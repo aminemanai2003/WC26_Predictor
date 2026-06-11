@@ -1,0 +1,37 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+dist/
+build/
+.ipynb_checkpoints/
+
+# Kaggle raw data (large CSVs, not committed)
+data/raw/results/
+data/raw/fifa_ranking/
+data/processed/
+
+# Trained model binary (large, reproducible from notebook)
+artifacts/models.joblib
+
+# Node
+node_modules/
+web/node_modules/
+.next/
+web/.next/
+web/out/
+out/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Secrets
+.env
+.env.local
+.env*.local
+kaggle.json

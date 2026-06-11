@@ -1,0 +1,43 @@
+{
+  "version": "1.0.0",
+  "trained_at": "2026-06-10T19:41:04Z",
+  "dixon_coles_rho": -0.03919196572189857,
+  "ensemble_w_clf": 0.8,
+  "temperature": 1.000060939873334,
+  "features": [
+    "elo_diff",
+    "home_elo",
+    "away_elo",
+    "rank_diff",
+    "host",
+    "tier",
+    "form_diff_l10",
+    "gd_diff_l10"
+  ],
+  "test_metrics": {
+    "elo_baseline": {
+      "log_loss": 0.8776891397212847,
+      "rps": 0.17225774159005824
+    },
+    "xgb_only": {
+      "log_loss": 0.8778040850365593,
+      "rps": 0.1721653131192081
+    },
+    "poisson_only": {
+      "log_loss": 0.8828814042450258,
+      "rps": 0.17357444720186133
+    },
+    "ensemble_raw": {
+      "log_loss": 0.8775777038875658,
+      "rps": 0.17224316490616057
+    },
+    "ensemble_cal": {
+      "log_loss": 0.8775760685397745,
+      "rps": 0.17224279118541053
+    }
+  },
+  "train_window": "<= 2017-12-31",
+  "val_window": "2018-01-01 .. 2021-12-31",
+  "test_window": "2022-01-01 .. 2025-12-31",
+  "n_matches_used": 30692
+}

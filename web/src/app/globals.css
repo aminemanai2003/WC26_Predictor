@@ -1,0 +1,114 @@
+@import "flag-icons/css/flag-icons.min.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Tell the browser which color-scheme to use for native controls (select popups,
+   scrollbars, form inputs). Without this, native <select> dropdowns render
+   white-on-white in dark mode. */
+:root { color-scheme: dark; }
+:root.light { color-scheme: light; }
+
+/* Explicit fallback for native <option> rendering in browsers that ignore color-scheme */
+select option {
+  background-color: var(--surface-solid);
+  color: var(--fg);
+}
+
+/* Theme tokens. Dark is default; .light overrides on <html>. */
+:root {
+  --bg: #06080f;
+  --bg-2: #0b0f1a;
+  --surface: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.01));
+  --surface-solid: #121826;
+  --surface-hover: rgba(255, 255, 255, 0.06);
+  --border: rgba(255, 255, 255, 0.06);
+  --border-strong: rgba(255, 255, 255, 0.12);
+  --fg: #e8ecf3;
+  --fg-2: rgba(232, 236, 243, 0.7);
+  --fg-muted: rgba(232, 236, 243, 0.5);
+  --fg-subtle: rgba(232, 236, 243, 0.4);
+  --grid-fade:
+    radial-gradient(ellipse at top, rgba(77, 141, 255, 0.10), transparent 55%),
+    radial-gradient(ellipse at 80% 100%, rgba(16, 224, 125, 0.08), transparent 50%);
+  --scrollbar: #1c2436;
+}
+
+:root.light {
+  --bg: #f6f7fb;
+  --bg-2: #ffffff;
+  --surface: linear-gradient(180deg, rgba(255, 255, 255, 0.95), rgba(255, 255, 255, 0.75));
+  --surface-solid: #ffffff;
+  --surface-hover: rgba(15, 23, 42, 0.04);
+  --border: rgba(15, 23, 42, 0.08);
+  --border-strong: rgba(15, 23, 42, 0.16);
+  --fg: #0b1220;
+  --fg-2: rgba(11, 18, 32, 0.72);
+  --fg-muted: rgba(11, 18, 32, 0.55);
+  --fg-subtle: rgba(11, 18, 32, 0.4);
+  --grid-fade:
+    radial-gradient(ellipse at top, rgba(77, 141, 255, 0.10), transparent 55%),
+    radial-gradient(ellipse at 80% 100%, rgba(16, 224, 125, 0.10), transparent 55%);
+  --scrollbar: rgba(15, 23, 42, 0.18);
+}
+
+html, body {
+  background: var(--bg);
+  color: var(--fg);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+body {
+  background-image: var(--grid-fade);
+  background-attachment: fixed;
+  min-height: 100vh;
+}
+
+/* Surface card */
+.glass {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  backdrop-filter: blur(8px);
+  border-radius: 16px;
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.04) inset,
+    0 30px 60px -30px rgba(0, 0, 0, 0.55);
+}
+:root.light .glass {
+  box-shadow:
+    0 1px 0 0 rgba(255, 255, 255, 0.6) inset,
+    0 12px 32px -16px rgba(15, 23, 42, 0.18);
+}
+
+/* Semantic colour helpers (override the literal Tailwind classes used throughout the app) */
+.text-white { color: var(--fg) !important; }
+.text-white\/90 { color: var(--fg) !important; opacity: 0.95; }
+.text-white\/80 { color: var(--fg) !important; opacity: 0.85; }
+.text-white\/70 { color: var(--fg-2) !important; }
+.text-white\/60 { color: var(--fg-2) !important; }
+.text-white\/50 { color: var(--fg-muted) !important; }
+.text-white\/40 { color: var(--fg-subtle) !important; }
+
+.bg-white\/5 { background-color: var(--surface-hover) !important; }
+.bg-white\/10 { background-color: var(--border-strong) !important; }
+.border-white\/5 { border-color: var(--border) !important; }
+.border-white\/10 { border-color: var(--border-strong) !important; }
+.hover\:bg-white\/5:hover { background-color: var(--surface-hover) !important; }
+.hover\:bg-white\/10:hover { background-color: var(--border-strong) !important; }
+
+/* The chrome nav bar uses its own bg — make sure it reads from var */
+.nav-bg { background-color: color-mix(in srgb, var(--bg) 80%, transparent); }
+
+.numeric { font-variant-numeric: tabular-nums; }
+.fi { vertical-align: -2px; }
+
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: var(--scrollbar); border-radius: 8px; }
+*::-webkit-scrollbar-track { background: transparent; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}

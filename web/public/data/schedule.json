@@ -1,0 +1,978 @@
+[
+  {
+    "id": "G001",
+    "stage": "group",
+    "group": "A",
+    "round": 1,
+    "date": "2026-06-11",
+    "home": "MEX",
+    "away": "POL",
+    "neutral": false
+  },
+  {
+    "id": "G002",
+    "stage": "group",
+    "group": "A",
+    "round": 2,
+    "date": "2026-06-12",
+    "home": "CHL",
+    "away": "MAR",
+    "neutral": true
+  },
+  {
+    "id": "G003",
+    "stage": "group",
+    "group": "A",
+    "round": 3,
+    "date": "2026-06-13",
+    "home": "MEX",
+    "away": "CHL",
+    "neutral": false
+  },
+  {
+    "id": "G004",
+    "stage": "group",
+    "group": "A",
+    "round": 4,
+    "date": "2026-06-17",
+    "home": "POL",
+    "away": "MAR",
+    "neutral": true
+  },
+  {
+    "id": "G005",
+    "stage": "group",
+    "group": "A",
+    "round": 5,
+    "date": "2026-06-18",
+    "home": "MEX",
+    "away": "MAR",
+    "neutral": false
+  },
+  {
+    "id": "G006",
+    "stage": "group",
+    "group": "A",
+    "round": 6,
+    "date": "2026-06-22",
+    "home": "POL",
+    "away": "CHL",
+    "neutral": true
+  },
+  {
+    "id": "G007",
+    "stage": "group",
+    "group": "B",
+    "round": 1,
+    "date": "2026-06-11",
+    "home": "CAN",
+    "away": "BEL",
+    "neutral": false
+  },
+  {
+    "id": "G008",
+    "stage": "group",
+    "group": "B",
+    "round": 2,
+    "date": "2026-06-12",
+    "home": "ECU",
+    "away": "TUN",
+    "neutral": true
+  },
+  {
+    "id": "G009",
+    "stage": "group",
+    "group": "B",
+    "round": 3,
+    "date": "2026-06-13",
+    "home": "CAN",
+    "away": "ECU",
+    "neutral": false
+  },
+  {
+    "id": "G010",
+    "stage": "group",
+    "group": "B",
+    "round": 4,
+    "date": "2026-06-17",
+    "home": "BEL",
+    "away": "TUN",
+    "neutral": true
+  },
+  {
+    "id": "G011",
+    "stage": "group",
+    "group": "B",
+    "round": 5,
+    "date": "2026-06-18",
+    "home": "CAN",
+    "away": "TUN",
+    "neutral": false
+  },
+  {
+    "id": "G012",
+    "stage": "group",
+    "group": "B",
+    "round": 6,
+    "date": "2026-06-22",
+    "home": "BEL",
+    "away": "ECU",
+    "neutral": true
+  },
+  {
+    "id": "G013",
+    "stage": "group",
+    "group": "C",
+    "round": 1,
+    "date": "2026-06-11",
+    "home": "USA",
+    "away": "URY",
+    "neutral": false
+  },
+  {
+    "id": "G014",
+    "stage": "group",
+    "group": "C",
+    "round": 2,
+    "date": "2026-06-12",
+    "home": "JPN",
+    "away": "CIV",
+    "neutral": true
+  },
+  {
+    "id": "G015",
+    "stage": "group",
+    "group": "C",
+    "round": 3,
+    "date": "2026-06-13",
+    "home": "USA",
+    "away": "JPN",
+    "neutral": false
+  },
+  {
+    "id": "G016",
+    "stage": "group",
+    "group": "C",
+    "round": 4,
+    "date": "2026-06-17",
+    "home": "URY",
+    "away": "CIV",
+    "neutral": true
+  },
+  {
+    "id": "G017",
+    "stage": "group",
+    "group": "C",
+    "round": 5,
+    "date": "2026-06-18",
+    "home": "USA",
+    "away": "CIV",
+    "neutral": false
+  },
+  {
+    "id": "G018",
+    "stage": "group",
+    "group": "C",
+    "round": 6,
+    "date": "2026-06-22",
+    "home": "URY",
+    "away": "JPN",
+    "neutral": true
+  },
+  {
+    "id": "G019",
+    "stage": "group",
+    "group": "D",
+    "round": 1,
+    "date": "2026-06-11",
+    "home": "ARG",
+    "away": "NLD",
+    "neutral": true
+  },
+  {
+    "id": "G020",
+    "stage": "group",
+    "group": "D",
+    "round": 2,
+    "date": "2026-06-12",
+    "home": "AUS",
+    "away": "EGY",
+    "neutral": true
+  },
+  {
+    "id": "G021",
+    "stage": "group",
+    "group": "D",
+    "round": 3,
+    "date": "2026-06-13",
+    "home": "ARG",
+    "away": "AUS",
+    "neutral": true
+  },
+  {
+    "id": "G022",
+    "stage": "group",
+    "group": "D",
+    "round": 4,
+    "date": "2026-06-17",
+    "home": "NLD",
+    "away": "EGY",
+    "neutral": true
+  },
+  {
+    "id": "G023",
+    "stage": "group",
+    "group": "D",
+    "round": 5,
+    "date": "2026-06-18",
+    "home": "ARG",
+    "away": "EGY",
+    "neutral": true
+  },
+  {
+    "id": "G024",
+    "stage": "group",
+    "group": "D",
+    "round": 6,
+    "date": "2026-06-22",
+    "home": "NLD",
+    "away": "AUS",
+    "neutral": true
+  },
+  {
+    "id": "G025",
+    "stage": "group",
+    "group": "E",
+    "round": 1,
+    "date": "2026-06-11",
+    "home": "FRA",
+    "away": "DNK",
+    "neutral": true
+  },
+  {
+    "id": "G026",
+    "stage": "group",
+    "group": "E",
+    "round": 2,
+    "date": "2026-06-12",
+    "home": "JOR",
+    "away": "GHA",
+    "neutral": true
+  },
+  {
+    "id": "G027",
+    "stage": "group",
+    "group": "E",
+    "round": 3,
+    "date": "2026-06-13",
+    "home": "FRA",
+    "away": "JOR",
+    "neutral": true
+  },
+  {
+    "id": "G028",
+    "stage": "group",
+    "group": "E",
+    "round": 4,
+    "date": "2026-06-17",
+    "home": "DNK",
+    "away": "GHA",
+    "neutral": true
+  },
+  {
+    "id": "G029",
+    "stage": "group",
+    "group": "E",
+    "round": 5,
+    "date": "2026-06-18",
+    "home": "FRA",
+    "away": "GHA",
+    "neutral": true
+  },
+  {
+    "id": "G030",
+    "stage": "group",
+    "group": "E",
+    "round": 6,
+    "date": "2026-06-22",
+    "home": "DNK",
+    "away": "JOR",
+    "neutral": true
+  },
+  {
+    "id": "G031",
+    "stage": "group",
+    "group": "F",
+    "round": 1,
+    "date": "2026-06-11",
+    "home": "ESP",
+    "away": "PRT",
+    "neutral": true
+  },
+  {
+    "id": "G032",
+    "stage": "group",
+    "group": "F",
+    "round": 2,
+    "date": "2026-06-12",
+    "home": "KOR",
+    "away": "PAN",
+    "neutral": true
+  },
+  {
+    "id": "G033",
+    "stage": "group",
+    "group": "F",
+    "round": 3,
+    "date": "2026-06-13",
+    "home": "ESP",
+    "away": "KOR",
+    "neutral": true
+  },
+  {
+    "id": "G034",
+    "stage": "group",
+    "group": "F",
+    "round": 4,
+    "date": "2026-06-17",
+    "home": "PRT",
+    "away": "PAN",
+    "neutral": true
+  },
+  {
+    "id": "G035",
+    "stage": "group",
+    "group": "F",
+    "round": 5,
+    "date": "2026-06-18",
+    "home": "ESP",
+    "away": "PAN",
+    "neutral": true
+  },
+  {
+    "id": "G036",
+    "stage": "group",
+    "group": "F",
+    "round": 6,
+    "date": "2026-06-22",
+    "home": "PRT",
+    "away": "KOR",
+    "neutral": true
+  },
+  {
+    "id": "G037",
+    "stage": "group",
+    "group": "G",
+    "round": 1,
+    "date": "2026-06-11",
+    "home": "BRA",
+    "away": "ENG",
+    "neutral": true
+  },
+  {
+    "id": "G038",
+    "stage": "group",
+    "group": "G",
+    "round": 2,
+    "date": "2026-06-12",
+    "home": "IRN",
+    "away": "JAM",
+    "neutral": true
+  },
+  {
+    "id": "G039",
+    "stage": "group",
+    "group": "G",
+    "round": 3,
+    "date": "2026-06-13",
+    "home": "BRA",
+    "away": "IRN",
+    "neutral": true
+  },
+  {
+    "id": "G040",
+    "stage": "group",
+    "group": "G",
+    "round": 4,
+    "date": "2026-06-17",
+    "home": "ENG",
+    "away": "JAM",
+    "neutral": true
+  },
+  {
+    "id": "G041",
+    "stage": "group",
+    "group": "G",
+    "round": 5,
+    "date": "2026-06-18",
+    "home": "BRA",
+    "away": "JAM",
+    "neutral": true
+  },
+  {
+    "id": "G042",
+    "stage": "group",
+    "group": "G",
+    "round": 6,
+    "date": "2026-06-22",
+    "home": "ENG",
+    "away": "IRN",
+    "neutral": true
+  },
+  {
+    "id": "G043",
+    "stage": "group",
+    "group": "H",
+    "round": 1,
+    "date": "2026-06-11",
+    "home": "DEU",
+    "away": "TUR",
+    "neutral": true
+  },
+  {
+    "id": "G044",
+    "stage": "group",
+    "group": "H",
+    "round": 2,
+    "date": "2026-06-12",
+    "home": "QAT",
+    "away": "SEN",
+    "neutral": true
+  },
+  {
+    "id": "G045",
+    "stage": "group",
+    "group": "H",
+    "round": 3,
+    "date": "2026-06-13",
+    "home": "DEU",
+    "away": "QAT",
+    "neutral": true
+  },
+  {
+    "id": "G046",
+    "stage": "group",
+    "group": "H",
+    "round": 4,
+    "date": "2026-06-17",
+    "home": "TUR",
+    "away": "SEN",
+    "neutral": true
+  },
+  {
+    "id": "G047",
+    "stage": "group",
+    "group": "H",
+    "round": 5,
+    "date": "2026-06-18",
+    "home": "DEU",
+    "away": "SEN",
+    "neutral": true
+  },
+  {
+    "id": "G048",
+    "stage": "group",
+    "group": "H",
+    "round": 6,
+    "date": "2026-06-22",
+    "home": "TUR",
+    "away": "QAT",
+    "neutral": true
+  },
+  {
+    "id": "G049",
+    "stage": "group",
+    "group": "I",
+    "round": 1,
+    "date": "2026-06-11",
+    "home": "ITA",
+    "away": "COL",
+    "neutral": true
+  },
+  {
+    "id": "G050",
+    "stage": "group",
+    "group": "I",
+    "round": 2,
+    "date": "2026-06-12",
+    "home": "SAU",
+    "away": "NZL",
+    "neutral": true
+  },
+  {
+    "id": "G051",
+    "stage": "group",
+    "group": "I",
+    "round": 3,
+    "date": "2026-06-13",
+    "home": "ITA",
+    "away": "SAU",
+    "neutral": true
+  },
+  {
+    "id": "G052",
+    "stage": "group",
+    "group": "I",
+    "round": 4,
+    "date": "2026-06-17",
+    "home": "COL",
+    "away": "NZL",
+    "neutral": true
+  },
+  {
+    "id": "G053",
+    "stage": "group",
+    "group": "I",
+    "round": 5,
+    "date": "2026-06-18",
+    "home": "ITA",
+    "away": "NZL",
+    "neutral": true
+  },
+  {
+    "id": "G054",
+    "stage": "group",
+    "group": "I",
+    "round": 6,
+    "date": "2026-06-22",
+    "home": "COL",
+    "away": "SAU",
+    "neutral": true
+  },
+  {
+    "id": "G055",
+    "stage": "group",
+    "group": "J",
+    "round": 1,
+    "date": "2026-06-11",
+    "home": "HRV",
+    "away": "SCO",
+    "neutral": true
+  },
+  {
+    "id": "G056",
+    "stage": "group",
+    "group": "J",
+    "round": 2,
+    "date": "2026-06-12",
+    "home": "UZB",
+    "away": "DZA",
+    "neutral": true
+  },
+  {
+    "id": "G057",
+    "stage": "group",
+    "group": "J",
+    "round": 3,
+    "date": "2026-06-13",
+    "home": "HRV",
+    "away": "UZB",
+    "neutral": true
+  },
+  {
+    "id": "G058",
+    "stage": "group",
+    "group": "J",
+    "round": 4,
+    "date": "2026-06-17",
+    "home": "SCO",
+    "away": "DZA",
+    "neutral": true
+  },
+  {
+    "id": "G059",
+    "stage": "group",
+    "group": "J",
+    "round": 5,
+    "date": "2026-06-18",
+    "home": "HRV",
+    "away": "DZA",
+    "neutral": true
+  },
+  {
+    "id": "G060",
+    "stage": "group",
+    "group": "J",
+    "round": 6,
+    "date": "2026-06-22",
+    "home": "SCO",
+    "away": "UZB",
+    "neutral": true
+  },
+  {
+    "id": "G061",
+    "stage": "group",
+    "group": "K",
+    "round": 1,
+    "date": "2026-06-11",
+    "home": "SWE",
+    "away": "SUI",
+    "neutral": true
+  },
+  {
+    "id": "G062",
+    "stage": "group",
+    "group": "K",
+    "round": 2,
+    "date": "2026-06-12",
+    "home": "PRY",
+    "away": "CPV",
+    "neutral": true
+  },
+  {
+    "id": "G063",
+    "stage": "group",
+    "group": "K",
+    "round": 3,
+    "date": "2026-06-13",
+    "home": "SWE",
+    "away": "PRY",
+    "neutral": true
+  },
+  {
+    "id": "G064",
+    "stage": "group",
+    "group": "K",
+    "round": 4,
+    "date": "2026-06-17",
+    "home": "SUI",
+    "away": "CPV",
+    "neutral": true
+  },
+  {
+    "id": "G065",
+    "stage": "group",
+    "group": "K",
+    "round": 5,
+    "date": "2026-06-18",
+    "home": "SWE",
+    "away": "CPV",
+    "neutral": true
+  },
+  {
+    "id": "G066",
+    "stage": "group",
+    "group": "K",
+    "round": 6,
+    "date": "2026-06-22",
+    "home": "SUI",
+    "away": "PRY",
+    "neutral": true
+  },
+  {
+    "id": "G067",
+    "stage": "group",
+    "group": "L",
+    "round": 1,
+    "date": "2026-06-11",
+    "home": "CZE",
+    "away": "AUT",
+    "neutral": true
+  },
+  {
+    "id": "G068",
+    "stage": "group",
+    "group": "L",
+    "round": 2,
+    "date": "2026-06-12",
+    "home": "CRI",
+    "away": "ZAF",
+    "neutral": true
+  },
+  {
+    "id": "G069",
+    "stage": "group",
+    "group": "L",
+    "round": 3,
+    "date": "2026-06-13",
+    "home": "CZE",
+    "away": "CRI",
+    "neutral": true
+  },
+  {
+    "id": "G070",
+    "stage": "group",
+    "group": "L",
+    "round": 4,
+    "date": "2026-06-17",
+    "home": "AUT",
+    "away": "ZAF",
+    "neutral": true
+  },
+  {
+    "id": "G071",
+    "stage": "group",
+    "group": "L",
+    "round": 5,
+    "date": "2026-06-18",
+    "home": "CZE",
+    "away": "ZAF",
+    "neutral": true
+  },
+  {
+    "id": "G072",
+    "stage": "group",
+    "group": "L",
+    "round": 6,
+    "date": "2026-06-22",
+    "home": "AUT",
+    "away": "CRI",
+    "neutral": true
+  },
+  {
+    "id": "R3201",
+    "stage": "R32",
+    "date": "2026-06-28",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R3202",
+    "stage": "R32",
+    "date": "2026-06-28",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R3203",
+    "stage": "R32",
+    "date": "2026-06-28",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R3204",
+    "stage": "R32",
+    "date": "2026-06-28",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R3205",
+    "stage": "R32",
+    "date": "2026-06-28",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R3206",
+    "stage": "R32",
+    "date": "2026-06-28",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R3207",
+    "stage": "R32",
+    "date": "2026-06-28",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R3208",
+    "stage": "R32",
+    "date": "2026-06-28",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R3209",
+    "stage": "R32",
+    "date": "2026-06-28",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R3210",
+    "stage": "R32",
+    "date": "2026-06-28",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R3211",
+    "stage": "R32",
+    "date": "2026-06-28",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R3212",
+    "stage": "R32",
+    "date": "2026-06-28",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R3213",
+    "stage": "R32",
+    "date": "2026-06-28",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R3214",
+    "stage": "R32",
+    "date": "2026-06-28",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R3215",
+    "stage": "R32",
+    "date": "2026-06-28",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R3216",
+    "stage": "R32",
+    "date": "2026-06-28",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R1601",
+    "stage": "R16",
+    "date": "2026-07-04",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R1602",
+    "stage": "R16",
+    "date": "2026-07-04",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R1603",
+    "stage": "R16",
+    "date": "2026-07-04",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R1604",
+    "stage": "R16",
+    "date": "2026-07-04",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R1605",
+    "stage": "R16",
+    "date": "2026-07-04",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R1606",
+    "stage": "R16",
+    "date": "2026-07-04",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R1607",
+    "stage": "R16",
+    "date": "2026-07-04",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "R1608",
+    "stage": "R16",
+    "date": "2026-07-04",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "QF01",
+    "stage": "QF",
+    "date": "2026-07-09",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "QF02",
+    "stage": "QF",
+    "date": "2026-07-09",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "QF03",
+    "stage": "QF",
+    "date": "2026-07-09",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "QF04",
+    "stage": "QF",
+    "date": "2026-07-09",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "SF01",
+    "stage": "SF",
+    "date": "2026-07-14",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "SF02",
+    "stage": "SF",
+    "date": "2026-07-14",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "3RD01",
+    "stage": "3RD",
+    "date": "2026-07-18",
+    "home": null,
+    "away": null,
+    "neutral": true
+  },
+  {
+    "id": "F01",
+    "stage": "F",
+    "date": "2026-07-19",
+    "home": null,
+    "away": null,
+    "neutral": true
+  }
+]
