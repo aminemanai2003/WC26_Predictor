@@ -32,6 +32,14 @@ export type PairwiseEntry = {
 
 export type Pairwise = Record<string, PairwiseEntry>;
 
+export type SquadAvailability = {
+  goalkeeper: number;
+  defenders: number;
+  midfielders: number;
+  attackers: number;
+  suspensions: number;
+};
+
 export type Meta = {
   version: string;
   trained_at: string;
@@ -54,6 +62,8 @@ export type SimConstraints = {
   // Force a match outcome: { "G001": "H" | "D" | "A" } or specific scoreline
   matchResult?: Record<string, "H" | "D" | "A">;
   matchScore?: Record<string, [number, number]>;
+  // User-declared pre-match absences. Values are unavailable likely starters.
+  teamAvailability?: Record<string, SquadAvailability>;
 };
 
 export type TournamentResult = {

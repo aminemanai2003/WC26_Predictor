@@ -19,6 +19,10 @@ Every run downloads the latest international results, evaluates on a time-based
 holdout, refits on all completed matches, and exports real World Cup scores so
 finished fixtures are not simulated again.
 
+The What-if Lab also supports transparent squad-availability stress tests. User
+inputs adjust expected goals at simulation time; they are not presented as
+verified injury reports and never enter model training.
+
 The scheduled GitHub Actions workflow runs every four hours. Add the repository
 secret `KAGGLE_API_TOKEN` so it can refresh the ranking data, then it will
 commit updated prediction artifacts automatically.

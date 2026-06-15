@@ -4,9 +4,10 @@ import { motion } from "framer-motion";
 import { Section } from "@/components/Section";
 import TeamBadge from "@/components/TeamBadge";
 import ChampionRace from "@/components/ChampionRace";
-import { teamByCode, schedule, teamsByGroup } from "@/lib/data";
+import { teamByCode, schedule, teams } from "@/lib/data";
 import { useSimulation } from "@/lib/sim/useSimulation";
-import type { SimConstraints } from "@/lib/types";
+import type { SimConstraints, SquadAvailability } from "@/lib/types";
+import { availabilityCount, EMPTY_AVAILABILITY } from "@/lib/sim/scenarios";
 import { Play, RotateCcw, Sparkles, Dices } from "lucide-react";
 import { useT } from "@/lib/i18n/context";
 
@@ -19,6 +20,7 @@ export default function SimulatorPage() {
   const [seed, setSeed] = useState(42);
   const [constraints, setConstraints] = useState<SimConstraints>({ matchResult: {} });
   const [selectedGroup, setSelectedGroup] = useState("A");
+  const [availabilityTeam, setAvailabilityTeam] = useState("ARG");
 
   useEffect(() => { run({ iterations, seed, constraints }); }, []); // eslint-disable-line
 
@@ -36,18 +38,34 @@ export default function SimulatorPage() {
       .slice(0, 10);
   }, [result]);
 
-  const constraintCount = Object.keys(constraints.matchResult || {}).length;
+  const constraintCount =
+    Object.keys(constraints.matchResult || {}).length +
+    Object.values(constraints.teamAvailability || {}).reduce(
+      (sum, value) => sum + availabilityCount(value),
+      0,
+    );
 
   function setOutcome(matchId: string, outcome: "H" | "D" | "A" | null) {
     setConstraints((prev) => {
       const mr = { ...(prev.matchResult || {}) };
       if (outcome === null) delete mr[matchId];
       else mr[matchId] = outcome;
-      return { matchResult: mr };
+      return { ...prev, matchResult: mr };
     });
   }
 
-  function reset() { setConstraints({ matchResult: {} }); }
+  function setAvailability(field: keyof SquadAvailability, value: number) {
+    setConstraints((prev) => {
+      const teamAvailability = { ...(prev.teamAvailability || {}) };
+      const current = teamAvailability[availabilityTeam] || EMPTY_AVAILABILITY;
+      const next = { ...current, [field]: value };
+      if (availabilityCount(next) === 0) delete teamAvailability[availabilityTeam];
+      else teamAvailability[availabilityTeam] = next;
+      return { ...prev, teamAvailability };
+    });
+  }
+
+  function reset() { setConstraints({ matchResult: {}, teamAvailability: {} }); }
   function runSim() { run({ iterations, seed, constraints }); }
   function reroll() { const s = Math.floor(Math.random() * 1e9); setSeed(s); run({ iterations, seed: s, constraints }); }
 
@@ -124,6 +142,51 @@ export default function SimulatorPage() {
                 </div>
               );
             })}
+          </div>
+
+          <div className="mt-5 pt-4 border-t border-white/5">
+            <div className="flex items-baseline justify-between gap-3 mb-3">
+              <div>
+                <div className="text-sm font-semibold">{t("sim.squadStress")}</div>
+                <p className="text-xs text-white/40 mt-1">{t("sim.squadStressHelp")}</p>
+              </div>
+              <select
+                value={availabilityTeam}
+                onChange={(event) => setAvailabilityTeam(event.target.value)}
+                className="bg-white/5 border border-white/10 rounded px-2 py-1.5 text-xs"
+                style={{ color: "var(--fg)" }}
+              >
+                {[...teams].sort((a, b) => a.name.localeCompare(b.name)).map((team) => (
+                  <option key={team.code} value={team.code}>{team.name}</option>
+                ))}
+              </select>
+            </div>
+            <div className="grid sm:grid-cols-2 gap-2">
+              {([
+                ["goalkeeper", t("sim.goalkeeper"), 1],
+                ["defenders", t("sim.defenders"), 3],
+                ["midfielders", t("sim.midfielders"), 3],
+                ["attackers", t("sim.attackers"), 3],
+                ["suspensions", t("sim.suspensions"), 4],
+              ] as [keyof SquadAvailability, string, number][]).map(([field, label, maximum]) => {
+                const value = constraints.teamAvailability?.[availabilityTeam]?.[field] || 0;
+                return (
+                  <label key={field} className="flex items-center justify-between gap-3 rounded-md bg-white/[0.03] px-3 py-2">
+                    <span className="text-xs text-white/60">{label}</span>
+                    <select
+                      value={value}
+                      onChange={(event) => setAvailability(field, Number(event.target.value))}
+                      className="bg-white/5 border border-white/10 rounded px-2 py-1 text-xs numeric"
+                      style={{ color: "var(--fg)" }}
+                    >
+                      {Array.from({ length: maximum + 1 }, (_, index) => (
+                        <option key={index} value={index}>{index}</option>
+                      ))}
+                    </select>
+                  </label>
+                );
+              })}
+            </div>
           </div>
 
           <div className="mt-5 pt-4 border-t border-white/5 flex flex-wrap items-center gap-3">

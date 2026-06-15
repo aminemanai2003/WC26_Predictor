@@ -3,6 +3,7 @@
 
 import type { Match, Pairwise, PairwiseEntry, Team, SimConstraints } from "../types";
 import { makeRng } from "./rng";
+import { applyAvailabilityScenario } from "./scenarios";
 // Generated from Annex C of the official FIFA World Cup 2026 regulations.
 import thirdPlaceAssignmentsJson from "./thirdPlaceAssignments.json";
 
@@ -322,12 +323,21 @@ export function simulate(input: SimInput): Aggregates {
   // knockouts can be any pair, so we lazily build & cache.
   const cdfCache = new Map<string, Float64Array>();
   function getCdf(home: string, away: string): Float64Array {
-    const key = `${home}-${away}`;
+    const availabilityKey = JSON.stringify([
+      constraints?.teamAvailability?.[home] ?? null,
+      constraints?.teamAvailability?.[away] ?? null,
+    ]);
+    const key = `${home}-${away}-${availabilityKey}`;
     let c = cdfCache.get(key);
     if (!c) {
-      const pair = pairwise[key];
-      if (!pair) throw new Error(`No pairwise entry for ${key}`);
-      c = buildCdf(pair, rho);
+      const basePair = pairwise[`${home}-${away}`];
+      if (!basePair) throw new Error(`No pairwise entry for ${home}-${away}`);
+      const scenarioPair = applyAvailabilityScenario(
+        basePair,
+        constraints?.teamAvailability?.[home],
+        constraints?.teamAvailability?.[away],
+      );
+      c = buildCdf(scenarioPair, rho);
       cdfCache.set(key, c);
     }
     return c;
@@ -389,7 +399,11 @@ export function simulate(input: SimInput): Aggregates {
     if (hs > as_) return home;
     if (as_ > hs) return away;
     // Penalty shootout — favor higher-Elo side slightly
-    const pair = pairwise[`${home}-${away}`];
+    const pair = applyAvailabilityScenario(
+      pairwise[`${home}-${away}`],
+      constraints?.teamAvailability?.[home],
+      constraints?.teamAvailability?.[away],
+    );
     const pHome = 0.5 + (pair.pH - pair.pA) * 0.3;
     return rng() < pHome ? home : away;
   }

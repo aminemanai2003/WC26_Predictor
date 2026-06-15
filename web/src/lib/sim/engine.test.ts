@@ -1,6 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { buildCdf, fillR32, sampleScore, simulate } from "./engine";
 import { makeRng } from "./rng";
+import { applyAvailabilityScenario } from "./scenarios";
 
 describe("scoreline sampling", () => {
   const pair = { lh: 1.5, la: 1.1, pH: 0.5, pD: 0.25, pA: 0.25 };
@@ -30,6 +31,31 @@ describe("scoreline sampling", () => {
     // Expected ~ 50–55% for these lambdas
     expect(hWins / n).toBeGreaterThan(0.4);
     expect(hWins / n).toBeLessThan(0.7);
+  });
+});
+
+describe("squad availability scenarios", () => {
+  const pair = { lh: 1.6, la: 1.1, pH: 0.52, pD: 0.25, pA: 0.23 };
+
+  it("reduces a team's attack when likely attacking starters are unavailable", () => {
+    const adjusted = applyAvailabilityScenario(pair, { attackers: 2 }, undefined);
+    expect(adjusted.lh).toBeLessThan(pair.lh);
+    expect(adjusted.la).toBe(pair.la);
+  });
+
+  it("raises opponent scoring when a goalkeeper is unavailable", () => {
+    const adjusted = applyAvailabilityScenario(pair, { goalkeeper: 1 }, undefined);
+    expect(adjusted.la).toBeGreaterThan(pair.la);
+  });
+
+  it("caps extreme user inputs", () => {
+    const adjusted = applyAvailabilityScenario(
+      pair,
+      { goalkeeper: 99, defenders: 99, midfielders: 99, attackers: 99, suspensions: 99 },
+      undefined,
+    );
+    expect(adjusted.lh).toBeGreaterThanOrEqual(0.15);
+    expect(adjusted.la).toBeLessThanOrEqual(5);
   });
 });
 

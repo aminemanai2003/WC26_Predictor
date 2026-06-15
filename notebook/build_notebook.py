@@ -1250,7 +1250,7 @@ print(f"pairwise.json: {len(pairwise):,} ordered pairs")
 
 code(r"""
 meta = {
-    "version": "3.0.0",
+    "version": "3.1.0",
     "trained_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
     "dixon_coles_rho": RHO,
     "ensemble_w_clf": W_CLF,
