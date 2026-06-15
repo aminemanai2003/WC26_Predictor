@@ -1,4 +1,9 @@
-import type { PairwiseEntry, SquadAvailability, TacticalStress } from "../types";
+import type {
+  ContextStress,
+  PairwiseEntry,
+  SquadAvailability,
+  TacticalStress,
+} from "../types";
 
 export const EMPTY_AVAILABILITY: SquadAvailability = {
   goalkeeper: 0,
@@ -13,6 +18,12 @@ export const EMPTY_TACTICAL_STRESS: TacticalStress = {
   defensiveDisorganization: 0,
   attackingDisconnect: 0,
   pressingFailure: 0,
+};
+
+export const EMPTY_CONTEXT_STRESS: ContextStress = {
+  fatigue: 0,
+  heat: 0,
+  travel: 0,
 };
 
 function clamp(value: number, minimum: number, maximum: number) {
@@ -35,6 +46,14 @@ function normalizedTacticalStress(value?: Partial<TacticalStress>): TacticalStre
     defensiveDisorganization: clamp(value?.defensiveDisorganization ?? 0, 0, 2),
     attackingDisconnect: clamp(value?.attackingDisconnect ?? 0, 0, 2),
     pressingFailure: clamp(value?.pressingFailure ?? 0, 0, 2),
+  };
+}
+
+function normalizedContextStress(value?: Partial<ContextStress>): ContextStress {
+  return {
+    fatigue: clamp(value?.fatigue ?? 0, 0, 2),
+    heat: clamp(value?.heat ?? 0, 0, 2),
+    travel: clamp(value?.travel ?? 0, 0, 2),
   };
 }
 
@@ -86,6 +105,8 @@ export function applyDynamicScenario(
   awayAvailability?: Partial<SquadAvailability>,
   homeTacticalStress?: Partial<TacticalStress>,
   awayTacticalStress?: Partial<TacticalStress>,
+  homeContextStress?: Partial<ContextStress>,
+  awayContextStress?: Partial<ContextStress>,
 ): PairwiseEntry {
   const availabilityAdjusted = applyAvailabilityScenario(
     pair,
@@ -94,23 +115,37 @@ export function applyDynamicScenario(
   );
   const home = normalizedTacticalStress(homeTacticalStress);
   const away = normalizedTacticalStress(awayTacticalStress);
+  const homeContext = normalizedContextStress(homeContextStress);
+  const awayContext = normalizedContextStress(awayContextStress);
 
   const homeAttackLoss =
     0.075 * home.midfieldVoid +
     0.085 * home.attackingDisconnect +
-    0.025 * home.pressingFailure;
+    0.025 * home.pressingFailure +
+    0.045 * homeContext.fatigue +
+    0.025 * homeContext.heat +
+    0.025 * homeContext.travel;
   const awayAttackLoss =
     0.075 * away.midfieldVoid +
     0.085 * away.attackingDisconnect +
-    0.025 * away.pressingFailure;
+    0.025 * away.pressingFailure +
+    0.045 * awayContext.fatigue +
+    0.025 * awayContext.heat +
+    0.025 * awayContext.travel;
   const homeDefenceLoss =
     0.07 * home.midfieldVoid +
     0.09 * home.defensiveDisorganization +
-    0.055 * home.pressingFailure;
+    0.055 * home.pressingFailure +
+    0.055 * homeContext.fatigue +
+    0.035 * homeContext.heat +
+    0.02 * homeContext.travel;
   const awayDefenceLoss =
     0.07 * away.midfieldVoid +
     0.09 * away.defensiveDisorganization +
-    0.055 * away.pressingFailure;
+    0.055 * away.pressingFailure +
+    0.055 * awayContext.fatigue +
+    0.035 * awayContext.heat +
+    0.02 * awayContext.travel;
 
   return {
     ...availabilityAdjusted,
@@ -140,6 +175,11 @@ export function availabilityCount(value?: Partial<SquadAvailability>) {
 
 export function tacticalStressCount(value?: Partial<TacticalStress>) {
   const normalized = normalizedTacticalStress(value);
+  return Object.values(normalized).reduce((sum, item) => sum + item, 0);
+}
+
+export function contextStressCount(value?: Partial<ContextStress>) {
+  const normalized = normalizedContextStress(value);
   return Object.values(normalized).reduce((sum, item) => sum + item, 0);
 }
 

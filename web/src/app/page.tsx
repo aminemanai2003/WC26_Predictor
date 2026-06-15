@@ -22,7 +22,11 @@ export default function HomePage() {
   const top10 = useMemo(() => {
     if (!result) return [];
     return Object.entries(result.champion)
-      .map(([code, p]) => ({ team: teamByCode[code], p }))
+      .map(([code, p]) => ({
+        team: teamByCode[code],
+        p,
+        interval: result.championInterval?.[code],
+      }))
       .sort((a, b) => b.p - a.p)
       .slice(0, 10);
   }, [result]);

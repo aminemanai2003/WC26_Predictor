@@ -84,6 +84,20 @@ describe("tactical stress scenarios", () => {
       { midfieldVoid: 9, defensiveDisorganization: 9, attackingDisconnect: 9, pressingFailure: 9 },
     )).toBe(100);
   });
+
+  it("fatigue lowers attack and increases defensive vulnerability", () => {
+    const adjusted = applyDynamicScenario(
+      pair,
+      undefined,
+      undefined,
+      undefined,
+      undefined,
+      { fatigue: 2 },
+      undefined,
+    );
+    expect(adjusted.lh).toBeLessThan(pair.lh);
+    expect(adjusted.la).toBeGreaterThan(pair.la);
+  });
 });
 
 describe("completed matches", () => {
@@ -137,6 +151,8 @@ describe("completed matches", () => {
     });
 
     expect(result.expectedPoints.A0).toBe(9);
+    expect(result.championInterval.A0[0]).toBeGreaterThanOrEqual(0);
+    expect(result.championInterval.A0[1]).toBeLessThanOrEqual(1);
   });
 });
 

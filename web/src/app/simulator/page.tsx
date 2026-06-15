@@ -6,10 +6,17 @@ import TeamBadge from "@/components/TeamBadge";
 import ChampionRace from "@/components/ChampionRace";
 import { teamByCode, schedule, teams } from "@/lib/data";
 import { useSimulation } from "@/lib/sim/useSimulation";
-import type { SimConstraints, SquadAvailability, TacticalStress } from "@/lib/types";
+import type {
+  ContextStress,
+  SimConstraints,
+  SquadAvailability,
+  TacticalStress,
+} from "@/lib/types";
 import {
   availabilityCount,
+  contextStressCount,
   EMPTY_AVAILABILITY,
+  EMPTY_CONTEXT_STRESS,
   EMPTY_TACTICAL_STRESS,
   tacticalStressCount,
   tacticalVoidIndex,
@@ -38,7 +45,11 @@ export default function SimulatorPage() {
   const top10 = useMemo(() => {
     if (!result) return [];
     return Object.entries(result.champion)
-      .map(([code, p]) => ({ team: teamByCode[code], p }))
+      .map(([code, p]) => ({
+        team: teamByCode[code],
+        p,
+        interval: result.championInterval?.[code],
+      }))
       .filter((r) => r.team)
       .sort((a, b) => b.p - a.p)
       .slice(0, 10);
@@ -52,6 +63,10 @@ export default function SimulatorPage() {
     ) +
     Object.values(constraints.tacticalStress || {}).reduce(
       (sum, value) => sum + tacticalStressCount(value),
+      0,
+    ) +
+    Object.values(constraints.contextStress || {}).reduce(
+      (sum, value) => sum + contextStressCount(value),
       0,
     );
 
@@ -86,8 +101,24 @@ export default function SimulatorPage() {
     });
   }
 
+  function setContextStress(field: keyof ContextStress, value: number) {
+    setConstraints((prev) => {
+      const contextStress = { ...(prev.contextStress || {}) };
+      const current = contextStress[availabilityTeam] || EMPTY_CONTEXT_STRESS;
+      const next = { ...current, [field]: value };
+      if (contextStressCount(next) === 0) delete contextStress[availabilityTeam];
+      else contextStress[availabilityTeam] = next;
+      return { ...prev, contextStress };
+    });
+  }
+
   function reset() {
-    setConstraints({ matchResult: {}, teamAvailability: {}, tacticalStress: {} });
+    setConstraints({
+      matchResult: {},
+      teamAvailability: {},
+      tacticalStress: {},
+      contextStress: {},
+    });
   }
   function runSim() { run({ iterations, seed, constraints }); }
   function reroll() { const s = Math.floor(Math.random() * 1e9); setSeed(s); run({ iterations, seed: s, constraints }); }
@@ -247,6 +278,34 @@ export default function SimulatorPage() {
                 );
               })}
             </div>
+            <div className="mt-4">
+              <div className="text-xs font-semibold">{t("sim.contextStress")}</div>
+              <p className="text-[11px] text-white/40 mt-1">{t("sim.contextStressHelp")}</p>
+            </div>
+            <div className="mt-2 grid sm:grid-cols-3 gap-2">
+              {([
+                ["fatigue", t("sim.fatigue")],
+                ["heat", t("sim.heat")],
+                ["travel", t("sim.travel")],
+              ] as [keyof ContextStress, string][]).map(([field, label]) => {
+                const value = constraints.contextStress?.[availabilityTeam]?.[field] || 0;
+                return (
+                  <label key={field} className="flex items-center justify-between gap-2 rounded-md bg-white/[0.03] px-3 py-2">
+                    <span className="text-xs text-white/60">{label}</span>
+                    <select
+                      value={value}
+                      onChange={(event) => setContextStress(field, Number(event.target.value))}
+                      className="bg-white/5 border border-white/10 rounded px-2 py-1 text-xs numeric"
+                      style={{ color: "var(--fg)" }}
+                    >
+                      <option value={0}>{t("sim.normal")}</option>
+                      <option value={1}>{t("sim.degraded")}</option>
+                      <option value={2}>{t("sim.severe")}</option>
+                    </select>
+                  </label>
+                );
+              })}
+            </div>
           </div>
 
           <div className="mt-5 pt-4 border-t border-white/5 flex flex-wrap items-center gap-3">
@@ -293,6 +352,7 @@ export default function SimulatorPage() {
           {result ? (
             <motion.div key={JSON.stringify(constraints) + seed} initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
               <ChampionRace data={top10} />
+              <p className="mt-4 text-[10px] text-white/35">{t("sim.intervalNote")}</p>
             </motion.div>
           ) : (
             <div className="space-y-3 animate-pulse">

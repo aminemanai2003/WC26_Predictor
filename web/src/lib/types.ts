@@ -47,6 +47,12 @@ export type TacticalStress = {
   pressingFailure: number;
 };
 
+export type ContextStress = {
+  fatigue: number;
+  heat: number;
+  travel: number;
+};
+
 export type Meta = {
   version: string;
   trained_at: string;
@@ -73,6 +79,8 @@ export type SimConstraints = {
   teamAvailability?: Record<string, SquadAvailability>;
   // Transparent tactical stress scenarios, scored from 0 (normal) to 2 (severe).
   tacticalStress?: Record<string, TacticalStress>;
+  // User-specified match-context stress, scored from 0 (normal) to 2 (severe).
+  contextStress?: Record<string, ContextStress>;
 };
 
 export type TournamentResult = {
@@ -85,6 +93,7 @@ export type TournamentResult = {
   reachSF: Record<string, number>;
   reachFinal: Record<string, number>;
   champion: Record<string, number>;
+  championInterval?: Record<string, [number, number]>;
   // Expected group standings
   expectedPoints: Record<string, number>;
   // Number of iterations actually run

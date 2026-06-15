@@ -310,6 +310,7 @@ export type Aggregates = {
   reachSF: Record<string, number>;
   reachFinal: Record<string, number>;
   champion: Record<string, number>;
+  championInterval: Record<string, [number, number]>;
   expectedPoints: Record<string, number>;
   iterations: number;
   seed: number;
@@ -328,6 +329,8 @@ export function simulate(input: SimInput): Aggregates {
       constraints?.teamAvailability?.[away] ?? null,
       constraints?.tacticalStress?.[home] ?? null,
       constraints?.tacticalStress?.[away] ?? null,
+      constraints?.contextStress?.[home] ?? null,
+      constraints?.contextStress?.[away] ?? null,
     ]);
     const key = `${home}-${away}-${availabilityKey}`;
     let c = cdfCache.get(key);
@@ -340,6 +343,8 @@ export function simulate(input: SimInput): Aggregates {
         constraints?.teamAvailability?.[away],
         constraints?.tacticalStress?.[home],
         constraints?.tacticalStress?.[away],
+        constraints?.contextStress?.[home],
+        constraints?.contextStress?.[away],
       );
       c = buildCdf(scenarioPair, rho);
       cdfCache.set(key, c);
@@ -364,6 +369,7 @@ export function simulate(input: SimInput): Aggregates {
     groupTop1: counts(), groupTop2: counts(), qualifyR32: counts(),
     reachR16: counts(), reachQF: counts(), reachSF: counts(),
     reachFinal: counts(), champion: counts(),
+    championInterval: Object.fromEntries(teams.map((team) => [team.code, [0, 0]])),
     expectedPoints: counts(),
     iterations, seed,
   };
@@ -409,6 +415,8 @@ export function simulate(input: SimInput): Aggregates {
       constraints?.teamAvailability?.[away],
       constraints?.tacticalStress?.[home],
       constraints?.tacticalStress?.[away],
+      constraints?.contextStress?.[home],
+      constraints?.contextStress?.[away],
     );
     const pHome = 0.5 + (pair.pH - pair.pA) * 0.3;
     return rng() < pHome ? home : away;
@@ -506,6 +514,20 @@ export function simulate(input: SimInput): Aggregates {
   }
   for (const code of Object.keys(agg.expectedPoints)) {
     agg.expectedPoints[code] = agg.expectedPoints[code] / iterations;
+  }
+  // Wilson 95% interval: Monte Carlo sampling uncertainty only.
+  for (const code of Object.keys(agg.champion)) {
+    const p = agg.champion[code];
+    const z = 1.96;
+    const denominator = 1 + (z * z) / iterations;
+    const center = (p + (z * z) / (2 * iterations)) / denominator;
+    const margin =
+      (z / denominator) *
+      Math.sqrt((p * (1 - p)) / iterations + (z * z) / (4 * iterations * iterations));
+    agg.championInterval[code] = [
+      Math.max(0, center - margin),
+      Math.min(1, center + margin),
+    ];
   }
   return agg;
 }

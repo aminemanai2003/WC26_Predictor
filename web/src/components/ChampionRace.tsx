@@ -4,7 +4,7 @@ import type { Team } from "@/lib/types";
 import TeamBadge from "./TeamBadge";
 
 type Props = {
-  data: { team: Team; p: number }[];
+  data: { team: Team; p: number; interval?: [number, number] }[];
   max?: number;
 };
 
@@ -34,7 +34,19 @@ export default function ChampionRace({ data, max = 10 }: Props) {
               }}
             />
           </div>
-          <span className="text-right numeric text-sm font-medium">{(row.p * 100).toFixed(1)}%</span>
+          <span
+            className="text-right numeric text-sm font-medium"
+            title={row.interval
+              ? `Monte Carlo 95% interval: ${(row.interval[0] * 100).toFixed(1)}–${(row.interval[1] * 100).toFixed(1)}%`
+              : undefined}
+          >
+            {(row.p * 100).toFixed(1)}%
+            {row.interval && (
+              <span className="block text-[9px] font-normal text-white/35">
+                {(row.interval[0] * 100).toFixed(1)}–{(row.interval[1] * 100).toFixed(1)}
+              </span>
+            )}
+          </span>
         </motion.div>
       ))}
     </div>

@@ -23,7 +23,7 @@ The What-if Lab also supports transparent squad-availability stress tests. User
 inputs adjust expected goals at simulation time; they are not presented as
 verified injury reports and never enter model training.
 
-The scheduled GitHub Actions workflow runs every four hours. Add the repository
+The scheduled GitHub Actions workflow runs every two hours. Add the repository
 secret `KAGGLE_API_TOKEN` so it can refresh the ranking data, then it will
 commit updated prediction artifacts automatically.
 
