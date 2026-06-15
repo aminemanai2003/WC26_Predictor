@@ -40,6 +40,13 @@ export type SquadAvailability = {
   suspensions: number;
 };
 
+export type TacticalStress = {
+  midfieldVoid: number;
+  defensiveDisorganization: number;
+  attackingDisconnect: number;
+  pressingFailure: number;
+};
+
 export type Meta = {
   version: string;
   trained_at: string;
@@ -64,6 +71,8 @@ export type SimConstraints = {
   matchScore?: Record<string, [number, number]>;
   // User-declared pre-match absences. Values are unavailable likely starters.
   teamAvailability?: Record<string, SquadAvailability>;
+  // Transparent tactical stress scenarios, scored from 0 (normal) to 2 (severe).
+  tacticalStress?: Record<string, TacticalStress>;
 };
 
 export type TournamentResult = {

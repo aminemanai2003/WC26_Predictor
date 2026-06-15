@@ -1,7 +1,7 @@
 import { describe, it, expect } from "vitest";
 import { buildCdf, fillR32, sampleScore, simulate } from "./engine";
 import { makeRng } from "./rng";
-import { applyAvailabilityScenario } from "./scenarios";
+import { applyAvailabilityScenario, applyDynamicScenario, tacticalVoidIndex } from "./scenarios";
 
 describe("scoreline sampling", () => {
   const pair = { lh: 1.5, la: 1.1, pH: 0.5, pD: 0.25, pA: 0.25 };
@@ -56,6 +56,33 @@ describe("squad availability scenarios", () => {
     );
     expect(adjusted.lh).toBeGreaterThanOrEqual(0.15);
     expect(adjusted.la).toBeLessThanOrEqual(5);
+  });
+});
+
+describe("tactical stress scenarios", () => {
+  const pair = { lh: 1.5, la: 1.2, pH: 0.46, pD: 0.27, pA: 0.27 };
+
+  it("double midfield void weakens both attack and defence", () => {
+    const adjusted = applyDynamicScenario(
+      pair,
+      undefined,
+      undefined,
+      { midfieldVoid: 2 },
+      undefined,
+    );
+    expect(adjusted.lh).toBeLessThan(pair.lh);
+    expect(adjusted.la).toBeGreaterThan(pair.la);
+  });
+
+  it("reports a bounded and monotonic Tactical Void Index", () => {
+    const mild = tacticalVoidIndex({ midfielders: 1 }, { midfieldVoid: 1 });
+    const severe = tacticalVoidIndex({ midfielders: 2 }, { midfieldVoid: 2 });
+    expect(mild).toBeGreaterThan(0);
+    expect(severe).toBeGreaterThan(mild);
+    expect(tacticalVoidIndex(
+      { goalkeeper: 9, defenders: 9, midfielders: 9, attackers: 9, suspensions: 9 },
+      { midfieldVoid: 9, defensiveDisorganization: 9, attackingDisconnect: 9, pressingFailure: 9 },
+    )).toBe(100);
   });
 });
 

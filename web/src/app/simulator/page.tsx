@@ -6,8 +6,14 @@ import TeamBadge from "@/components/TeamBadge";
 import ChampionRace from "@/components/ChampionRace";
 import { teamByCode, schedule, teams } from "@/lib/data";
 import { useSimulation } from "@/lib/sim/useSimulation";
-import type { SimConstraints, SquadAvailability } from "@/lib/types";
-import { availabilityCount, EMPTY_AVAILABILITY } from "@/lib/sim/scenarios";
+import type { SimConstraints, SquadAvailability, TacticalStress } from "@/lib/types";
+import {
+  availabilityCount,
+  EMPTY_AVAILABILITY,
+  EMPTY_TACTICAL_STRESS,
+  tacticalStressCount,
+  tacticalVoidIndex,
+} from "@/lib/sim/scenarios";
 import { Play, RotateCcw, Sparkles, Dices } from "lucide-react";
 import { useT } from "@/lib/i18n/context";
 
@@ -43,6 +49,10 @@ export default function SimulatorPage() {
     Object.values(constraints.teamAvailability || {}).reduce(
       (sum, value) => sum + availabilityCount(value),
       0,
+    ) +
+    Object.values(constraints.tacticalStress || {}).reduce(
+      (sum, value) => sum + tacticalStressCount(value),
+      0,
     );
 
   function setOutcome(matchId: string, outcome: "H" | "D" | "A" | null) {
@@ -65,7 +75,20 @@ export default function SimulatorPage() {
     });
   }
 
-  function reset() { setConstraints({ matchResult: {}, teamAvailability: {} }); }
+  function setTacticalStress(field: keyof TacticalStress, value: number) {
+    setConstraints((prev) => {
+      const tacticalStress = { ...(prev.tacticalStress || {}) };
+      const current = tacticalStress[availabilityTeam] || EMPTY_TACTICAL_STRESS;
+      const next = { ...current, [field]: value };
+      if (tacticalStressCount(next) === 0) delete tacticalStress[availabilityTeam];
+      else tacticalStress[availabilityTeam] = next;
+      return { ...prev, tacticalStress };
+    });
+  }
+
+  function reset() {
+    setConstraints({ matchResult: {}, teamAvailability: {}, tacticalStress: {} });
+  }
   function runSim() { run({ iterations, seed, constraints }); }
   function reroll() { const s = Math.floor(Math.random() * 1e9); setSeed(s); run({ iterations, seed: s, constraints }); }
 
@@ -182,6 +205,43 @@ export default function SimulatorPage() {
                       {Array.from({ length: maximum + 1 }, (_, index) => (
                         <option key={index} value={index}>{index}</option>
                       ))}
+                    </select>
+                  </label>
+                );
+              })}
+            </div>
+            <div className="mt-4 flex items-center justify-between">
+              <div>
+                <div className="text-xs font-semibold">{t("sim.tacticalVoid")}</div>
+                <p className="text-[11px] text-white/40">{t("sim.tacticalVoidHelp")}</p>
+              </div>
+              <div className="numeric text-lg font-semibold text-accent-gold">
+                {tacticalVoidIndex(
+                  constraints.teamAvailability?.[availabilityTeam],
+                  constraints.tacticalStress?.[availabilityTeam],
+                )}/100
+              </div>
+            </div>
+            <div className="mt-2 grid sm:grid-cols-2 gap-2">
+              {([
+                ["midfieldVoid", t("sim.midfieldVoid")],
+                ["defensiveDisorganization", t("sim.defensiveDisorganization")],
+                ["attackingDisconnect", t("sim.attackingDisconnect")],
+                ["pressingFailure", t("sim.pressingFailure")],
+              ] as [keyof TacticalStress, string][]).map(([field, label]) => {
+                const value = constraints.tacticalStress?.[availabilityTeam]?.[field] || 0;
+                return (
+                  <label key={field} className="flex items-center justify-between gap-3 rounded-md bg-white/[0.03] px-3 py-2">
+                    <span className="text-xs text-white/60">{label}</span>
+                    <select
+                      value={value}
+                      onChange={(event) => setTacticalStress(field, Number(event.target.value))}
+                      className="bg-white/5 border border-white/10 rounded px-2 py-1 text-xs numeric"
+                      style={{ color: "var(--fg)" }}
+                    >
+                      <option value={0}>{t("sim.normal")}</option>
+                      <option value={1}>{t("sim.degraded")}</option>
+                      <option value={2}>{t("sim.severe")}</option>
                     </select>
                   </label>
                 );
