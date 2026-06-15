@@ -213,7 +213,7 @@
     "confederation": "CAF",
     "host": false,
     "group": "F",
-    "elo": 1693.4
+    "elo": 1693.3
   },
   {
     "code": "BEL",
@@ -258,7 +258,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "H",
-    "elo": 2199.4
+    "elo": 2171.8
   },
   {
     "code": "URU",
@@ -285,7 +285,7 @@
     "confederation": "CAF",
     "host": false,
     "group": "H",
-    "elo": 1652.2
+    "elo": 1679.7
   },
   {
     "code": "FRA",
@@ -375,7 +375,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "K",
-    "elo": 2048.6
+    "elo": 2048.5
   },
   {
     "code": "UZB",

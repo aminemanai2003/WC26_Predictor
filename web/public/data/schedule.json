@@ -186,7 +186,9 @@
     "home": "ESP",
     "away": "CPV",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 0,
+    "awayScore": 0
   },
   {
     "id": "G016",
