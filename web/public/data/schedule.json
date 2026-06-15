@@ -125,7 +125,9 @@
     "home": "CIV",
     "away": "ECU",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 1,
+    "awayScore": 0
   },
   {
     "id": "G011",
@@ -149,7 +151,9 @@
     "home": "SWE",
     "away": "TUN",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 5,
+    "awayScore": 1
   },
   {
     "id": "G013",

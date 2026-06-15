@@ -1,9 +1,9 @@
 {
-  "version": "3.3.0",
-  "trained_at": "2026-06-14T23:06:23Z",
-  "dixon_coles_rho": 0.01346407510031059,
+  "version": "4.0.0",
+  "trained_at": "2026-06-15T12:25:27Z",
+  "dixon_coles_rho": 0.01401609757134188,
   "ensemble_w_clf": 0.5,
-  "temperature": 1.056523130142439,
+  "temperature": 1.058720619560777,
   "classifier": "regularized_multinomial",
   "recency_half_life_years": 12.0,
   "walk_forward_cv": {
@@ -12,15 +12,15 @@
       "2020-01-01 .. 2022-01-01",
       "2022-01-01 .. 2024-01-01"
     ],
-    "mean_log_loss": 0.8645625924722631,
+    "mean_log_loss": 0.8645779622131536,
     "fold_log_loss": [
-      0.8740744685144375,
-      0.837310621846397,
-      0.8823026870559547
+      0.8740822596202101,
+      0.8373220483280339,
+      0.8823295786912168
     ],
     "candidates": {
-      "regularized_multinomial": 0.8645625924722631,
-      "xgboost": 0.865587867540508
+      "regularized_multinomial": 0.8645779622131536,
+      "xgboost": 0.8656583079896089
     }
   },
   "features": [
@@ -49,31 +49,37 @@
     "xg": "online expected-goal proxy from prior international scores; no broad historical xG source",
     "fifa_rankings": "exponentially downweighted when stale"
   },
+  "release_policy": {
+    "selection": "classifier family and hyperparameters selected by walk-forward log-loss",
+    "holdout": "2024+ used for final reporting and frozen Elo benchmark comparison",
+    "scenario_inputs": "never enter training; applied only as transparent expected-goal stress tests",
+    "artifact_gate": "team, schedule, probability, benchmark, and feature-policy validation"
+  },
   "test_metrics": {
     "elo_baseline": {
-      "log_loss": 0.8696883071912387,
-      "rps": 0.16814835793366198
+      "log_loss": 0.869932415103282,
+      "rps": 0.16826625340381007
     },
     "xgb_only": {
-      "log_loss": 0.8695291297624731,
-      "rps": 0.16788286636272187
+      "log_loss": 0.8694080763398475,
+      "rps": 0.16782917733969635
     },
     "selected_classifier": {
       "name": "regularized_multinomial",
-      "log_loss": 0.8685995547494907,
-      "rps": 0.1673425900448511
+      "log_loss": 0.869103203933365,
+      "rps": 0.16755850323673077
     },
     "poisson_only": {
-      "log_loss": 0.8727738217522085,
-      "rps": 0.16856282507777276
+      "log_loss": 0.8738769797344241,
+      "rps": 0.16894874454335063
     },
     "ensemble_raw": {
-      "log_loss": 0.8678792197353464,
-      "rps": 0.1672840605856966
+      "log_loss": 0.8687241967481378,
+      "rps": 0.16759006993281625
     },
     "ensemble_cal": {
-      "log_loss": 0.866702349576797,
-      "rps": 0.1669939025519119
+      "log_loss": 0.8675111578831848,
+      "rps": 0.16729159803594568
     }
   },
   "train_window": "<= 2021-12-31",
@@ -81,6 +87,6 @@
   "test_window": ">= 2024-01-01",
   "production_train_window": "1993-01-01 .. 2026-06-14",
   "latest_result_date": "2026-06-14",
-  "completed_world_cup_matches": 10,
-  "n_matches_used": 30708
+  "completed_world_cup_matches": 12,
+  "n_matches_used": 30710
 }

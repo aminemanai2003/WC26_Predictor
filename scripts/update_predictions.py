@@ -11,6 +11,7 @@ from nbclient import NotebookClient
 ROOT = Path(__file__).resolve().parents[1]
 BUILDER = ROOT / "notebook" / "build_notebook.py"
 NOTEBOOK = ROOT / "notebook" / "wc2026_pipeline.ipynb"
+VALIDATOR = ROOT / "scripts" / "validate_release.py"
 
 
 def main() -> None:
@@ -22,6 +23,7 @@ def main() -> None:
         kernel_name="python3",
         resources={"metadata": {"path": str(ROOT)}},
     ).execute()
+    subprocess.run([sys.executable, str(VALIDATOR)], cwd=ROOT, check=True)
     print("Prediction artifacts refreshed successfully.")
 
 

@@ -23,6 +23,12 @@ The What-if Lab also supports transparent squad-availability stress tests. User
 inputs adjust expected goals at simulation time; they are not presented as
 verified injury reports and never enter model training.
 
+Model v4 adds tactical-void and match-context scenarios, Monte Carlo confidence
+intervals, and a release quality gate. Every automated refresh validates team
+and schedule integrity, all pairwise probabilities, walk-forward metadata, the
+pre-match-only feature policy, and performance against the frozen Elo baseline.
+It then runs the simulator tests and a production Next.js build before pushing.
+
 The scheduled GitHub Actions workflow runs every two hours. Add the repository
 secret `KAGGLE_API_TOKEN` so it can refresh the ranking data, then it will
 commit updated prediction artifacts automatically.
@@ -75,6 +81,7 @@ web/                             — Next.js 15 app, static export
   src/lib/sim/                   — Monte Carlo engine + Web Worker + tests
   src/app/                       — pages: /, /groups, /bracket, /versus, /simulator, /methodology
   scripts/seed-data.mjs          — placeholder JSON so the site runs before the notebook does
+scripts/validate_release.py      — artifact integrity and model-release quality gate
 ```
 
 ## Tests

@@ -1250,7 +1250,7 @@ print(f"pairwise.json: {len(pairwise):,} ordered pairs")
 
 code(r"""
 meta = {
-    "version": "3.3.0",
+    "version": "4.0.0",
     "trained_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
     "dixon_coles_rho": RHO,
     "ensemble_w_clf": W_CLF,
@@ -1277,6 +1277,12 @@ meta = {
         "player_ratings": "excluded: available only for recent FIFA editions and unsafe to backfill",
         "xg": "online expected-goal proxy from prior international scores; no broad historical xG source",
         "fifa_rankings": "exponentially downweighted when stale",
+    },
+    "release_policy": {
+        "selection": "classifier family and hyperparameters selected by walk-forward log-loss",
+        "holdout": "2024+ used for final reporting and frozen Elo benchmark comparison",
+        "scenario_inputs": "never enter training; applied only as transparent expected-goal stress tests",
+        "artifact_gate": "team, schedule, probability, benchmark, and feature-policy validation",
     },
     "test_metrics": {
         "elo_baseline":  {"log_loss": float(log_loss(y_test, p_base_test)), "rps": rps(y_test.values, p_base_test)},

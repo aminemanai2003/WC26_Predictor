@@ -418,7 +418,7 @@ export function simulate(input: SimInput): Aggregates {
       constraints?.contextStress?.[home],
       constraints?.contextStress?.[away],
     );
-    const pHome = 0.5 + (pair.pH - pair.pA) * 0.3;
+    const pHome = 0.5 + Math.tanh((pair.lh - pair.la) * 0.7) * 0.12;
     return rng() < pHome ? home : away;
   }
 

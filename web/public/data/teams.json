@@ -159,7 +159,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "E",
-    "elo": 2015.8
+    "elo": 1971.8
   },
   {
     "code": "CIV",
@@ -168,7 +168,7 @@
     "confederation": "CAF",
     "host": false,
     "group": "E",
-    "elo": 1840.7
+    "elo": 1884.6
   },
   {
     "code": "CUW",
@@ -204,7 +204,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "F",
-    "elo": 1773.7
+    "elo": 1825.3
   },
   {
     "code": "TUN",
@@ -213,7 +213,7 @@
     "confederation": "CAF",
     "host": false,
     "group": "F",
-    "elo": 1745.0
+    "elo": 1693.4
   },
   {
     "code": "BEL",

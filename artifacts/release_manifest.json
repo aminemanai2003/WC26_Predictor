@@ -1,0 +1,28 @@
+{
+  "version": "4.0.0",
+  "trained_at": "2026-06-15T12:25:27Z",
+  "validated_at": "2026-06-15T12:27:16+00:00",
+  "latest_result_date": "2026-06-14",
+  "quality_gates": {
+    "team_and_group_integrity": "passed",
+    "schedule_integrity": "passed",
+    "probability_integrity": "passed",
+    "walk_forward_metrics_present": "passed",
+    "elo_benchmark": "passed",
+    "pre_match_feature_policy": "passed"
+  },
+  "files": {
+    "teams.json": {
+      "sha256": "4cc6f6c42921fbca3fc6e530d48786223b6e470b30929e109882a77012fbc7e9"
+    },
+    "schedule.json": {
+      "sha256": "518d4f02b00dbcb3235752dfdbc9f7fac6825a8c9c5f66fbbd29ad0e3bf8ad43"
+    },
+    "pairwise.json": {
+      "sha256": "7c8647ab11ad33b2c578f8e5f584a1ddb01ac81dd90e594a2fa7fa1e92c96def"
+    },
+    "meta.json": {
+      "sha256": "66683777ca450f6dafbd25b9960211a042484797eeceaac9fc6132a9e0b26c1b"
+    }
+  }
+}
