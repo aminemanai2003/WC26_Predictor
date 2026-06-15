@@ -1,43 +1,86 @@
 {
-  "version": "1.0.0",
-  "trained_at": "2026-06-10T19:41:04Z",
-  "dixon_coles_rho": -0.03919196572189857,
-  "ensemble_w_clf": 0.8,
-  "temperature": 1.000060939873334,
+  "version": "3.0.0",
+  "trained_at": "2026-06-14T23:06:23Z",
+  "dixon_coles_rho": 0.01346407510031059,
+  "ensemble_w_clf": 0.5,
+  "temperature": 1.056523130142439,
+  "classifier": "regularized_multinomial",
+  "recency_half_life_years": 12.0,
+  "walk_forward_cv": {
+    "windows": [
+      "2018-01-01 .. 2020-01-01",
+      "2020-01-01 .. 2022-01-01",
+      "2022-01-01 .. 2024-01-01"
+    ],
+    "mean_log_loss": 0.8645625924722631,
+    "fold_log_loss": [
+      0.8740744685144375,
+      0.837310621846397,
+      0.8823026870559547
+    ],
+    "candidates": {
+      "regularized_multinomial": 0.8645625924722631,
+      "xgboost": 0.865587867540508
+    }
+  },
   "features": [
     "elo_diff",
     "home_elo",
     "away_elo",
     "rank_diff",
+    "rank_freshness",
     "host",
     "tier",
+    "form_diff_l5",
+    "gd_diff_l5",
     "form_diff_l10",
-    "gd_diff_l10"
+    "gd_diff_l10",
+    "attack_diff",
+    "defence_diff",
+    "poisson_lh",
+    "poisson_la",
+    "poisson_goal_diff",
+    "rest_diff",
+    "congestion_diff"
   ],
+  "feature_policy": {
+    "pre_match_only": true,
+    "player_ratings": "excluded: available only for recent FIFA editions and unsafe to backfill",
+    "xg": "online expected-goal proxy from prior international scores; no broad historical xG source",
+    "fifa_rankings": "exponentially downweighted when stale"
+  },
   "test_metrics": {
     "elo_baseline": {
-      "log_loss": 0.8776891397212847,
-      "rps": 0.17225774159005824
+      "log_loss": 0.8696883071912387,
+      "rps": 0.16814835793366198
     },
     "xgb_only": {
-      "log_loss": 0.8778040850365593,
-      "rps": 0.1721653131192081
+      "log_loss": 0.8695291297624731,
+      "rps": 0.16788286636272187
+    },
+    "selected_classifier": {
+      "name": "regularized_multinomial",
+      "log_loss": 0.8685995547494907,
+      "rps": 0.1673425900448511
     },
     "poisson_only": {
-      "log_loss": 0.8828814042450258,
-      "rps": 0.17357444720186133
+      "log_loss": 0.8727738217522085,
+      "rps": 0.16856282507777276
     },
     "ensemble_raw": {
-      "log_loss": 0.8775777038875658,
-      "rps": 0.17224316490616057
+      "log_loss": 0.8678792197353464,
+      "rps": 0.1672840605856966
     },
     "ensemble_cal": {
-      "log_loss": 0.8775760685397745,
-      "rps": 0.17224279118541053
+      "log_loss": 0.866702349576797,
+      "rps": 0.1669939025519119
     }
   },
-  "train_window": "<= 2017-12-31",
-  "val_window": "2018-01-01 .. 2021-12-31",
-  "test_window": "2022-01-01 .. 2025-12-31",
-  "n_matches_used": 30692
+  "train_window": "<= 2021-12-31",
+  "val_window": "2022-01-01 .. 2023-12-31",
+  "test_window": ">= 2024-01-01",
+  "production_train_window": "1993-01-01 .. 2026-06-14",
+  "latest_result_date": "2026-06-14",
+  "completed_world_cup_matches": 10,
+  "n_matches_used": 30708
 }

@@ -12,10 +12,16 @@ from pathlib import Path
 CELLS = []
 
 def md(src):
-    CELLS.append({"cell_type": "markdown", "metadata": {}, "source": src.strip("\n").splitlines(keepends=True)})
+    CELLS.append({
+        "id": f"cell-{len(CELLS):03d}",
+        "cell_type": "markdown",
+        "metadata": {},
+        "source": src.strip("\n").splitlines(keepends=True),
+    })
 
 def code(src):
     CELLS.append({
+        "id": f"cell-{len(CELLS):03d}",
         "cell_type": "code",
         "metadata": {},
         "execution_count": None,
@@ -35,7 +41,7 @@ everything from raw Kaggle data to deployable JSON.
 1. Business Understanding — objectives, format, success criteria
 2. Data Understanding — Kaggle download, schema, EDA
 3. Data Preparation — Elo, features, time-based split
-4. Modeling — XGBoost classifier + Dixon-Coles Poisson goals + ensemble + calibration
+4. Modeling — walk-forward classifier selection + Dixon-Coles goals + calibration
 5. Evaluation — log-loss, Brier, RPS, calibration plot, WC 2022 backtest
 6. Deployment — JSON artifact export to `web/public/data/`
 
@@ -61,7 +67,7 @@ Carlo simulation.
 **Success criteria.**
 - Beat an **Elo-only logistic** baseline on log-loss, Brier score, and
   **RPS** (Ranked Probability Score — the standard metric for ordered
-  football outcomes) on a held-out time-based test set (2022–2025).
+  football outcomes) on a held-out time-based test set (2024 onward).
 - Reliability curve close to the diagonal (well-calibrated probabilities).
 - WC 2022 backtest produces sensible champion odds.
 
@@ -127,21 +133,28 @@ else:
 
 code(r"""
 import subprocess
+from urllib.request import urlretrieve
 
 def kaggle_download(slug: str, target: Path):
     target.mkdir(parents=True, exist_ok=True)
-    sentinel = target / ".downloaded"
-    if sentinel.exists():
-        print(f"  cached: {slug}")
-        return
-    print(f"  downloading {slug} ...")
+    print(f"  refreshing {slug} ...")
     subprocess.run(
-        ["kaggle", "datasets", "download", "-d", slug, "-p", str(target), "--unzip"],
+        ["kaggle", "datasets", "download", "-d", slug, "-p", str(target), "--unzip", "--force"],
         check=True,
     )
-    sentinel.touch()
 
-kaggle_download("martj42/international-football-results-from-1872-to-2017", RAW / "results")
+results_dir = RAW / "results"
+results_dir.mkdir(parents=True, exist_ok=True)
+urlretrieve(
+    "https://raw.githubusercontent.com/martj42/international_results/master/results.csv",
+    results_dir / "results.csv",
+)
+print("  refreshed martj42/international_results")
+urlretrieve(
+    "https://raw.githubusercontent.com/openfootball/world-cup.json/master/2026/worldcup.json",
+    RAW / "wc2026_live.json",
+)
+print("  refreshed openfootball/world-cup.json")
 kaggle_download("cashncarry/fifaworldranking", RAW / "fifa_ranking")
 print("Done.")
 """)
@@ -156,13 +169,38 @@ def find_csv(folder: Path, hint: str):
 
 results_csv = find_csv(RAW / "results", "results")
 shootouts_csv = find_csv(RAW / "results", "shootout")
-ranking_csv = find_csv(RAW / "fifa_ranking", "ranking") or find_csv(RAW / "fifa_ranking", "fifa")
+ranking_candidates = sorted((RAW / "fifa_ranking").rglob("*.csv"))
+ranking_csv = ranking_candidates[-1] if ranking_candidates else None
 
 print("results:  ", results_csv)
 print("shootouts:", shootouts_csv)
 print("ranking:  ", ranking_csv)
 
 matches = pd.read_csv(results_csv, parse_dates=["date"])
+wc_live = json.loads((RAW / "wc2026_live.json").read_text(encoding="utf-8"))
+wc_live_matches = wc_live["matches"]
+wc_completed_rows = []
+for fixture in wc_live_matches:
+    if "score" not in fixture or "ft" not in fixture["score"]:
+        continue
+    home_score, away_score = fixture["score"]["ft"]
+    wc_completed_rows.append({
+        "date": fixture["date"],
+        "home_team": fixture["team1"],
+        "away_team": fixture["team2"],
+        "home_score": home_score,
+        "away_score": away_score,
+        "tournament": "FIFA World Cup",
+        "city": fixture.get("ground", ""),
+        "country": "",
+        "neutral": fixture["team1"] not in {"Mexico", "Canada", "United States"},
+    })
+if wc_completed_rows:
+    wc_completed = pd.DataFrame(wc_completed_rows)
+    wc_completed["date"] = pd.to_datetime(wc_completed["date"])
+    matches = pd.concat([matches, wc_completed], ignore_index=True)
+    matches = matches.sort_values(["date", "home_team", "away_team", "home_score"], na_position="first")
+    matches = matches.drop_duplicates(["date", "home_team", "away_team"], keep="last")
 shootouts = pd.read_csv(shootouts_csv, parse_dates=["date"]) if shootouts_csv else pd.DataFrame()
 ranking = pd.read_csv(ranking_csv)
 date_col = next((c for c in ranking.columns if "date" in c.lower()), None)
@@ -239,10 +277,16 @@ ALIASES = {
     "USSR": "Russia", "Soviet Union": "Russia",
     "Czechoslovakia": "Czech Republic", "Yugoslavia": "Serbia",
     "Serbia and Montenegro": "Serbia",
+    "Bosnia & Herzegovina": "Bosnia and Herzegovina",
     "Zaire": "DR Congo", "DR Congo": "DR Congo", "Congo DR": "DR Congo",
     "Burma": "Myanmar", "Ceylon": "Sri Lanka",
     "Cote d'Ivoire": "Ivory Coast",
+    "Côte d'Ivoire": "Ivory Coast",
     "Cabo Verde": "Cape Verde", "Cape Verde Islands": "Cape Verde",
+    "Czechia": "Czech Republic",
+    "Türkiye": "Turkey",
+    "Curacao": "Curaçao",
+    "Congo DR": "DR Congo",
     "FYR Macedonia": "North Macedonia",
     "China PR": "China",
     "Iran": "Iran",
@@ -252,12 +296,12 @@ ALIASES = {
 # Explicit ISO-3 for the 48 WC 2026 nations + common opponents (keeps codes stable)
 EXPLICIT_CODE = {
     "United States": "USA", "Mexico": "MEX", "Canada": "CAN",
-    "Argentina": "ARG", "Brazil": "BRA", "Uruguay": "URY", "Colombia": "COL",
+    "Argentina": "ARG", "Brazil": "BRA", "Uruguay": "URU", "Colombia": "COL",
     "Ecuador": "ECU", "Paraguay": "PRY", "Chile": "CHL", "Peru": "PER",
     "Venezuela": "VEN", "Bolivia": "BOL",
-    "Spain": "ESP", "France": "FRA", "England": "ENG", "Germany": "DEU",
-    "Netherlands": "NLD", "Portugal": "PRT", "Belgium": "BEL", "Italy": "ITA",
-    "Croatia": "HRV", "Switzerland": "SUI", "Denmark": "DNK", "Austria": "AUT",
+    "Spain": "ESP", "France": "FRA", "England": "ENG", "Germany": "GER",
+    "Netherlands": "NED", "Portugal": "POR", "Belgium": "BEL", "Italy": "ITA",
+    "Croatia": "CRO", "Switzerland": "SUI", "Denmark": "DNK", "Austria": "AUT",
     "Poland": "POL", "Turkey": "TUR", "Norway": "NOR", "Scotland": "SCO",
     "Sweden": "SWE", "Czech Republic": "CZE", "Wales": "WAL",
     "Republic of Ireland": "IRL", "Northern Ireland": "NIR",
@@ -270,9 +314,10 @@ EXPLICIT_CODE = {
     "Uzbekistan": "UZB", "Qatar": "QAT",
     "China": "CHN", "Iraq": "IRQ",
     "Morocco": "MAR", "Senegal": "SEN", "Egypt": "EGY", "Tunisia": "TUN",
-    "Algeria": "DZA", "Ivory Coast": "CIV", "Ghana": "GHA", "Cape Verde": "CPV",
-    "South Africa": "ZAF", "Nigeria": "NGA", "Cameroon": "CMR", "Mali": "MLI",
+    "Algeria": "ALG", "Ivory Coast": "CIV", "Ghana": "GHA", "Cape Verde": "CPV",
+    "South Africa": "RSA", "Nigeria": "NGA", "Cameroon": "CMR", "Mali": "MLI",
     "DR Congo": "COD",
+    "Curaçao": "CUW", "Haiti": "HAI",
     "New Zealand": "NZL",
     "Panama": "PAN", "Costa Rica": "CRI", "Jamaica": "JAM",
     "Honduras": "HND", "El Salvador": "SLV", "Trinidad and Tobago": "TTO",
@@ -367,7 +412,89 @@ print(top.round(0))
 """)
 
 md(r"""
-### 3.3 Rolling form features
+### 3.3 Online attack/defence, rest, and congestion
+
+These features are updated one match at a time. Every row sees only information
+available before kickoff. Team strengths decay gently during inactivity, which
+helps the model adapt to changing generations without discarding older evidence.
+""")
+
+code(r"""
+from collections import defaultdict, deque
+
+ATTACK_HALF_LIFE_DAYS = 4 * 365.25
+GOAL_HOME_BASE = math.log(1.35)
+GOAL_AWAY_BASE = math.log(1.05)
+
+attack = defaultdict(float)
+defence_weakness = defaultdict(float)
+strength_date = {}
+last_match_date = {}
+recent_dates = defaultdict(deque)
+
+online_cols = {
+    "attack_diff": np.zeros(len(mapped)),
+    "defence_diff": np.zeros(len(mapped)),
+    "poisson_lh": np.zeros(len(mapped)),
+    "poisson_la": np.zeros(len(mapped)),
+    "rest_diff": np.zeros(len(mapped)),
+    "congestion_diff": np.zeros(len(mapped)),
+}
+
+def decayed_strength(team, match_date):
+    previous = strength_date.get(team)
+    if previous is not None:
+        days = max(0, (match_date - previous).days)
+        decay = 0.5 ** (days / ATTACK_HALF_LIFE_DAYS)
+        attack[team] *= decay
+        defence_weakness[team] *= decay
+    strength_date[team] = match_date
+    return attack[team], defence_weakness[team]
+
+for i, row in enumerate(mapped.itertuples(index=False)):
+    h, a, match_date = row.home_code, row.away_code, row.date
+    ah, dh = decayed_strength(h, match_date)
+    aa, da = decayed_strength(a, match_date)
+
+    home_log_rate = GOAL_HOME_BASE + ah + da + (0.0 if row.neutral else 0.08)
+    away_log_rate = GOAL_AWAY_BASE + aa + dh
+    lh = float(np.clip(np.exp(home_log_rate), 0.15, 5.0))
+    la = float(np.clip(np.exp(away_log_rate), 0.15, 5.0))
+
+    home_rest = min(120, (match_date - last_match_date[h]).days) if h in last_match_date else 60
+    away_rest = min(120, (match_date - last_match_date[a]).days) if a in last_match_date else 60
+    cutoff = match_date - pd.Timedelta(days=30)
+    while recent_dates[h] and recent_dates[h][0] < cutoff:
+        recent_dates[h].popleft()
+    while recent_dates[a] and recent_dates[a][0] < cutoff:
+        recent_dates[a].popleft()
+
+    online_cols["attack_diff"][i] = ah - aa
+    online_cols["defence_diff"][i] = da - dh
+    online_cols["poisson_lh"][i] = lh
+    online_cols["poisson_la"][i] = la
+    online_cols["rest_diff"][i] = np.clip(home_rest - away_rest, -60, 60)
+    online_cols["congestion_diff"][i] = len(recent_dates[a]) - len(recent_dates[h])
+
+    update_rate = {1: 0.018, 2: 0.024, 3: 0.030, 4: 0.036}.get(row.tier, 0.024)
+    err_h = float(np.clip(row.home_score - lh, -3.0, 3.0))
+    err_a = float(np.clip(row.away_score - la, -3.0, 3.0))
+    attack[h] = float(np.clip(ah + update_rate * err_h, -1.1, 1.1))
+    defence_weakness[a] = float(np.clip(da + update_rate * err_h, -1.1, 1.1))
+    attack[a] = float(np.clip(aa + update_rate * err_a, -1.1, 1.1))
+    defence_weakness[h] = float(np.clip(dh + update_rate * err_a, -1.1, 1.1))
+    last_match_date[h] = last_match_date[a] = match_date
+    recent_dates[h].append(match_date)
+    recent_dates[a].append(match_date)
+
+for col, values in online_cols.items():
+    mapped[col] = values
+mapped["poisson_goal_diff"] = mapped["poisson_lh"] - mapped["poisson_la"]
+print("Online strength/context features added without look-ahead")
+""")
+
+md(r"""
+### 3.4 Rolling form features
 """)
 
 code(r"""
@@ -414,7 +541,7 @@ mapped.head(3)
 """)
 
 md(r"""
-### 3.4 FIFA ranking-point difference
+### 3.5 FIFA ranking-point difference
 
 Genuinely orthogonal to Elo (different formula, monthly cadence, manual
 adjustments). We join the closest prior ranking row per team via merge-asof.
@@ -430,6 +557,7 @@ if pts_col is None:
 print("rank cols ->", team_col, pts_col)
 
 rk = rk[[team_col, "date", pts_col]].rename(columns={team_col: "team", pts_col: "rank_pts"})
+rk["rank_date"] = rk["date"]
 rk["team_code"] = rk["team"].map(to_code)
 rk = rk.dropna(subset=["team_code"]).sort_values("date")
 
@@ -438,57 +566,76 @@ def join_rank(df, code_col, side):
     keys["__row"] = np.arange(len(keys))
     merged = pd.merge_asof(
         keys.sort_values("date"),
-        rk[["team_code", "date", "rank_pts"]].sort_values("date"),
+        rk[["team_code", "date", "rank_date", "rank_pts"]].sort_values("date"),
         on="date", by="team_code", direction="backward", allow_exact_matches=False,
     ).sort_values("__row")
     df[f"{side}_rank_pts"] = merged["rank_pts"].values
+    df[f"{side}_rank_date"] = merged["rank_date"].values
     return df
 
 mapped = join_rank(mapped, "home_code", "h")
 mapped = join_rank(mapped, "away_code", "a")
-mapped["rank_diff"] = (mapped["h_rank_pts"].fillna(0) - mapped["a_rank_pts"].fillna(0))
+mapped["rank_age_days"] = np.maximum(
+    (mapped["date"] - mapped["h_rank_date"]).dt.days.fillna(3650),
+    (mapped["date"] - mapped["a_rank_date"]).dt.days.fillna(3650),
+)
+mapped["rank_freshness"] = np.exp(-mapped["rank_age_days"] / 365.25)
+mapped["rank_diff"] = (
+    mapped["h_rank_pts"].fillna(0) - mapped["a_rank_pts"].fillna(0)
+) * mapped["rank_freshness"]
 print("rank join coverage:",
       f"{mapped['h_rank_pts'].notna().mean()*100:.0f}% home,",
       f"{mapped['a_rank_pts'].notna().mean()*100:.0f}% away")
 """)
 
 md(r"""
-### 3.5 Final feature table + time-based split
+### 3.6 Final feature table + time-based split
 
-Slim 9-feature set: Elo already encodes form, so we drop the noisier
-`pts_l5/gf_l5/ga_l5/...` rolling stats and keep only the long-horizon
-goal-difference signal alongside Elo, FIFA-rank diff, host, and tier.
+The compact feature set mixes independent rating systems and match context.
+Short and long form are both retained, while stale FIFA rankings are
+automatically shrunk toward neutral.
 """)
 
 code(r"""
 mapped["host"] = (~mapped["neutral"]).astype(int)
 mapped["tier"] = mapped["tier"].astype(int)
+mapped["gd_diff_l5"] = (mapped["h_gf_l5"] - mapped["h_ga_l5"]) - (mapped["a_gf_l5"] - mapped["a_ga_l5"])
 mapped["gd_diff_l10"] = (mapped["h_gf_l10"] - mapped["h_ga_l10"]) - (mapped["a_gf_l10"] - mapped["a_ga_l10"])
+mapped["form_diff_l5"] = mapped["h_pts_l5"].fillna(0) - mapped["a_pts_l5"].fillna(0)
 mapped["form_diff_l10"] = mapped["h_pts_l10"].fillna(0) - mapped["a_pts_l10"].fillna(0)
 
 FEATURES = [
     "elo_diff", "home_elo", "away_elo",
-    "rank_diff",
+    "rank_diff", "rank_freshness",
     "host", "tier",
+    "form_diff_l5", "gd_diff_l5",
     "form_diff_l10", "gd_diff_l10",
+    "attack_diff", "defence_diff",
+    "poisson_lh", "poisson_la", "poisson_goal_diff",
+    "rest_diff", "congestion_diff",
 ]
 
 ds = mapped.dropna(subset=["elo_diff", "home_elo", "away_elo"]).copy()
 # rank_diff and form_diff may be NaN for very early matches — impute with 0 (neutral)
-for c in ["rank_diff", "form_diff_l10", "gd_diff_l10"]:
+for c in FEATURES:
     ds[c] = ds[c].fillna(0)
 
 ds["y_cls"] = ds["result"].map({"H": 0, "D": 1, "A": 2})
 print(f"Modeling rows: {len(ds):,}")
 
-train = ds[ds["date"] < "2018-01-01"]
-val   = ds[(ds["date"] >= "2018-01-01") & (ds["date"] < "2022-01-01")]
-test  = ds[ds["date"] >= "2022-01-01"]
+train = ds[ds["date"] < "2022-01-01"]
+val   = ds[(ds["date"] >= "2022-01-01") & (ds["date"] < "2024-01-01")]
+test  = ds[ds["date"] >= "2024-01-01"]
 print(f"train: {len(train):,}   val: {len(val):,}   test: {len(test):,}")
 
 X_train, y_train = train[FEATURES], train["y_cls"]
 X_val,   y_val   = val[FEATURES],   val["y_cls"]
 X_test,  y_test  = test[FEATURES],  test["y_cls"]
+
+def recency_weights(frame, reference_date, half_life_years):
+    age_years = np.maximum(0, (pd.Timestamp(reference_date) - frame["date"]).dt.days / 365.25)
+    weights = np.maximum(0.05, 0.5 ** (age_years / half_life_years))
+    return weights / weights.mean()
 """)
 
 # =============================================================================
@@ -500,6 +647,8 @@ md(r"""
 
 code(r"""
 from sklearn.linear_model import LogisticRegression
+from sklearn.pipeline import make_pipeline
+from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import log_loss, brier_score_loss
 
 def rps(y_true, p):
@@ -516,7 +665,7 @@ print(f"Baseline (Elo-only) test RPS:      {rps(y_test.values, p_base_test):.4f}
 """)
 
 md(r"""
-### 4.2 XGBoost W/D/L classifier — Optuna-tuned
+### 4.2 Walk-forward classifier selection
 """)
 
 code(r"""
@@ -525,38 +674,109 @@ import optuna
 
 optuna.logging.set_verbosity(optuna.logging.WARNING)
 
+CV_WINDOWS = [
+    ("2018-01-01", "2020-01-01"),
+    ("2020-01-01", "2022-01-01"),
+    ("2022-01-01", "2024-01-01"),
+]
+
 def objective(trial):
+    half_life_years = trial.suggest_categorical("half_life_years", [4.0, 6.0, 8.0, 12.0])
     params = dict(
         objective="multi:softprob", num_class=3, eval_metric="mlogloss",
         tree_method="hist", n_jobs=-1, random_state=42,
-        n_estimators=1500,
-        max_depth=trial.suggest_int("max_depth", 3, 6),
-        learning_rate=trial.suggest_float("learning_rate", 0.02, 0.1, log=True),
-        min_child_weight=trial.suggest_int("min_child_weight", 2, 12),
-        subsample=trial.suggest_float("subsample", 0.6, 1.0),
-        colsample_bytree=trial.suggest_float("colsample_bytree", 0.6, 1.0),
-        reg_lambda=trial.suggest_float("reg_lambda", 0.5, 5.0, log=True),
-        reg_alpha=trial.suggest_float("reg_alpha", 1e-3, 1.0, log=True),
+        n_estimators=700,
+        max_depth=trial.suggest_int("max_depth", 2, 5),
+        learning_rate=trial.suggest_float("learning_rate", 0.015, 0.08, log=True),
+        min_child_weight=trial.suggest_int("min_child_weight", 4, 20),
+        subsample=trial.suggest_float("subsample", 0.65, 0.95),
+        colsample_bytree=trial.suggest_float("colsample_bytree", 0.6, 0.9),
+        reg_lambda=trial.suggest_float("reg_lambda", 1.0, 12.0, log=True),
+        reg_alpha=trial.suggest_float("reg_alpha", 0.01, 2.0, log=True),
     )
-    m = xgb.XGBClassifier(early_stopping_rounds=40, **params)
-    m.fit(X_train, y_train, eval_set=[(X_val, y_val)], verbose=False)
-    return log_loss(y_val, m.predict_proba(X_val))
+    fold_losses = []
+    for fold_start, fold_end in CV_WINDOWS:
+        fold_train = ds[ds["date"] < fold_start]
+        fold_val = ds[(ds["date"] >= fold_start) & (ds["date"] < fold_end)]
+        weights = recency_weights(fold_train, pd.Timestamp(fold_start), half_life_years)
+        m = xgb.XGBClassifier(early_stopping_rounds=35, **params)
+        m.fit(
+            fold_train[FEATURES], fold_train["y_cls"],
+            sample_weight=weights,
+            eval_set=[(fold_val[FEATURES], fold_val["y_cls"])],
+            verbose=False,
+        )
+        fold_losses.append(log_loss(fold_val["y_cls"], m.predict_proba(fold_val[FEATURES]), labels=[0,1,2]))
+    trial.set_user_attr("fold_losses", fold_losses)
+    return float(np.mean(fold_losses))
 
 study = optuna.create_study(direction="minimize", sampler=optuna.samplers.TPESampler(seed=42))
-study.optimize(objective, n_trials=40, show_progress_bar=False)
-print(f"best val log-loss: {study.best_value:.4f}")
+study.optimize(objective, n_trials=24, show_progress_bar=False)
+print(f"best walk-forward mean log-loss: {study.best_value:.4f}")
+print("fold log-losses:", [round(x, 4) for x in study.best_trial.user_attrs["fold_losses"]])
 print("best params:", study.best_params)
 
-clf = xgb.XGBClassifier(
+BEST_HALF_LIFE = float(study.best_params["half_life_years"])
+BEST_XGB_PARAMS = {k: v for k, v in study.best_params.items() if k != "half_life_years"}
+xgb_clf = xgb.XGBClassifier(
     objective="multi:softprob", num_class=3, eval_metric="mlogloss",
     tree_method="hist", n_jobs=-1, random_state=42,
-    n_estimators=1500, early_stopping_rounds=40,
-    **study.best_params,
+    n_estimators=900, early_stopping_rounds=40,
+    **BEST_XGB_PARAMS,
 )
-clf.fit(X_train, y_train, eval_set=[(X_val, y_val)], verbose=False)
-p_clf_test = clf.predict_proba(X_test)
-print(f"XGB classifier test log-loss: {log_loss(y_test, p_clf_test):.4f}")
-print(f"XGB classifier test RPS:      {rps(y_test.values, p_clf_test):.4f}")
+train_weights = recency_weights(train, pd.Timestamp("2022-01-01"), BEST_HALF_LIFE)
+xgb_clf.fit(
+    X_train, y_train, sample_weight=train_weights,
+    eval_set=[(X_val, y_val)], verbose=False,
+)
+p_xgb_test = xgb_clf.predict_proba(X_test)
+print(f"XGB classifier test log-loss: {log_loss(y_test, p_xgb_test):.4f}")
+print(f"XGB classifier test RPS:      {rps(y_test.values, p_xgb_test):.4f}")
+
+# A regularized linear model is a strong low-variance challenger. Select the
+# classifier family and regularization only from walk-forward validation.
+linear_trials = []
+for C in [0.003, 0.01, 0.03, 0.1, 0.3]:
+    fold_losses = []
+    for fold_start, fold_end in CV_WINDOWS:
+        fold_train = ds[ds["date"] < fold_start]
+        fold_val = ds[(ds["date"] >= fold_start) & (ds["date"] < fold_end)]
+        weights = recency_weights(fold_train, pd.Timestamp(fold_start), BEST_HALF_LIFE)
+        model = make_pipeline(
+            StandardScaler(),
+            LogisticRegression(C=C, max_iter=1500, random_state=42),
+        )
+        model.fit(
+            fold_train[FEATURES], fold_train["y_cls"],
+            logisticregression__sample_weight=weights,
+        )
+        fold_losses.append(log_loss(
+            fold_val["y_cls"], model.predict_proba(fold_val[FEATURES]), labels=[0,1,2]
+        ))
+    linear_trials.append((float(np.mean(fold_losses)), C, fold_losses))
+
+LINEAR_CV_LOSS, LINEAR_C, LINEAR_FOLD_LOSSES = min(linear_trials, key=lambda row: row[0])
+linear_clf = make_pipeline(
+    StandardScaler(),
+    LogisticRegression(C=LINEAR_C, max_iter=1500, random_state=42),
+)
+linear_clf.fit(X_train, y_train, logisticregression__sample_weight=train_weights)
+p_linear_test = linear_clf.predict_proba(X_test)
+
+if LINEAR_CV_LOSS <= study.best_value:
+    CLASSIFIER_KIND = "regularized_multinomial"
+    clf = linear_clf
+    p_clf_test = p_linear_test
+    classifier_cv_loss = LINEAR_CV_LOSS
+else:
+    CLASSIFIER_KIND = "xgboost"
+    clf = xgb_clf
+    p_clf_test = p_xgb_test
+    classifier_cv_loss = float(study.best_value)
+
+print(f"Selected classifier: {CLASSIFIER_KIND} (walk-forward LL={classifier_cv_loss:.4f})")
+print(f"Selected classifier test log-loss: {log_loss(y_test, p_clf_test):.4f}")
+print(f"Selected classifier test RPS:      {rps(y_test.values, p_clf_test):.4f}")
 """)
 
 md(r"""
@@ -578,8 +798,14 @@ reg_a = xgb.XGBRegressor(
     subsample=0.9, colsample_bytree=0.8, min_child_weight=4, reg_lambda=1.5,
     tree_method="hist", early_stopping_rounds=30, n_jobs=-1, random_state=42,
 )
-reg_h.fit(X_train, train["home_score"].clip(0, 8), eval_set=[(X_val, val["home_score"].clip(0,8))], verbose=False)
-reg_a.fit(X_train, train["away_score"].clip(0, 8), eval_set=[(X_val, val["away_score"].clip(0,8))], verbose=False)
+reg_h.fit(
+    X_train, train["home_score"].clip(0, 8), sample_weight=train_weights,
+    eval_set=[(X_val, val["home_score"].clip(0,8))], verbose=False,
+)
+reg_a.fit(
+    X_train, train["away_score"].clip(0, 8), sample_weight=train_weights,
+    eval_set=[(X_val, val["away_score"].clip(0,8))], verbose=False,
+)
 
 lh_test = np.clip(reg_h.predict(X_test), 0.05, 6.0)
 la_test = np.clip(reg_a.predict(X_test), 0.05, 6.0)
@@ -703,7 +929,8 @@ md(r"""
 code(r"""
 results_table = pd.DataFrame([
     ("Elo-only baseline",          log_loss(y_test, p_base_test), rps(y_test.values, p_base_test)),
-    ("XGB classifier only",        log_loss(y_test, p_clf_test),  rps(y_test.values, p_clf_test)),
+    ("XGB classifier only",        log_loss(y_test, p_xgb_test),  rps(y_test.values, p_xgb_test)),
+    (f"Selected: {CLASSIFIER_KIND}",log_loss(y_test, p_clf_test),  rps(y_test.values, p_clf_test)),
     ("Poisson goals -> W/D/L",     log_loss(y_test, p_goals_test),rps(y_test.values, p_goals_test)),
     ("Ensemble (raw)",             log_loss(y_test, p_raw_test),  rps(y_test.values, p_raw_test)),
     ("Ensemble (calibrated) ★",    log_loss(y_test, p_cal_test),  rps(y_test.values, p_cal_test)),
@@ -721,13 +948,57 @@ for cls, label, color in [(0, "Home win", "#0a84ff"), (1, "Draw", "#8e8e93"), (2
     ax.plot(prob_pred, prob_true, "o-", color=color, label=label)
 ax.plot([0,1],[0,1], "--", color="#444")
 ax.set_xlabel("Predicted probability"); ax.set_ylabel("Empirical frequency")
-ax.set_title("Reliability diagram — calibrated ensemble (test 2022–2025)")
+ax.set_title("Reliability diagram — calibrated ensemble (held-out 2024+ test)")
 ax.legend()
 plt.tight_layout()
 calib_path = WEB_DATA / "calibration.png"
 plt.savefig(calib_path, dpi=140, bbox_inches="tight")
 print("Saved", calib_path)
 plt.show()
+""")
+
+code(r"""
+# Refit production models on every completed match after holdout evaluation.
+production_weights = recency_weights(
+    ds, ds["date"].max() + pd.Timedelta(days=1), BEST_HALF_LIFE
+)
+if CLASSIFIER_KIND == "regularized_multinomial":
+    clf = make_pipeline(
+        StandardScaler(),
+        LogisticRegression(C=LINEAR_C, max_iter=1500, random_state=42),
+    )
+    clf.fit(
+        ds[FEATURES], ds["y_cls"],
+        logisticregression__sample_weight=production_weights,
+    )
+else:
+    clf = xgb.XGBClassifier(
+        objective="multi:softprob", num_class=3, eval_metric="mlogloss",
+        tree_method="hist", n_jobs=-1, random_state=42,
+        n_estimators=max(1, int(xgb_clf.best_iteration) + 1),
+        **BEST_XGB_PARAMS,
+    )
+    clf.fit(ds[FEATURES], ds["y_cls"], sample_weight=production_weights, verbose=False)
+
+reg_h = xgb.XGBRegressor(
+    objective="count:poisson", n_estimators=max(1, int(reg_h.best_iteration) + 1),
+    max_depth=4, learning_rate=0.05, subsample=0.9, colsample_bytree=0.8,
+    min_child_weight=4, reg_lambda=1.5, tree_method="hist", n_jobs=-1, random_state=42,
+)
+reg_a = xgb.XGBRegressor(
+    objective="count:poisson", n_estimators=max(1, int(reg_a.best_iteration) + 1),
+    max_depth=4, learning_rate=0.05, subsample=0.9, colsample_bytree=0.8,
+    min_child_weight=4, reg_lambda=1.5, tree_method="hist", n_jobs=-1, random_state=42,
+)
+reg_h.fit(
+    ds[FEATURES], ds["home_score"].clip(0, 8),
+    sample_weight=production_weights, verbose=False,
+)
+reg_a.fit(
+    ds[FEATURES], ds["away_score"].clip(0, 8),
+    sample_weight=production_weights, verbose=False,
+)
+print(f"Production models refit through {ds['date'].max().date()} on {len(ds):,} completed matches")
 """)
 
 # =============================================================================
@@ -772,41 +1043,68 @@ print(f"teams.json: {len(teams_out)} teams")
 code(r"""
 # Build the 104-match schedule.
 # Group stage: 6 matches per group (1v2, 3v4, 1v3, 2v4, 1v4, 2v3) — standard rotation.
-HOST_OF_GROUP = {"A": "MEX", "B": "CAN", "C": "USA"}  # hosts pre-assigned by FIFA
-GROUP_ROUNDS = [(0,1),(2,3),(0,2),(1,3),(0,3),(1,2)]
-
 GROUP_LETTERS = list("ABCDEFGHIJKL")
-schedule = []
-mid = 1
-group_dates = {
-    1: "2026-06-11", 2: "2026-06-12", 3: "2026-06-13",
-    4: "2026-06-17", 5: "2026-06-18", 6: "2026-06-22",
+team_to_group = {
+    team_code: group
+    for group, members in GROUPS.items()
+    for team_code in members
 }
-for letter in GROUP_LETTERS:
-    teams = GROUPS[letter]
-    host_team = HOST_OF_GROUP.get(letter)
-    for rd_idx, (i, j) in enumerate(GROUP_ROUNDS, start=1):
-        a, b = teams[i], teams[j]
-        # Put the host team at home if present, else neutral
-        if host_team in (a, b):
-            home, away = (host_team, b if a == host_team else a)
-            neutral = False
-        else:
-            home, away = a, b
-            neutral = True
-        schedule.append({
-            "id": f"G{mid:03d}",
-            "stage": "group",
-            "group": letter,
-            "round": rd_idx,
-            "date": group_dates[rd_idx],
-            "home": home,
-            "away": away,
-            "neutral": neutral,
-        })
-        mid += 1
+wc_fixtures = pd.DataFrame([
+    {
+        "date": pd.Timestamp(fixture["date"]),
+        "home_team": fixture["team1"],
+        "away_team": fixture["team2"],
+        "home_score": fixture.get("score", {}).get("ft", [None, None])[0],
+        "away_score": fixture.get("score", {}).get("ft", [None, None])[1],
+        "neutral": fixture["team1"] not in {"Mexico", "Canada", "United States"},
+        "group": fixture["group"].replace("Group ", ""),
+    }
+    for fixture in wc_live_matches
+    if fixture.get("group", "").startswith("Group ")
+])
+wc_fixtures["home_code"] = wc_fixtures["home_team"].map(to_code)
+wc_fixtures["away_code"] = wc_fixtures["away_team"].map(to_code)
+wc_fixtures = wc_fixtures[
+    wc_fixtures["home_code"].map(team_to_group).eq(wc_fixtures["group"])
+    & (wc_fixtures["away_code"].map(team_to_group) == wc_fixtures["group"])
+].sort_values(["date", "group"]).reset_index(drop=True)
+
+assert len(wc_fixtures) == 72, f"Expected 72 official group fixtures, got {len(wc_fixtures)}"
+
+group_round_dates = {
+    group: {
+        match_date: index + 1
+        for index, match_date in enumerate(sorted(group_rows["date"].dt.strftime("%Y-%m-%d").unique()))
+    }
+    for group, group_rows in wc_fixtures.groupby("group")
+}
+
+schedule = []
+for index, row in wc_fixtures.iterrows():
+    date_str = row["date"].strftime("%Y-%m-%d")
+    completed = pd.notna(row["home_score"]) and pd.notna(row["away_score"])
+    fixture = {
+        "id": f"G{index + 1:03d}",
+        "stage": "group",
+        "group": row["group"],
+        "round": group_round_dates[row["group"]][date_str],
+        "date": date_str,
+        "home": row["home_code"],
+        "away": row["away_code"],
+        "neutral": bool(row["neutral"]),
+        "completed": bool(completed),
+    }
+    if completed:
+        fixture["homeScore"] = int(row["home_score"])
+        fixture["awayScore"] = int(row["away_score"])
+    schedule.append(fixture)
 
 assert len(schedule) == 72, f"Expected 72 group matches, got {len(schedule)}"
+assert all(sum(match["group"] == group for match in schedule) == 6 for group in GROUP_LETTERS)
+assert all(
+    sum(team_code in (match["home"], match["away"]) for match in schedule) == 3
+    for team_code in TEAMS_META
+)
 
 # Round of 32 bracket: maps to 16 slots. We use a deterministic mapping that
 # alternates group winners / runners-up / third-placed across the bracket.
@@ -859,31 +1157,61 @@ last_form = (
 form_avg = last_form.mean().to_dict()
 
 def form_for(code_):
-    if code_ in last_form.index:
-        r = last_form.loc[code_]
-        return {k: float(r[k]) for k in last_form.columns}
-    return {k: float(v) for k, v in form_avg.items()}
+    team_rows = long[long["team"] == code_].sort_values("date")
+    if team_rows.empty:
+        return {"pts_l5": 1.0, "gf_l5": 1.1, "ga_l5": 1.1,
+                "pts_l10": 1.0, "gf_l10": 1.1, "ga_l10": 1.1}
+    out = {}
+    for n in (5, 10):
+        recent = team_rows.tail(n)
+        out[f"pts_l{n}"] = float(recent["pts"].mean())
+        out[f"gf_l{n}"] = float(recent["gf"].mean())
+        out[f"ga_l{n}"] = float(recent["ga"].mean())
+    return out
 
-# Most recent FIFA ranking points per team
-last_rank = rk.sort_values("date").groupby("team_code").tail(1).set_index("team_code")["rank_pts"]
+# Most recent FIFA ranking points per team. Old values are softly ignored.
+last_rank_rows = rk.sort_values("date").groupby("team_code").tail(1).set_index("team_code")
 def rank_for(code_):
-    return float(last_rank[code_]) if code_ in last_rank.index else 0.0
+    if code_ not in last_rank_rows.index:
+        return 0.0, 0.0
+    row = last_rank_rows.loc[code_]
+    age_days = max(0, (ds["date"].max() - row["rank_date"]).days)
+    freshness = float(np.exp(-age_days / 365.25))
+    return float(row["rank_pts"]), freshness
 
 def make_features(home, away, neutral=True, tier_=4):
     fh = form_for(home); fa = form_for(away)
     eh, ea = elo[home], elo[away]
     adv = 0.0 if neutral else HOME_ADV
-    rh, ra = rank_for(home), rank_for(away)
+    rh, fh_rank = rank_for(home)
+    ra, fa_rank = rank_for(away)
+    rank_freshness = min(fh_rank, fa_rank)
+    ah, aa = float(attack[home]), float(attack[away])
+    dh, da = float(defence_weakness[home]), float(defence_weakness[away])
+    lh = float(np.clip(np.exp(GOAL_HOME_BASE + ah + da + (0.0 if neutral else 0.08)), 0.15, 5.0))
+    la = float(np.clip(np.exp(GOAL_AWAY_BASE + aa + dh), 0.15, 5.0))
+    form_diff_l5 = fh["pts_l5"] - fa["pts_l5"]
+    gd_diff_l5 = (fh["gf_l5"] - fh["ga_l5"]) - (fa["gf_l5"] - fa["ga_l5"])
     form_diff = fh["pts_l10"] - fa["pts_l10"]
     gd_diff = (fh["gf_l10"] - fh["ga_l10"]) - (fa["gf_l10"] - fa["ga_l10"])
     return {
         "elo_diff": eh + adv - ea,
         "home_elo": eh, "away_elo": ea,
-        "rank_diff": rh - ra,
+        "rank_diff": (rh - ra) * rank_freshness,
+        "rank_freshness": rank_freshness,
         "host": 0 if neutral else 1,
         "tier": tier_,
+        "form_diff_l5": form_diff_l5,
+        "gd_diff_l5": gd_diff_l5,
         "form_diff_l10": form_diff,
         "gd_diff_l10": gd_diff,
+        "attack_diff": ah - aa,
+        "defence_diff": da - dh,
+        "poisson_lh": lh,
+        "poisson_la": la,
+        "poisson_goal_diff": lh - la,
+        "rest_diff": 0.0,
+        "congestion_diff": 0.0,
     }
 
 # Build a big DataFrame of all (home, away) pairs for fast batched inference.
@@ -922,22 +1250,52 @@ print(f"pairwise.json: {len(pairwise):,} ordered pairs")
 
 code(r"""
 meta = {
-    "version": "1.0.0",
+    "version": "3.0.0",
     "trained_at": datetime.utcnow().isoformat(timespec="seconds") + "Z",
     "dixon_coles_rho": RHO,
     "ensemble_w_clf": W_CLF,
     "temperature": T_OPT,
+    "classifier": CLASSIFIER_KIND,
+    "recency_half_life_years": BEST_HALF_LIFE,
+    "walk_forward_cv": {
+        "windows": [f"{start} .. {end}" for start, end in CV_WINDOWS],
+        "mean_log_loss": float(classifier_cv_loss),
+        "fold_log_loss": [
+            float(x) for x in (
+                LINEAR_FOLD_LOSSES if CLASSIFIER_KIND == "regularized_multinomial"
+                else study.best_trial.user_attrs["fold_losses"]
+            )
+        ],
+        "candidates": {
+            "regularized_multinomial": float(LINEAR_CV_LOSS),
+            "xgboost": float(study.best_value),
+        },
+    },
     "features": FEATURES,
+    "feature_policy": {
+        "pre_match_only": True,
+        "player_ratings": "excluded: available only for recent FIFA editions and unsafe to backfill",
+        "xg": "online expected-goal proxy from prior international scores; no broad historical xG source",
+        "fifa_rankings": "exponentially downweighted when stale",
+    },
     "test_metrics": {
         "elo_baseline":  {"log_loss": float(log_loss(y_test, p_base_test)), "rps": rps(y_test.values, p_base_test)},
-        "xgb_only":      {"log_loss": float(log_loss(y_test, p_clf_test)),  "rps": rps(y_test.values, p_clf_test)},
+        "xgb_only":      {"log_loss": float(log_loss(y_test, p_xgb_test)),  "rps": rps(y_test.values, p_xgb_test)},
+        "selected_classifier": {
+            "name": CLASSIFIER_KIND,
+            "log_loss": float(log_loss(y_test, p_clf_test)),
+            "rps": rps(y_test.values, p_clf_test),
+        },
         "poisson_only":  {"log_loss": float(log_loss(y_test, p_goals_test)),"rps": rps(y_test.values, p_goals_test)},
         "ensemble_raw":  {"log_loss": float(log_loss(y_test, p_raw_test)),  "rps": rps(y_test.values, p_raw_test)},
         "ensemble_cal":  {"log_loss": float(log_loss(y_test, p_cal_test)),  "rps": rps(y_test.values, p_cal_test)},
     },
-    "train_window": "<= 2017-12-31",
-    "val_window": "2018-01-01 .. 2021-12-31",
-    "test_window": "2022-01-01 .. 2025-12-31",
+    "train_window": "<= 2021-12-31",
+    "val_window": "2022-01-01 .. 2023-12-31",
+    "test_window": ">= 2024-01-01",
+    "production_train_window": f"1993-01-01 .. {ds['date'].max().date()}",
+    "latest_result_date": str(ds["date"].max().date()),
+    "completed_world_cup_matches": int(sum(1 for match in schedule if match.get("completed"))),
     "n_matches_used": int(len(ds)),
 }
 (WEB_DATA / "meta.json").write_text(json.dumps(meta, indent=2), encoding="utf-8")
@@ -949,7 +1307,10 @@ code(r"""
 # Save model artifacts (for reproducibility / re-running export without re-training)
 import joblib
 joblib.dump({"clf": clf, "reg_h": reg_h, "reg_a": reg_a, "temperature": T_OPT,
-             "rho": RHO, "w_clf": W_CLF, "elo": dict(elo), "features": FEATURES},
+             "rho": RHO, "w_clf": W_CLF, "elo": dict(elo), "features": FEATURES,
+             "attack": dict(attack), "defence_weakness": dict(defence_weakness),
+             "recency_half_life_years": BEST_HALF_LIFE,
+             "classifier_kind": CLASSIFIER_KIND},
             ART / "models.joblib")
 print("Saved", ART / "models.joblib")
 """)

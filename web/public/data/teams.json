@@ -1,57 +1,48 @@
 [
   {
-    "code": "MAR",
-    "name": "Morocco",
-    "iso2": "ma",
-    "confederation": "CAF",
-    "host": false,
-    "group": "A",
-    "elo": 2006.9
-  },
-  {
     "code": "MEX",
     "name": "Mexico",
     "iso2": "mx",
     "confederation": "CONCACAF",
     "host": true,
     "group": "A",
-    "elo": 1973.9
+    "elo": 1983.6
   },
   {
-    "code": "CHL",
-    "name": "Chile",
-    "iso2": "cl",
-    "confederation": "CONMEBOL",
+    "code": "KOR",
+    "name": "Korea Republic",
+    "iso2": "kr",
+    "confederation": "AFC",
     "host": false,
     "group": "A",
-    "elo": 1807.7
+    "elo": 1901.7
   },
   {
-    "code": "POL",
-    "name": "Poland",
-    "iso2": "pl",
+    "code": "CZE",
+    "name": "Czechia",
+    "iso2": "cz",
     "confederation": "UEFA",
     "host": false,
     "group": "A",
-    "elo": 1758.4
+    "elo": 1787.1
   },
   {
-    "code": "ECU",
-    "name": "Ecuador",
-    "iso2": "ec",
-    "confederation": "CONMEBOL",
+    "code": "RSA",
+    "name": "South Africa",
+    "iso2": "za",
+    "confederation": "CAF",
     "host": false,
-    "group": "B",
-    "elo": 2015.8
+    "group": "A",
+    "elo": 1657.1
   },
   {
-    "code": "BEL",
-    "name": "Belgium",
-    "iso2": "be",
+    "code": "SUI",
+    "name": "Switzerland",
+    "iso2": "ch",
     "confederation": "UEFA",
     "host": false,
     "group": "B",
-    "elo": 1956.1
+    "elo": 1924.6
   },
   {
     "code": "CAN",
@@ -60,70 +51,61 @@
     "confederation": "CONCACAF",
     "host": true,
     "group": "B",
-    "elo": 1911.8
+    "elo": 1868.4
   },
   {
-    "code": "TUN",
-    "name": "Tunisia",
-    "iso2": "tn",
-    "confederation": "CAF",
-    "host": false,
-    "group": "B",
-    "elo": 1745.0
-  },
-  {
-    "code": "JPN",
-    "name": "Japan",
-    "iso2": "jp",
-    "confederation": "AFC",
-    "host": false,
-    "group": "C",
-    "elo": 2012.6
-  },
-  {
-    "code": "URY",
-    "name": "Uruguay",
-    "iso2": "uy",
-    "confederation": "CONMEBOL",
-    "host": false,
-    "group": "C",
-    "elo": 1952.1
-  },
-  {
-    "code": "USA",
-    "name": "United States",
-    "iso2": "us",
-    "confederation": "CONCACAF",
-    "host": true,
-    "group": "C",
-    "elo": 1848.0
-  },
-  {
-    "code": "CIV",
-    "name": "Ivory Coast",
-    "iso2": "ci",
-    "confederation": "CAF",
-    "host": false,
-    "group": "C",
-    "elo": 1840.7
-  },
-  {
-    "code": "ARG",
-    "name": "Argentina",
-    "iso2": "ar",
-    "confederation": "CONMEBOL",
-    "host": false,
-    "group": "D",
-    "elo": 2183.0
-  },
-  {
-    "code": "NLD",
-    "name": "Netherlands",
-    "iso2": "nl",
+    "code": "BIH",
+    "name": "Bosnia and Herzegovina",
+    "iso2": "ba",
     "confederation": "UEFA",
     "host": false,
-    "group": "D",
-    "elo": 2001.1
+    "group": "B",
+    "elo": 1673.9
+  },
+  {
+    "code": "QAT",
+    "name": "Qatar",
+    "iso2": "qa",
+    "confederation": "AFC",
+    "host": false,
+    "group": "B",
+    "elo": 1578.0
+  },
+  {
+    "code": "BRA",
+    "name": "Brazil",
+    "iso2": "br",
+    "confederation": "CONMEBOL",
+    "host": false,
+    "group": "C",
+    "elo": 2058.5
+  },
+  {
+    "code": "MAR",
+    "name": "Morocco",
+    "iso2": "ma",
+    "confederation": "CAF",
+    "host": false,
+    "group": "C",
+    "elo": 2011.7
+  },
+  {
+    "code": "SCO",
+    "name": "Scotland",
+    "iso2": "gb-sct",
+    "confederation": "UEFA",
+    "host": false,
+    "group": "C",
+    "elo": 1858.3
+  },
+  {
+    "code": "HAI",
+    "name": "Haiti",
+    "iso2": "ht",
+    "confederation": "CONCACAF",
+    "host": false,
+    "group": "C",
+    "elo": 1685.2
   },
   {
     "code": "AUS",
@@ -132,241 +114,25 @@
     "confederation": "AFC",
     "host": false,
     "group": "D",
-    "elo": 1898.7
+    "elo": 1952.7
   },
   {
-    "code": "EGY",
-    "name": "Egypt",
-    "iso2": "eg",
-    "confederation": "CAF",
-    "host": false,
+    "code": "USA",
+    "name": "United States",
+    "iso2": "us",
+    "confederation": "CONCACAF",
+    "host": true,
     "group": "D",
-    "elo": 1805.2
-  },
-  {
-    "code": "FRA",
-    "name": "France",
-    "iso2": "fr",
-    "confederation": "UEFA",
-    "host": false,
-    "group": "E",
-    "elo": 2112.9
-  },
-  {
-    "code": "DNK",
-    "name": "Denmark",
-    "iso2": "dk",
-    "confederation": "UEFA",
-    "host": false,
-    "group": "E",
-    "elo": 1922.5
-  },
-  {
-    "code": "JOR",
-    "name": "Jordan",
-    "iso2": "jo",
-    "confederation": "AFC",
-    "host": false,
-    "group": "E",
-    "elo": 1771.9
-  },
-  {
-    "code": "GHA",
-    "name": "Ghana",
-    "iso2": "gh",
-    "confederation": "CAF",
-    "host": false,
-    "group": "E",
-    "elo": 1624.5
-  },
-  {
-    "code": "ESP",
-    "name": "Spain",
-    "iso2": "es",
-    "confederation": "UEFA",
-    "host": false,
-    "group": "F",
-    "elo": 2199.4
-  },
-  {
-    "code": "PRT",
-    "name": "Portugal",
-    "iso2": "pt",
-    "confederation": "UEFA",
-    "host": false,
-    "group": "F",
-    "elo": 2042.3
-  },
-  {
-    "code": "KOR",
-    "name": "South Korea",
-    "iso2": "kr",
-    "confederation": "AFC",
-    "host": false,
-    "group": "F",
-    "elo": 1877.3
-  },
-  {
-    "code": "PAN",
-    "name": "Panama",
-    "iso2": "pa",
-    "confederation": "CONCACAF",
-    "host": false,
-    "group": "F",
-    "elo": 1822.6
-  },
-  {
-    "code": "BRA",
-    "name": "Brazil",
-    "iso2": "br",
-    "confederation": "CONMEBOL",
-    "host": false,
-    "group": "G",
-    "elo": 2063.3
-  },
-  {
-    "code": "ENG",
-    "name": "England",
-    "iso2": "gb-eng",
-    "confederation": "UEFA",
-    "host": false,
-    "group": "G",
-    "elo": 2061.4
-  },
-  {
-    "code": "IRN",
-    "name": "Iran",
-    "iso2": "ir",
-    "confederation": "AFC",
-    "host": false,
-    "group": "G",
-    "elo": 1902.3
-  },
-  {
-    "code": "JAM",
-    "name": "Jamaica",
-    "iso2": "jm",
-    "confederation": "CONCACAF",
-    "host": false,
-    "group": "G",
-    "elo": 1652.3
-  },
-  {
-    "code": "DEU",
-    "name": "Germany",
-    "iso2": "de",
-    "confederation": "UEFA",
-    "host": false,
-    "group": "H",
-    "elo": 2009.2
+    "elo": 1942.2
   },
   {
     "code": "TUR",
-    "name": "Turkey",
+    "name": "Turkiye",
     "iso2": "tr",
     "confederation": "UEFA",
     "host": false,
-    "group": "H",
-    "elo": 1969.0
-  },
-  {
-    "code": "SEN",
-    "name": "Senegal",
-    "iso2": "sn",
-    "confederation": "CAF",
-    "host": false,
-    "group": "H",
-    "elo": 1904.8
-  },
-  {
-    "code": "QAT",
-    "name": "Qatar",
-    "iso2": "qa",
-    "confederation": "AFC",
-    "host": false,
-    "group": "H",
-    "elo": 1553.6
-  },
-  {
-    "code": "COL",
-    "name": "Colombia",
-    "iso2": "co",
-    "confederation": "CONMEBOL",
-    "host": false,
-    "group": "I",
-    "elo": 2057.6
-  },
-  {
-    "code": "ITA",
-    "name": "Italy",
-    "iso2": "it",
-    "confederation": "UEFA",
-    "host": false,
-    "group": "I",
-    "elo": 1926.9
-  },
-  {
-    "code": "SAU",
-    "name": "Saudi Arabia",
-    "iso2": "sa",
-    "confederation": "AFC",
-    "host": false,
-    "group": "I",
-    "elo": 1697.8
-  },
-  {
-    "code": "NZL",
-    "name": "New Zealand",
-    "iso2": "nz",
-    "confederation": "OFC",
-    "host": false,
-    "group": "I",
-    "elo": 1695.1
-  },
-  {
-    "code": "HRV",
-    "name": "Croatia",
-    "iso2": "hr",
-    "confederation": "UEFA",
-    "host": false,
-    "group": "J",
-    "elo": 1951.5
-  },
-  {
-    "code": "DZA",
-    "name": "Algeria",
-    "iso2": "dz",
-    "confederation": "CAF",
-    "host": false,
-    "group": "J",
-    "elo": 1899.4
-  },
-  {
-    "code": "SCO",
-    "name": "Scotland",
-    "iso2": "gb-sct",
-    "confederation": "UEFA",
-    "host": false,
-    "group": "J",
-    "elo": 1839.4
-  },
-  {
-    "code": "UZB",
-    "name": "Uzbekistan",
-    "iso2": "uz",
-    "confederation": "AFC",
-    "host": false,
-    "group": "J",
-    "elo": 1826.2
-  },
-  {
-    "code": "SUI",
-    "name": "Switzerland",
-    "iso2": "ch",
-    "confederation": "UEFA",
-    "host": false,
-    "group": "K",
-    "elo": 1949.1
+    "group": "D",
+    "elo": 1915.0
   },
   {
     "code": "PRY",
@@ -374,8 +140,62 @@
     "iso2": "py",
     "confederation": "CONMEBOL",
     "host": false,
-    "group": "K",
-    "elo": 1899.9
+    "group": "D",
+    "elo": 1805.7
+  },
+  {
+    "code": "GER",
+    "name": "Germany",
+    "iso2": "de",
+    "confederation": "UEFA",
+    "host": false,
+    "group": "E",
+    "elo": 2019.8
+  },
+  {
+    "code": "ECU",
+    "name": "Ecuador",
+    "iso2": "ec",
+    "confederation": "CONMEBOL",
+    "host": false,
+    "group": "E",
+    "elo": 2015.8
+  },
+  {
+    "code": "CIV",
+    "name": "Cote d'Ivoire",
+    "iso2": "ci",
+    "confederation": "CAF",
+    "host": false,
+    "group": "E",
+    "elo": 1840.7
+  },
+  {
+    "code": "CUW",
+    "name": "Curacao",
+    "iso2": "cw",
+    "confederation": "CONCACAF",
+    "host": false,
+    "group": "E",
+    "elo": 1581.3
+  },
+  {
+    "code": "JPN",
+    "name": "Japan",
+    "iso2": "jp",
+    "confederation": "AFC",
+    "host": false,
+    "group": "F",
+    "elo": 2011.6
+  },
+  {
+    "code": "NED",
+    "name": "Netherlands",
+    "iso2": "nl",
+    "confederation": "UEFA",
+    "host": false,
+    "group": "F",
+    "elo": 2002.1
   },
   {
     "code": "SWE",
@@ -383,17 +203,143 @@
     "iso2": "se",
     "confederation": "UEFA",
     "host": false,
-    "group": "K",
+    "group": "F",
     "elo": 1773.7
   },
   {
+    "code": "TUN",
+    "name": "Tunisia",
+    "iso2": "tn",
+    "confederation": "CAF",
+    "host": false,
+    "group": "F",
+    "elo": 1745.0
+  },
+  {
+    "code": "BEL",
+    "name": "Belgium",
+    "iso2": "be",
+    "confederation": "UEFA",
+    "host": false,
+    "group": "G",
+    "elo": 1956.1
+  },
+  {
+    "code": "IRN",
+    "name": "IR Iran",
+    "iso2": "ir",
+    "confederation": "AFC",
+    "host": false,
+    "group": "G",
+    "elo": 1902.2
+  },
+  {
+    "code": "EGY",
+    "name": "Egypt",
+    "iso2": "eg",
+    "confederation": "CAF",
+    "host": false,
+    "group": "G",
+    "elo": 1805.2
+  },
+  {
+    "code": "NZL",
+    "name": "New Zealand",
+    "iso2": "nz",
+    "confederation": "OFC",
+    "host": false,
+    "group": "G",
+    "elo": 1695.1
+  },
+  {
+    "code": "ESP",
+    "name": "Spain",
+    "iso2": "es",
+    "confederation": "UEFA",
+    "host": false,
+    "group": "H",
+    "elo": 2199.4
+  },
+  {
+    "code": "URU",
+    "name": "Uruguay",
+    "iso2": "uy",
+    "confederation": "CONMEBOL",
+    "host": false,
+    "group": "H",
+    "elo": 1952.1
+  },
+  {
+    "code": "SAU",
+    "name": "Saudi Arabia",
+    "iso2": "sa",
+    "confederation": "AFC",
+    "host": false,
+    "group": "H",
+    "elo": 1697.8
+  },
+  {
     "code": "CPV",
-    "name": "Cape Verde",
+    "name": "Cabo Verde",
     "iso2": "cv",
     "confederation": "CAF",
     "host": false,
-    "group": "K",
+    "group": "H",
     "elo": 1652.2
+  },
+  {
+    "code": "FRA",
+    "name": "France",
+    "iso2": "fr",
+    "confederation": "UEFA",
+    "host": false,
+    "group": "I",
+    "elo": 2112.9
+  },
+  {
+    "code": "NOR",
+    "name": "Norway",
+    "iso2": "no",
+    "confederation": "UEFA",
+    "host": false,
+    "group": "I",
+    "elo": 1976.3
+  },
+  {
+    "code": "SEN",
+    "name": "Senegal",
+    "iso2": "sn",
+    "confederation": "CAF",
+    "host": false,
+    "group": "I",
+    "elo": 1904.8
+  },
+  {
+    "code": "IRQ",
+    "name": "Iraq",
+    "iso2": "iq",
+    "confederation": "AFC",
+    "host": false,
+    "group": "I",
+    "elo": 1729.3
+  },
+  {
+    "code": "ARG",
+    "name": "Argentina",
+    "iso2": "ar",
+    "confederation": "CONMEBOL",
+    "host": false,
+    "group": "J",
+    "elo": 2183.0
+  },
+  {
+    "code": "ALG",
+    "name": "Algeria",
+    "iso2": "dz",
+    "confederation": "CAF",
+    "host": false,
+    "group": "J",
+    "elo": 1913.2
   },
   {
     "code": "AUT",
@@ -401,34 +347,88 @@
     "iso2": "at",
     "confederation": "UEFA",
     "host": false,
-    "group": "L",
+    "group": "J",
     "elo": 1898.3
   },
   {
-    "code": "CZE",
-    "name": "Czech Republic",
-    "iso2": "cz",
+    "code": "JOR",
+    "name": "Jordan",
+    "iso2": "jo",
+    "confederation": "AFC",
+    "host": false,
+    "group": "J",
+    "elo": 1771.9
+  },
+  {
+    "code": "COL",
+    "name": "Colombia",
+    "iso2": "co",
+    "confederation": "CONMEBOL",
+    "host": false,
+    "group": "K",
+    "elo": 2057.6
+  },
+  {
+    "code": "POR",
+    "name": "Portugal",
+    "iso2": "pt",
+    "confederation": "UEFA",
+    "host": false,
+    "group": "K",
+    "elo": 2048.6
+  },
+  {
+    "code": "UZB",
+    "name": "Uzbekistan",
+    "iso2": "uz",
+    "confederation": "AFC",
+    "host": false,
+    "group": "K",
+    "elo": 1826.2
+  },
+  {
+    "code": "COD",
+    "name": "Congo DR",
+    "iso2": "cd",
+    "confederation": "CAF",
+    "host": false,
+    "group": "K",
+    "elo": 1757.6
+  },
+  {
+    "code": "ENG",
+    "name": "England",
+    "iso2": "gb-eng",
     "confederation": "UEFA",
     "host": false,
     "group": "L",
-    "elo": 1811.5
+    "elo": 2068.2
   },
   {
-    "code": "CRI",
-    "name": "Costa Rica",
-    "iso2": "cr",
+    "code": "CRO",
+    "name": "Croatia",
+    "iso2": "hr",
+    "confederation": "UEFA",
+    "host": false,
+    "group": "L",
+    "elo": 1951.5
+  },
+  {
+    "code": "PAN",
+    "name": "Panama",
+    "iso2": "pa",
     "confederation": "CONCACAF",
     "host": false,
     "group": "L",
-    "elo": 1729.9
+    "elo": 1822.6
   },
   {
-    "code": "ZAF",
-    "name": "South Africa",
-    "iso2": "za",
+    "code": "GHA",
+    "name": "Ghana",
+    "iso2": "gh",
     "confederation": "CAF",
     "host": false,
     "group": "L",
-    "elo": 1666.8
+    "elo": 1624.5
   }
 ]

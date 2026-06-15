@@ -13,23 +13,24 @@ export default function MethodologyPage() {
     ? [
         { title: "Compréhension métier", icon: Sparkles, body: "Probabilités calibrées pour chaque match du Mondial 2026 et probabilités à l'échelle du tournoi via Monte Carlo. Succès mesuré contre une baseline Elo sur log-loss, Brier et RPS." },
         { title: "Compréhension des données", icon: Database, body: "Deux datasets Kaggle — `martj42/international-football-results-from-1872-to-2017` (~48k matchs) et `cashncarry/fifaworldranking` — joints à un fichier équipes 2026 curé à la main." },
-        { title: "Préparation des données", icon: Layers, body: "Époque moderne (1993+), codes équipes normalisés, Elo custom (K-factor pondéré par tier de tournoi et différentiel de buts), forme glissante sur 5/10 matchs, head-to-head — tout calculé chronologiquement (zéro leakage)." },
-        { title: "Modélisation", icon: Cpu, body: "Deux modèles en concert : classificateur V/N/D XGBoost et modèle de buts Poisson ajusté Dixon-Coles. Les V/N/D des deux sont mélangés (poids tuné sur log-loss validation) puis passés en temperature scaling." },
-        { title: "Évaluation", icon: Gauge, body: "Split temporel (train ≤2017, val 2018-21, test 2022-25). L'ensemble bat la baseline Elo sur chaque métrique, avec une courbe de fiabilité bien alignée. Backtest WC 2022 cohérent." },
+        { title: "Préparation des données", icon: Layers, body: "Époque moderne (1993+), Elo, forces attaque/défense mises à jour en ligne, forme 5/10 matchs, repos, congestion et fraîcheur du classement FIFA — tout calculé avant le coup d'envoi, sans fuite de données." },
+        { title: "Modélisation", icon: Cpu, body: "Une validation glissante choisit entre XGBoost et une régression multinomiale régularisée. Le gagnant est combiné à un modèle de buts Poisson ajusté Dixon-Coles, puis calibré par température." },
+        { title: "Évaluation", icon: Gauge, body: "Trois fenêtres de validation chronologique (2018-23) règlent le modèle. La période 2024+ reste totalement séparée pour le score final et l'ensemble y bat la baseline Elo." },
         { title: "Déploiement", icon: GitBranch, body: "Artefacts JSON (équipes, calendrier, probas pairwise, métadonnées) exportés depuis le notebook et consommés par ce site. Monte Carlo dans un Web Worker — 10 000 tournois en ~1-2 s, hors-ligne." },
       ]
     : [
         { title: "Business understanding", icon: Sparkles, body: "Calibrated probabilities for every WC 2026 match and tournament-level outcomes via Monte Carlo. Success is measured against an Elo-only baseline on log-loss, Brier, and Ranked Probability Score (RPS)." },
         { title: "Data understanding", icon: Database, body: "Two Kaggle datasets — `martj42/international-football-results-from-1872-to-2017` (~48k matches) and `cashncarry/fifaworldranking` — joined to a hand-curated 2026 team + group file." },
-        { title: "Data preparation", icon: Layers, body: "Modern era (1993+), normalized team codes, custom Elo (K-factor scaled by tournament tier and goal-difference multiplier), 5/10-match rolling form, head-to-head — all computed chronologically with leakage protection." },
-        { title: "Modeling", icon: Cpu, body: "Two models in concert: XGBoost W/D/L classifier and a Dixon-Coles-adjusted Poisson goals model. Their W/D/L estimates are blended (weight tuned on validation log-loss) then temperature-scaled." },
-        { title: "Evaluation", icon: Gauge, body: "Time-based split (train ≤2017, val 2018-21, test 2022-25). The ensemble beats Elo-only on every metric, with a well-aligned reliability curve. A WC 2022 backtest produces sensible champion odds." },
+        { title: "Data preparation", icon: Layers, body: "Modern era (1993+), Elo, online attack/defence strengths, 5/10-match form, rest, congestion, and FIFA-ranking freshness — every value is computed before kickoff with leakage protection." },
+        { title: "Modeling", icon: Cpu, body: "Walk-forward validation chooses between XGBoost and regularized multinomial regression. The winner is blended with a Dixon-Coles-adjusted Poisson goals model, then temperature-scaled." },
+        { title: "Evaluation", icon: Gauge, body: "Three chronological validation windows (2018-23) tune and select the model. The 2024+ period stays untouched for the final scorecard, where the ensemble beats Elo-only." },
         { title: "Deployment", icon: GitBranch, body: "JSON artifacts (teams, schedule, pairwise probabilities, metadata) are exported from the notebook and consumed by this site. Monte Carlo runs in a Web Worker — 10,000 tournaments in ~1-2 seconds, fully offline." },
       ];
 
   const rows = [
     [locale === "fr" ? "Baseline Elo seul" : "Elo-only baseline", m?.elo_baseline?.log_loss, m?.elo_baseline?.rps],
     [locale === "fr" ? "Classificateur XGBoost" : "XGBoost classifier", m?.xgb_only?.log_loss, m?.xgb_only?.rps],
+    [locale === "fr" ? "Classificateur sélectionné" : "Selected classifier", m?.selected_classifier?.log_loss, m?.selected_classifier?.rps],
     [locale === "fr" ? "Buts Poisson → V/N/D" : "Poisson goals → W/D/L", m?.poisson_only?.log_loss, m?.poisson_only?.rps],
     [locale === "fr" ? "Ensemble (brut)" : "Ensemble (raw)", m?.ensemble_raw?.log_loss, m?.ensemble_raw?.rps],
     [locale === "fr" ? "Ensemble (calibré)" : "Ensemble (calibrated)", m?.ensemble_cal?.log_loss, m?.ensemble_cal?.rps],
@@ -41,14 +42,14 @@ export default function MethodologyPage() {
         "Les signaux à l'échelle de l'effectif (blessures, changements d'entraîneur, choix tactiques) ne sont pas modélisés — seuls les résultats des sélections nationales le sont.",
         "L'avantage du terrain ne s'applique qu'aux USA / Mexique / Canada à domicile ; tous les autres matchs sont traités comme neutres.",
         "Le mapping R32 reflète le format 2026 publié ; de petites différences d'assignation des places ont un effet négligeable sur les probabilités agrégées.",
-        "Pré-tournoi uniquement : ce site ne se met pas à jour avec les vrais résultats pendant le tournoi.",
+        "Les résultats terminés sont récupérés automatiquement puis le modèle est réentraîné ; une source externe en retard peut retarder une mise à jour.",
       ]
     : [
         "Football is high-variance. A 'good' classifier on this task lands near 0.88-0.95 log-loss; calibration is the point, not certainty.",
         "Squad-level signals (injuries, manager changes, tactical fit) are not modeled — only national-team match results.",
         "Host advantage applies only to USA / Mexico / Canada in their home matches; all other fixtures are treated as neutral venues.",
         "The R32 bracket-mapping mirrors the published 2026 format; small differences in slot assignment have negligible effect on aggregate probabilities.",
-        "Pre-tournament only: this site does not update mid-tournament with actual results.",
+        "Completed results are fetched automatically and trigger a full retrain; an upstream data delay can postpone an update.",
       ];
 
   return (

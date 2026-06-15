@@ -12,9 +12,16 @@ python -m venv .venv
 .venv\Scripts\Activate.ps1
 pip install -r requirements.txt
 # Place your Kaggle API token at %USERPROFILE%\.kaggle\kaggle.json
-jupyter notebook notebook/wc2026_pipeline.ipynb
-# Restart & Run All -> writes artifacts/ + web/public/data/
+python scripts/update_predictions.py
 ```
+
+Every run downloads the latest international results, evaluates on a time-based
+holdout, refits on all completed matches, and exports real World Cup scores so
+finished fixtures are not simulated again.
+
+The scheduled GitHub Actions workflow runs every four hours. Add the repository
+secret `KAGGLE_API_TOKEN` so it can refresh the ranking data, then it will
+commit updated prediction artifacts automatically.
 
 ### 2. Next.js site
 
@@ -34,7 +41,7 @@ with `web/out/` as its root.
 
 - **Notebook** (`notebook/wc2026_pipeline.ipynb`) — full CRISP-DM pipeline:
   Business Understanding → Data Understanding → Data Preparation → Modeling
-  (XGBoost W/D/L classifier + Dixon-Coles-adjusted Poisson goals model) →
+  (walk-forward-selected classifier + Dixon-Coles-adjusted Poisson goals model) →
   Evaluation → Deployment (JSON artifact export).
 - **Browser Monte Carlo** (`web/src/lib/sim/`) — TS engine + Web Worker, seeded
   RNG, ~10k tournament iterations in ~1–2 s, supports user constraints.

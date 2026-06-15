@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildCdf, sampleScore } from "./engine";
+import { buildCdf, fillR32, sampleScore, simulate } from "./engine";
 import { makeRng } from "./rng";
 
 describe("scoreline sampling", () => {
@@ -30,5 +30,108 @@ describe("scoreline sampling", () => {
     // Expected ~ 50–55% for these lambdas
     expect(hWins / n).toBeGreaterThan(0.4);
     expect(hWins / n).toBeLessThan(0.7);
+  });
+});
+
+describe("completed matches", () => {
+  it("uses the real score instead of a user constraint", () => {
+    const allTeams = "ABCDEFGHIJKL".split("").flatMap((group) =>
+      [0, 1, 2, 3].map((index) => ({
+        code: `${group}${index}`,
+        name: `${group}${index}`,
+        iso2: "us",
+        confederation: "TEST",
+        host: false,
+        group,
+        elo: 1500,
+      }))
+    );
+    const pairwise = Object.fromEntries(
+      allTeams.flatMap((home) =>
+        allTeams
+          .filter((away) => away.code !== home.code)
+          .map((away) => [
+            `${home.code}-${away.code}`,
+            { lh: 1, la: 1, pH: 0.34, pD: 0.32, pA: 0.34 },
+          ])
+      )
+    );
+    const schedule = "ABCDEFGHIJKL".split("").flatMap((group) => {
+      const codes = allTeams.filter((team) => team.group === group).map((team) => team.code);
+      return [[0, 1], [2, 3], [0, 2], [1, 3], [0, 3], [1, 2]].map(
+        ([home, away], index) => ({
+          id: `${group}${index}`,
+          stage: "group" as const,
+          group,
+          date: "2026-06-11",
+          home: codes[home],
+          away: codes[away],
+          neutral: true,
+          completed: true,
+          homeScore: home === 0 ? 9 : 0,
+          awayScore: 0,
+        })
+      );
+    });
+
+    const result = simulate({
+      teams: allTeams,
+      schedule,
+      pairwise,
+      iterations: 1,
+      seed: 1,
+      constraints: { matchScore: { A0: [0, 9] } },
+    });
+
+    expect(result.expectedPoints.A0).toBe(9);
+  });
+});
+
+describe("official Round-of-32 feeds", () => {
+  it("resolves every possible set of eight third-place groups", () => {
+    const letters = "ABCDEFGHIJKL".split("");
+    const standings = Object.fromEntries(
+      letters.map((group) => [
+        group,
+        [0, 1, 2, 3].map((index) => ({
+          team: `${group}${index}`,
+          played: 3,
+          won: 0,
+          drew: 0,
+          lost: 0,
+          gf: 0,
+          ga: 0,
+          pts: 0,
+        })),
+      ])
+    );
+    const combinations: string[][] = [];
+    function choose(start: number, selected: string[]) {
+      if (selected.length === 8) {
+        combinations.push(selected);
+        return;
+      }
+      for (let index = start; index <= letters.length - (8 - selected.length); index++) {
+        choose(index + 1, [...selected, letters[index]]);
+      }
+    }
+    choose(0, []);
+
+    expect(combinations).toHaveLength(495);
+    for (const groups of combinations) {
+      const ties = fillR32(standings, new Set(groups));
+      expect(ties).toHaveLength(16);
+      expect(ties.flat().every(Boolean)).toBe(true);
+    }
+
+    const annexRowOne = fillR32(standings, new Set("EFGHIJKL".split("")));
+    expect(annexRowOne[0][1]).toBe("F2");
+    expect(annexRowOne[1][1]).toBe("G2");
+    expect(annexRowOne[6][1]).toBe("I2");
+    expect(annexRowOne[7][1]).toBe("H2");
+    expect(annexRowOne[10][1]).toBe("E2");
+    expect(annexRowOne[11][1]).toBe("K2");
+    expect(annexRowOne[14][1]).toBe("J2");
+    expect(annexRowOne[15][1]).toBe("L2");
   });
 });

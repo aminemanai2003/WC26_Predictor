@@ -17,6 +17,9 @@ export type Match = {
   home: string | null;
   away: string | null;
   neutral: boolean;
+  completed?: boolean;
+  homeScore?: number;
+  awayScore?: number;
 };
 
 export type PairwiseEntry = {
@@ -34,11 +37,16 @@ export type Meta = {
   trained_at: string;
   dixon_coles_rho: number;
   ensemble_w_clf: number;
+  classifier?: string;
+  recency_half_life_years?: number;
   features: string[];
-  test_metrics: Record<string, { log_loss: number; rps: number }>;
+  test_metrics: Record<string, { log_loss: number; rps: number; name?: string }>;
   train_window: string;
   val_window: string;
   test_window: string;
+  production_train_window?: string;
+  latest_result_date?: string;
+  completed_world_cup_matches?: number;
   n_matches_used: number;
 };
 

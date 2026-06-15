@@ -12,6 +12,7 @@ build/
 # Kaggle raw data (large CSVs, not committed)
 data/raw/results/
 data/raw/fifa_ranking/
+data/raw/wc2026_live.json
 data/processed/
 
 # Trained model binary (large, reproducible from notebook)

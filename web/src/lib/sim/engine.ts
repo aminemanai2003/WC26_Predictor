@@ -3,6 +3,11 @@
 
 import type { Match, Pairwise, PairwiseEntry, Team, SimConstraints } from "../types";
 import { makeRng } from "./rng";
+// Generated from Annex C of the official FIFA World Cup 2026 regulations.
+import thirdPlaceAssignmentsJson from "./thirdPlaceAssignments.json";
+
+const THIRD_PLACE_ASSIGNMENTS = thirdPlaceAssignmentsJson as Record<string, string[]>;
+const THIRD_PLACE_WINNERS = ["A", "B", "D", "E", "G", "I", "K", "L"];
 
 export type SimInput = {
   teams: Team[];
@@ -116,12 +121,12 @@ function applyMatch(rows: Map<string, GroupRow>, m: GroupMatch) {
 /**
  * FIFA group tiebreakers (in order):
  * 1. Points
- * 2. Goal difference
- * 3. Goals for
- * 4. Head-to-head points (among tied teams)
- * 5. Head-to-head goal difference (among tied teams)
- * 6. Head-to-head goals for (among tied teams)
- * 7. Random (we don't model fair-play / drawing of lots)
+ * 2. Head-to-head points (among tied teams)
+ * 3. Head-to-head goal difference
+ * 4. Head-to-head goals for
+ * 5. Overall goal difference
+ * 6. Overall goals for
+ * 7. Random (we don't model team conduct / ranking)
  */
 function rankGroup(
   rows: Map<string, GroupRow>,
@@ -146,42 +151,51 @@ function rankGroup(
     return stats;
   }
 
-  // Sort first by pts/gd/gf
-  all.sort((x, y) =>
-    y.pts - x.pts ||
-    (y.gf - y.ga) - (x.gf - x.ga) ||
-    y.gf - x.gf ||
-    0
-  );
-
-  // Within groups of equal pts/gd/gf, apply head-to-head then random
   const result: GroupRow[] = [];
+  all.sort((x, y) => y.pts - x.pts);
   let i = 0;
   while (i < all.length) {
     let j = i + 1;
-    while (
-      j < all.length &&
-      all[j].pts === all[i].pts &&
-      (all[j].gf - all[j].ga) === (all[i].gf - all[i].ga) &&
-      all[j].gf === all[i].gf
-    ) j++;
+    while (j < all.length && all[j].pts === all[i].pts) j++;
 
     const tied = all.slice(i, j);
-    if (tied.length === 1) {
-      result.push(tied[0]);
-    } else {
-      const h2h = h2hStats(tied);
-      tied.sort((x, y) => {
+
+    function resolveHeadToHead(group: GroupRow[]): GroupRow[] {
+      if (group.length === 1) return group;
+      const h2h = h2hStats(group);
+      const sorted = [...group].sort((x, y) => {
         const sx = h2h.get(x.team)!, sy = h2h.get(y.team)!;
-        return (
-          sy.pts - sx.pts ||
-          sy.gd - sx.gd ||
-          sy.gf - sx.gf ||
-          (rng() - 0.5) // final tiebreaker: random
-        );
+        return sy.pts - sx.pts || sy.gd - sx.gd || sy.gf - sx.gf;
       });
-      for (const t of tied) result.push(t);
+      const resolved: GroupRow[] = [];
+      let start = 0;
+      while (start < sorted.length) {
+        let end = start + 1;
+        const base = h2h.get(sorted[start].team)!;
+        while (end < sorted.length) {
+          const next = h2h.get(sorted[end].team)!;
+          if (next.pts !== base.pts || next.gd !== base.gd || next.gf !== base.gf) break;
+          end++;
+        }
+        const stillTied = sorted.slice(start, end);
+        if (stillTied.length === 1) {
+          resolved.push(stillTied[0]);
+        } else if (stillTied.length < group.length) {
+          resolved.push(...resolveHeadToHead(stillTied));
+        } else {
+          stillTied.sort((x, y) =>
+            (y.gf - y.ga) - (x.gf - x.ga) ||
+            y.gf - x.gf ||
+            (rng() - 0.5)
+          );
+          resolved.push(...stillTied);
+        }
+        start = end;
+      }
+      return resolved;
     }
+
+    result.push(...resolveHeadToHead(tied));
     i = j;
   }
   return result;
@@ -212,24 +226,22 @@ type Slot =
   | { kind: "third"; from: string[] };
 
 export const R32_TIES: [Slot, Slot][] = [
-  // Each tie pairs slots. We construct a symmetric bracket.
-  [{ kind: "winner", group: "A" }, { kind: "third", from: ["C", "D", "E", "F"] }],
-  [{ kind: "winner", group: "C" }, { kind: "third", from: ["A", "B", "F", "H"] }],
-  [{ kind: "winner", group: "E" }, { kind: "third", from: ["B", "D", "G", "I"] }],
-  [{ kind: "winner", group: "G" }, { kind: "third", from: ["E", "H", "K", "L"] }],
-  [{ kind: "winner", group: "I" }, { kind: "third", from: ["A", "F", "J", "L"] }],
-  [{ kind: "winner", group: "K" }, { kind: "third", from: ["G", "H", "I", "J"] }],
-  [{ kind: "winner", group: "B" }, { kind: "runnerUp", group: "A" }],
-  [{ kind: "winner", group: "D" }, { kind: "runnerUp", group: "C" }],
-  [{ kind: "winner", group: "F" }, { kind: "runnerUp", group: "E" }],
-  [{ kind: "winner", group: "H" }, { kind: "runnerUp", group: "G" }],
-  [{ kind: "winner", group: "J" }, { kind: "runnerUp", group: "I" }],
-  [{ kind: "winner", group: "L" }, { kind: "runnerUp", group: "K" }],
-  [{ kind: "runnerUp", group: "B" }, { kind: "runnerUp", group: "F" }],
-  [{ kind: "runnerUp", group: "D" }, { kind: "runnerUp", group: "H" }],
-  [{ kind: "runnerUp", group: "J" }, { kind: "runnerUp", group: "L" }],
-  // Auto-balance tie 16 with any unused third slots
-  [{ kind: "third", from: ["C", "D", "E", "K"] }, { kind: "third", from: ["A", "B", "G", "L"] }],
+  [{ kind: "winner", group: "E" }, { kind: "third", from: ["A", "B", "C", "D", "F"] }],
+  [{ kind: "winner", group: "I" }, { kind: "third", from: ["C", "D", "F", "G", "H"] }],
+  [{ kind: "runnerUp", group: "A" }, { kind: "runnerUp", group: "B" }],
+  [{ kind: "winner", group: "F" }, { kind: "runnerUp", group: "C" }],
+  [{ kind: "runnerUp", group: "K" }, { kind: "runnerUp", group: "L" }],
+  [{ kind: "winner", group: "H" }, { kind: "runnerUp", group: "J" }],
+  [{ kind: "winner", group: "D" }, { kind: "third", from: ["B", "E", "F", "I", "J"] }],
+  [{ kind: "winner", group: "G" }, { kind: "third", from: ["A", "E", "H", "I", "J"] }],
+  [{ kind: "winner", group: "C" }, { kind: "runnerUp", group: "F" }],
+  [{ kind: "runnerUp", group: "E" }, { kind: "runnerUp", group: "I" }],
+  [{ kind: "winner", group: "A" }, { kind: "third", from: ["C", "E", "F", "H", "I"] }],
+  [{ kind: "winner", group: "L" }, { kind: "third", from: ["E", "H", "I", "J", "K"] }],
+  [{ kind: "winner", group: "J" }, { kind: "runnerUp", group: "H" }],
+  [{ kind: "runnerUp", group: "D" }, { kind: "runnerUp", group: "G" }],
+  [{ kind: "winner", group: "B" }, { kind: "third", from: ["E", "F", "G", "I", "J"] }],
+  [{ kind: "winner", group: "K" }, { kind: "third", from: ["D", "E", "I", "J", "L"] }],
 ];
 
 /** Rank all 12 third-placed teams overall, then pick the best 8. */
@@ -251,37 +263,37 @@ export function fillR32(
   standings: Record<string, GroupRow[]>, // group letter -> ranked rows
   bestThirds: Set<string>, // group letters whose third-placed teams qualified
 ): [string, string][] {
-  const ties: [string, string][] = [];
+  const assignment = new Map<string, string>();
+  const combination = [...bestThirds].sort().join("");
+  const fifaRow = THIRD_PLACE_ASSIGNMENTS[combination];
+  if (!fifaRow) {
+    throw new Error(`No FIFA Annex C assignment for ${combination}`);
+  }
+  const thirdByWinner = new Map(
+    THIRD_PLACE_WINNERS.map((winner, index) => [winner, fifaRow[index]])
+  );
+  R32_TIES.forEach((tie, tieIndex) => {
+    const winner = tie.find((slot) => slot.kind === "winner");
+    const thirdSide = tie.findIndex((slot) => slot.kind === "third");
+    if (!winner || winner.kind !== "winner" || thirdSide < 0) return;
+    const group = thirdByWinner.get(winner.group);
+    if (!group) throw new Error(`Missing Annex C opponent for Group ${winner.group}`);
+    assignment.set(`${tieIndex}-${thirdSide}`, group);
+  });
 
-  const thirdQueue: string[] = []; // pool of qualifying third-placed teams (group letters)
-  for (const l of GROUP_LETTERS) if (bestThirds.has(l)) thirdQueue.push(l);
-
-  function resolve(slot: Slot): string {
+  function resolve(slot: Slot, tieIndex: number, side: number): string {
     if (slot.kind === "winner") return standings[slot.group][0].team;
     if (slot.kind === "runnerUp") return standings[slot.group][1].team;
     // third — pick the first qualifying group letter in this slot's preferred list
-    for (const g of slot.from) {
-      if (bestThirds.has(g)) {
-        bestThirds.delete(g);
-        return standings[g][2].team;
-      }
-    }
-    // Fallback: any remaining qualifying third
-    const idx = thirdQueue.findIndex((g) => bestThirds.has(g));
-    if (idx >= 0) {
-      const g = thirdQueue[idx];
-      bestThirds.delete(g);
-      return standings[g][2].team;
-    }
-    return ""; // should not happen
+    const group = assignment.get(`${tieIndex}-${side}`);
+    if (!group) throw new Error("Missing third-place assignment");
+    return standings[group][2].team;
   }
 
-  for (const [s1, s2] of R32_TIES) {
-    const a = resolve(s1);
-    const b = resolve(s2);
-    ties.push([a, b]);
-  }
-  return ties;
+  return R32_TIES.map(([home, away], tieIndex) => [
+    resolve(home, tieIndex, 0),
+    resolve(away, tieIndex, 1),
+  ]);
 }
 
 // =============================================================================
@@ -352,8 +364,15 @@ export function simulate(input: SimInput): Aggregates {
     return null;
   }
 
-  function simMatch(home: string, away: string, matchId?: string): [number, number] {
-    const forced = forceMatch(matchId, home, away);
+  function simMatch(home: string, away: string, match?: Match): [number, number] {
+    if (
+      match?.completed &&
+      Number.isFinite(match.homeScore) &&
+      Number.isFinite(match.awayScore)
+    ) {
+      return [match.homeScore!, match.awayScore!];
+    }
+    const forced = forceMatch(match?.id, home, away);
     if (forced) return forced;
     return sampleScore(getCdf(home, away), rng());
   }
@@ -389,7 +408,7 @@ export function simulate(input: SimInput): Aggregates {
 
       for (const m of matches) {
         const home = m.home!, away = m.away!;
-        const [hs, as_] = simMatch(home, away, m.id);
+        const [hs, as_] = simMatch(home, away, m);
         const gm: GroupMatch = { home, away, hs, as: as_ };
         logged.push(gm);
         applyMatch(rows, gm);

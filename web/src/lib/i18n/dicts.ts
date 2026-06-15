@@ -27,7 +27,7 @@ export const DICTS = {
       heroLine1: "48 teams. 104 matches.",
       heroLine2: "One calibrated forecast.",
       heroSub:
-        "An XGBoost classifier paired with a Dixon-Coles Poisson goals model, calibrated on the last three decades of international football, then run through {n} Monte Carlo tournament simulations — live in your browser.",
+        "A walk-forward-selected classifier paired with a Dixon-Coles Poisson goals model, trained on three decades of international football, then run through {n} Monte Carlo tournament simulations — live in your browser.",
       exploreBracket: "Explore the bracket",
       openSimulator: "Open What-if Lab",
       teams: "Teams",
@@ -130,7 +130,7 @@ export const DICTS = {
       builtBy: "Built by",
       tags: "Data Science · Machine Learning · Next.js",
       modelLine: "Model v{version} · trained {date} · {n} matches",
-      disclaimer: "CRISP-DM · XGBoost · Dixon-Coles · Monte Carlo · For entertainment only.",
+      disclaimer: "CRISP-DM · Walk-forward validation · Dixon-Coles · Monte Carlo · For entertainment only.",
     },
   },
   fr: {
@@ -159,7 +159,7 @@ export const DICTS = {
       heroLine1: "48 équipes. 104 matchs.",
       heroLine2: "Une prévision calibrée.",
       heroSub:
-        "Un classificateur XGBoost couplé à un modèle de buts Poisson Dixon-Coles, calibré sur trois décennies de football international, puis passé dans {n} simulations Monte Carlo du tournoi — en direct dans votre navigateur.",
+        "Un classificateur choisi par validation chronologique, couplé à un modèle de buts Poisson Dixon-Coles et entraîné sur trois décennies, puis passé dans {n} simulations Monte Carlo — en direct dans votre navigateur.",
       exploreBracket: "Voir le tableau",
       openSimulator: "Ouvrir « Et si… »",
       teams: "Équipes",
@@ -267,7 +267,7 @@ export const DICTS = {
       tags: "Data Science · Machine Learning · Next.js",
       modelLine: "Modèle v{version} · entraîné {date} · {n} matchs",
       disclaimer:
-        "CRISP-DM · XGBoost · Dixon-Coles · Monte Carlo · À but de divertissement.",
+        "CRISP-DM · Validation chronologique · Dixon-Coles · Monte Carlo · À but de divertissement.",
     },
   },
 };

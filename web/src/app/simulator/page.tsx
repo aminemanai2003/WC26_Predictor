@@ -77,12 +77,14 @@ export default function SimulatorPage() {
             {groupMatches.map((m) => {
               const ht = teamByCode[m.home!]; const at = teamByCode[m.away!];
               const current = constraints.matchResult?.[m.id];
+              const completed = m.completed && m.homeScore !== undefined && m.awayScore !== undefined;
               return (
                 <div key={m.id} className="grid grid-cols-[1fr_auto_1fr] items-center gap-2 p-2 rounded-md hover:bg-white/5">
                   <button
                     onClick={() => setOutcome(m.id, current === "H" ? null : "H")}
                     title={t("sim.forceWin", { team: ht.name })}
-                    className={`flex items-center gap-2 justify-end text-sm rounded-md px-2 py-1.5 border transition-colors ${
+                    disabled={completed}
+                    className={`flex items-center gap-2 justify-end text-sm rounded-md px-2 py-1.5 border transition-colors disabled:cursor-default ${
                       current === "H"
                         ? "bg-accent-green/20 border-accent-green/50 text-white"
                         : "border-white/5 hover:border-accent-green/30 hover:bg-accent-green/5 text-white/80"
@@ -91,19 +93,26 @@ export default function SimulatorPage() {
                     <span className="text-[9px] uppercase tracking-widest text-white/40">{t("sim.winLabel")}</span>
                     <TeamBadge team={ht} size="sm" />
                   </button>
-                  <button
-                    onClick={() => setOutcome(m.id, current === "D" ? null : "D")}
-                    title={t("sim.forceDraw")}
-                    className={`text-[10px] font-semibold tracking-widest px-3 py-1.5 rounded-md border transition-colors ${
-                      current === "D"
-                        ? "bg-white/15 border-white/40 text-white"
-                        : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/20 text-white/50"
-                    }`}
-                  >{t("sim.drawLabel")}</button>
+                  {completed ? (
+                    <span className="numeric text-sm font-semibold px-3 py-1.5 rounded-md border border-accent-green/30 bg-accent-green/10">
+                      {m.homeScore}-{m.awayScore}
+                    </span>
+                  ) : (
+                    <button
+                      onClick={() => setOutcome(m.id, current === "D" ? null : "D")}
+                      title={t("sim.forceDraw")}
+                      className={`text-[10px] font-semibold tracking-widest px-3 py-1.5 rounded-md border transition-colors ${
+                        current === "D"
+                          ? "bg-white/15 border-white/40 text-white"
+                          : "bg-white/5 border-white/5 hover:bg-white/10 hover:border-white/20 text-white/50"
+                      }`}
+                    >{t("sim.drawLabel")}</button>
+                  )}
                   <button
                     onClick={() => setOutcome(m.id, current === "A" ? null : "A")}
                     title={t("sim.forceWin", { team: at.name })}
-                    className={`flex items-center gap-2 text-sm rounded-md px-2 py-1.5 border transition-colors ${
+                    disabled={completed}
+                    className={`flex items-center gap-2 text-sm rounded-md px-2 py-1.5 border transition-colors disabled:cursor-default ${
                       current === "A"
                         ? "bg-accent-red/20 border-accent-red/50 text-white"
                         : "border-white/5 hover:border-accent-red/30 hover:bg-accent-red/5 text-white/80"
