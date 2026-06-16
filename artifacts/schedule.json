@@ -177,7 +177,9 @@
     "home": "IRN",
     "away": "NZL",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 2,
+    "awayScore": 2
   },
   {
     "id": "G015",
