@@ -47,6 +47,11 @@ On Windows, `start-site.bat` at the project root builds and opens the site.
 Do not open `web/out/index.html` directly: Next.js assets require an HTTP server
 with `web/out/` as its root.
 
+The repository root also has a tiny Vercel build shim. If Vercel dashboard
+settings build from the repository root, `npm run build` installs/builds the
+Next.js app under `web/` and copies `web/out/` to root `public/`, matching
+Vercel's default static output setting.
+
 ## Architecture
 
 - **Notebook** (`notebook/wc2026_pipeline.ipynb`) — full CRISP-DM pipeline:

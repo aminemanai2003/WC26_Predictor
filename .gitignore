@@ -24,6 +24,7 @@ web/node_modules/
 .next/
 web/.next/
 web/out/
+/public/
 out/
 
 # OS

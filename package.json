@@ -1,0 +1,8 @@
+{
+  "name": "wc26-predictor-root",
+  "private": true,
+  "scripts": {
+    "build": "npm ci --prefix web && npm run build --prefix web && node scripts/copy_vercel_output.mjs",
+    "vercel-build": "npm run build"
+  }
+}
