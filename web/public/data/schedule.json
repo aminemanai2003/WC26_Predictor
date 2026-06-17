@@ -229,7 +229,9 @@
     "home": "IRQ",
     "away": "NOR",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 1,
+    "awayScore": 4
   },
   {
     "id": "G019",
