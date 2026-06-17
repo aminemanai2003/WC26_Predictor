@@ -123,7 +123,7 @@
     "confederation": "CONCACAF",
     "host": true,
     "group": "D",
-    "elo": 1944.2
+    "elo": 1942.2
   },
   {
     "code": "TUR",
@@ -141,7 +141,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "D",
-    "elo": 1803.7
+    "elo": 1805.7
   },
   {
     "code": "GER",
@@ -330,16 +330,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "J",
-    "elo": 2183.0
-  },
-  {
-    "code": "ALG",
-    "name": "Algeria",
-    "iso2": "dz",
-    "confederation": "CAF",
-    "host": false,
-    "group": "J",
-    "elo": 1913.2
+    "elo": 2201.4
   },
   {
     "code": "AUT",
@@ -349,6 +340,15 @@
     "host": false,
     "group": "J",
     "elo": 1898.3
+  },
+  {
+    "code": "ALG",
+    "name": "Algeria",
+    "iso2": "dz",
+    "confederation": "CAF",
+    "host": false,
+    "group": "J",
+    "elo": 1894.9
   },
   {
     "code": "JOR",
