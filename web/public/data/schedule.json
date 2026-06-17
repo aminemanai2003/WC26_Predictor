@@ -255,7 +255,9 @@
     "home": "AUT",
     "away": "JOR",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 3,
+    "awayScore": 1
   },
   {
     "id": "G021",
