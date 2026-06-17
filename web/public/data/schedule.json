@@ -268,7 +268,9 @@
     "home": "POR",
     "away": "COD",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 1,
+    "awayScore": 1
   },
   {
     "id": "G022",
