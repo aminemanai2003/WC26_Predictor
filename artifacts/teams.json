@@ -420,7 +420,7 @@
     "confederation": "CONCACAF",
     "host": false,
     "group": "L",
-    "elo": 1822.6
+    "elo": 1777.1
   },
   {
     "code": "GHA",
@@ -429,6 +429,6 @@
     "confederation": "CAF",
     "host": false,
     "group": "L",
-    "elo": 1624.5
+    "elo": 1669.9
   }
 ]
