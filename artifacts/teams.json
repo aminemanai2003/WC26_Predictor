@@ -123,7 +123,7 @@
     "confederation": "CONCACAF",
     "host": true,
     "group": "D",
-    "elo": 1944.2
+    "elo": 1942.2
   },
   {
     "code": "TUR",
@@ -141,7 +141,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "D",
-    "elo": 1803.7
+    "elo": 1805.7
   },
   {
     "code": "GER",
@@ -366,7 +366,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "K",
-    "elo": 2057.6
+    "elo": 2076.4
   },
   {
     "code": "POR",
@@ -384,7 +384,7 @@
     "confederation": "AFC",
     "host": false,
     "group": "K",
-    "elo": 1826.2
+    "elo": 1807.4
   },
   {
     "code": "COD",
