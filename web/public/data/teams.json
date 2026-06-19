@@ -6,7 +6,7 @@
     "confederation": "CONCACAF",
     "host": true,
     "group": "A",
-    "elo": 1983.6
+    "elo": 2002.0
   },
   {
     "code": "KOR",
@@ -15,7 +15,7 @@
     "confederation": "AFC",
     "host": false,
     "group": "A",
-    "elo": 1901.7
+    "elo": 1883.3
   },
   {
     "code": "CZE",

@@ -333,7 +333,9 @@
     "home": "MEX",
     "away": "KOR",
     "neutral": false,
-    "completed": false
+    "completed": true,
+    "homeScore": 1,
+    "awayScore": 0
   },
   {
     "id": "G027",
