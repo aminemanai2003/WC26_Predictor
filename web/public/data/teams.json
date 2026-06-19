@@ -108,22 +108,13 @@
     "elo": 1685.2
   },
   {
-    "code": "AUS",
-    "name": "Australia",
-    "iso2": "au",
-    "confederation": "AFC",
-    "host": false,
-    "group": "D",
-    "elo": 1952.7
-  },
-  {
     "code": "USA",
     "name": "United States",
     "iso2": "us",
     "confederation": "CONCACAF",
     "host": true,
     "group": "D",
-    "elo": 1942.2
+    "elo": 1990.3
   },
   {
     "code": "TUR",
@@ -135,13 +126,22 @@
     "elo": 1915.0
   },
   {
+    "code": "AUS",
+    "name": "Australia",
+    "iso2": "au",
+    "confederation": "AFC",
+    "host": false,
+    "group": "D",
+    "elo": 1906.6
+  },
+  {
     "code": "PRY",
     "name": "Paraguay",
     "iso2": "py",
     "confederation": "CONMEBOL",
     "host": false,
     "group": "D",
-    "elo": 1805.7
+    "elo": 1803.7
   },
   {
     "code": "GER",
