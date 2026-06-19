@@ -357,7 +357,9 @@
     "home": "CAN",
     "away": "QAT",
     "neutral": false,
-    "completed": false
+    "completed": true,
+    "homeScore": 6,
+    "awayScore": 0
   },
   {
     "id": "G029",
