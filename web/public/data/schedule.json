@@ -385,7 +385,9 @@
     "home": "BRA",
     "away": "HAI",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 3,
+    "awayScore": 0
   },
   {
     "id": "G031",
