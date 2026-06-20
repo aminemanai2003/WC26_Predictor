@@ -372,7 +372,9 @@
     "home": "SCO",
     "away": "MAR",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 0,
+    "awayScore": 1
   },
   {
     "id": "G030",
