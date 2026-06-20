@@ -424,7 +424,9 @@
     "home": "GER",
     "away": "CIV",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 2,
+    "awayScore": 1
   },
   {
     "id": "G034",
