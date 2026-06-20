@@ -446,7 +446,9 @@
     "home": "NED",
     "away": "SWE",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 5,
+    "awayScore": 1
   },
   {
     "id": "G036",
