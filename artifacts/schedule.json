@@ -411,7 +411,9 @@
     "home": "TUR",
     "away": "PRY",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 0,
+    "awayScore": 1
   },
   {
     "id": "G033",
