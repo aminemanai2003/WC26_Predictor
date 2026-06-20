@@ -1,7 +1,7 @@
 {
   "version": "4.0.0",
-  "trained_at": "2026-06-20T05:49:52Z",
-  "validated_at": "2026-06-20T05:49:52+00:00",
+  "trained_at": "2026-06-20T07:41:38Z",
+  "validated_at": "2026-06-20T07:41:39+00:00",
   "latest_result_date": "2026-06-19",
   "quality_gates": {
     "team_and_group_integrity": "passed",
@@ -22,7 +22,7 @@
       "sha256": "9189941b7e28cc103da8c81574c140a860e153f15407df82b544da1e272491b1"
     },
     "meta.json": {
-      "sha256": "71d6461cadc63d5f9f32a3001c5242c22a8e4228f04e8cbcf7a15d24dfdb007f"
+      "sha256": "1adbcb56b811d52aefac0b6376ccd2d686ef15736a3a9016d4e9539442113c9d"
     }
   }
 }
