@@ -498,7 +498,9 @@
     "home": "ESP",
     "away": "SAU",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 4,
+    "awayScore": 0
   },
   {
     "id": "G040",

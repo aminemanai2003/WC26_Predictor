@@ -105,7 +105,7 @@
     "confederation": "CONCACAF",
     "host": false,
     "group": "C",
-    "elo": 1674.2
+    "elo": 1674.3
   },
   {
     "code": "USA",
@@ -258,7 +258,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "H",
-    "elo": 2171.8
+    "elo": 2179.4
   },
   {
     "code": "URU",
@@ -276,7 +276,7 @@
     "confederation": "AFC",
     "host": false,
     "group": "H",
-    "elo": 1716.5
+    "elo": 1708.9
   },
   {
     "code": "CPV",
@@ -330,7 +330,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "J",
-    "elo": 2201.3
+    "elo": 2201.4
   },
   {
     "code": "AUT",
