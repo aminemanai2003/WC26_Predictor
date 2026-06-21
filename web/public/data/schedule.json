@@ -463,7 +463,9 @@
     "home": "TUN",
     "away": "JPN",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 0,
+    "awayScore": 4
   },
   {
     "id": "G037",

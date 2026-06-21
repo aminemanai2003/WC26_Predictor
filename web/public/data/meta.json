@@ -1,6 +1,6 @@
 {
   "version": "4.0.0",
-  "trained_at": "2026-06-21T06:02:45Z",
+  "trained_at": "2026-06-21T08:02:52Z",
   "dixon_coles_rho": 0.013760025224633392,
   "ensemble_w_clf": 0.5,
   "temperature": 1.0562404505686698,
@@ -87,6 +87,6 @@
   "test_window": ">= 2024-01-01",
   "production_train_window": "1993-01-01 .. 2026-06-20",
   "latest_result_date": "2026-06-20",
-  "completed_world_cup_matches": 35,
+  "completed_world_cup_matches": 36,
   "n_matches_used": 30736
 }
