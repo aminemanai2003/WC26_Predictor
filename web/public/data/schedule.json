@@ -437,7 +437,9 @@
     "home": "ECU",
     "away": "CUW",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 0,
+    "awayScore": 0
   },
   {
     "id": "G035",
