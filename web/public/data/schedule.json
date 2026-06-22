@@ -489,7 +489,9 @@
     "home": "NZL",
     "away": "EGY",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 1,
+    "awayScore": 3
   },
   {
     "id": "G039",
