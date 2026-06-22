@@ -550,7 +550,9 @@
     "home": "ARG",
     "away": "AUT",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 2,
+    "awayScore": 0
   },
   {
     "id": "G044",
