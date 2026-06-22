@@ -513,7 +513,9 @@
     "home": "URU",
     "away": "CPV",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 2,
+    "awayScore": 2
   },
   {
     "id": "G041",
