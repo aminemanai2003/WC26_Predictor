@@ -333,6 +333,15 @@
     "elo": 2216.8
   },
   {
+    "code": "ALG",
+    "name": "Algeria",
+    "iso2": "dz",
+    "confederation": "CAF",
+    "host": false,
+    "group": "J",
+    "elo": 1912.5
+  },
+  {
     "code": "AUT",
     "name": "Austria",
     "iso2": "at",
@@ -342,22 +351,13 @@
     "elo": 1912.2
   },
   {
-    "code": "ALG",
-    "name": "Algeria",
-    "iso2": "dz",
-    "confederation": "CAF",
-    "host": false,
-    "group": "J",
-    "elo": 1894.9
-  },
-  {
     "code": "JOR",
     "name": "Jordan",
     "iso2": "jo",
     "confederation": "AFC",
     "host": false,
     "group": "J",
-    "elo": 1742.6
+    "elo": 1724.9
   },
   {
     "code": "COL",

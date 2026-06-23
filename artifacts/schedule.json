@@ -567,7 +567,9 @@
     "home": "JOR",
     "away": "ALG",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 1,
+    "awayScore": 2
   },
   {
     "id": "G045",
