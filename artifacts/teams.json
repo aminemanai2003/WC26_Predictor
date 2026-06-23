@@ -402,7 +402,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "L",
-    "elo": 2098.6
+    "elo": 2073.3
   },
   {
     "code": "CRO",
@@ -429,6 +429,6 @@
     "confederation": "CAF",
     "host": false,
     "group": "L",
-    "elo": 1669.9
+    "elo": 1695.2
   }
 ]
