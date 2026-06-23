@@ -294,7 +294,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "I",
-    "elo": 2133.7
+    "elo": 2142.1
   },
   {
     "code": "NOR",
@@ -303,7 +303,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "I",
-    "elo": 1996.7
+    "elo": 2017.3
   },
   {
     "code": "SEN",
@@ -312,7 +312,7 @@
     "confederation": "CAF",
     "host": false,
     "group": "I",
-    "elo": 1884.0
+    "elo": 1863.4
   },
   {
     "code": "IRQ",
@@ -321,7 +321,7 @@
     "confederation": "AFC",
     "host": false,
     "group": "I",
-    "elo": 1708.9
+    "elo": 1700.5
   },
   {
     "code": "ARG",
