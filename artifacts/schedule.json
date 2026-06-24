@@ -617,7 +617,9 @@
     "home": "PAN",
     "away": "CRO",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 0,
+    "awayScore": 1
   },
   {
     "id": "G049",

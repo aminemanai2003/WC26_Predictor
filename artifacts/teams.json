@@ -105,7 +105,7 @@
     "confederation": "CONCACAF",
     "host": false,
     "group": "C",
-    "elo": 1674.2
+    "elo": 1674.3
   },
   {
     "code": "USA",
@@ -258,7 +258,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "H",
-    "elo": 2179.5
+    "elo": 2179.4
   },
   {
     "code": "URU",
@@ -411,7 +411,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "L",
-    "elo": 1921.0
+    "elo": 1939.3
   },
   {
     "code": "PAN",
@@ -420,7 +420,7 @@
     "confederation": "CONCACAF",
     "host": false,
     "group": "L",
-    "elo": 1777.1
+    "elo": 1758.9
   },
   {
     "code": "GHA",
