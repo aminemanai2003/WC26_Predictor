@@ -654,7 +654,9 @@
     "home": "SUI",
     "away": "CAN",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 2,
+    "awayScore": 1
   },
   {
     "id": "G052",
@@ -665,7 +667,9 @@
     "home": "BIH",
     "away": "QAT",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 3,
+    "awayScore": 1
   },
   {
     "id": "G053",
