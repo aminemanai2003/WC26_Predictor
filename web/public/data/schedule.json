@@ -632,7 +632,9 @@
     "home": "CZE",
     "away": "MEX",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 0,
+    "awayScore": 3
   },
   {
     "id": "G050",
@@ -643,7 +645,9 @@
     "home": "RSA",
     "away": "KOR",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 1,
+    "awayScore": 0
   },
   {
     "id": "G051",
