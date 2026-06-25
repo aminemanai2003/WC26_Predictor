@@ -42,7 +42,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "B",
-    "elo": 1984.6
+    "elo": 1984.7
   },
   {
     "code": "CAN",
@@ -78,7 +78,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "C",
-    "elo": 2069.5
+    "elo": 2091.7
   },
   {
     "code": "MAR",
@@ -87,7 +87,7 @@
     "confederation": "CAF",
     "host": false,
     "group": "C",
-    "elo": 2029.2
+    "elo": 2039.6
   },
   {
     "code": "SCO",
@@ -96,7 +96,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "C",
-    "elo": 1840.7
+    "elo": 1818.5
   },
   {
     "code": "HAI",
@@ -105,7 +105,7 @@
     "confederation": "CONCACAF",
     "host": false,
     "group": "C",
-    "elo": 1674.3
+    "elo": 1663.9
   },
   {
     "code": "USA",
@@ -258,7 +258,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "H",
-    "elo": 2179.4
+    "elo": 2179.5
   },
   {
     "code": "URU",
