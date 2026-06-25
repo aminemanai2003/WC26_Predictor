@@ -732,7 +732,9 @@
     "home": "CUW",
     "away": "CIV",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 0,
+    "awayScore": 2
   },
   {
     "id": "G058",
@@ -743,7 +745,9 @@
     "home": "ECU",
     "away": "GER",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 2,
+    "awayScore": 1
   },
   {
     "id": "G059",

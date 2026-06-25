@@ -114,7 +114,7 @@
     "confederation": "CONCACAF",
     "host": true,
     "group": "D",
-    "elo": 2017.6
+    "elo": 2016.1
   },
   {
     "code": "AUS",
@@ -123,7 +123,7 @@
     "confederation": "AFC",
     "host": false,
     "group": "D",
-    "elo": 1879.2
+    "elo": 1878.8
   },
   {
     "code": "TUR",
@@ -132,7 +132,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "D",
-    "elo": 1875.7
+    "elo": 1875.9
   },
   {
     "code": "PRY",
@@ -141,7 +141,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "D",
-    "elo": 1843.0
+    "elo": 1844.9
   },
   {
     "code": "GER",
@@ -150,7 +150,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "E",
-    "elo": 2038.7
+    "elo": 2001.0
   },
   {
     "code": "ECU",
@@ -159,7 +159,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "E",
-    "elo": 1947.5
+    "elo": 1985.2
   },
   {
     "code": "CIV",
@@ -168,7 +168,7 @@
     "confederation": "CAF",
     "host": false,
     "group": "E",
-    "elo": 1865.7
+    "elo": 1882.2
   },
   {
     "code": "CUW",
@@ -177,7 +177,7 @@
     "confederation": "CONCACAF",
     "host": false,
     "group": "E",
-    "elo": 1605.6
+    "elo": 1589.1
   },
   {
     "code": "NED",
