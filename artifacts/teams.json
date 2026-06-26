@@ -108,22 +108,22 @@
     "elo": 1663.9
   },
   {
-    "code": "USA",
-    "name": "United States",
-    "iso2": "us",
-    "confederation": "CONCACAF",
-    "host": true,
-    "group": "D",
-    "elo": 1974.6
-  },
-  {
     "code": "TUR",
     "name": "Turkiye",
     "iso2": "tr",
     "confederation": "UEFA",
     "host": false,
     "group": "D",
-    "elo": 1917.4
+    "elo": 1957.1
+  },
+  {
+    "code": "USA",
+    "name": "United States",
+    "iso2": "us",
+    "confederation": "CONCACAF",
+    "host": true,
+    "group": "D",
+    "elo": 1934.8
   },
   {
     "code": "AUS",
