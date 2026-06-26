@@ -42,7 +42,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "B",
-    "elo": 2009.1
+    "elo": 2008.6
   },
   {
     "code": "CAN",
@@ -51,7 +51,7 @@
     "confederation": "CONCACAF",
     "host": true,
     "group": "B",
-    "elo": 1835.5
+    "elo": 1836.0
   },
   {
     "code": "BIH",
@@ -114,16 +114,7 @@
     "confederation": "CONCACAF",
     "host": true,
     "group": "D",
-    "elo": 2016.1
-  },
-  {
-    "code": "AUS",
-    "name": "Australia",
-    "iso2": "au",
-    "confederation": "AFC",
-    "host": false,
-    "group": "D",
-    "elo": 1878.8
+    "elo": 1974.6
   },
   {
     "code": "TUR",
@@ -132,7 +123,16 @@
     "confederation": "UEFA",
     "host": false,
     "group": "D",
-    "elo": 1875.9
+    "elo": 1917.4
+  },
+  {
+    "code": "AUS",
+    "name": "Australia",
+    "iso2": "au",
+    "confederation": "AFC",
+    "host": false,
+    "group": "D",
+    "elo": 1875.8
   },
   {
     "code": "PRY",
@@ -141,7 +141,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "D",
-    "elo": 1844.9
+    "elo": 1847.8
   },
   {
     "code": "GER",
