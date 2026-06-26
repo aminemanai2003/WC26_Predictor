@@ -758,7 +758,9 @@
     "home": "JPN",
     "away": "SWE",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 1,
+    "awayScore": 1
   },
   {
     "id": "G060",
@@ -769,7 +771,9 @@
     "home": "TUN",
     "away": "NED",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 1,
+    "awayScore": 3
   },
   {
     "id": "G061",

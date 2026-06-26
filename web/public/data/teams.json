@@ -42,7 +42,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "B",
-    "elo": 2008.6
+    "elo": 2009.1
   },
   {
     "code": "CAN",
@@ -51,7 +51,7 @@
     "confederation": "CONCACAF",
     "host": true,
     "group": "B",
-    "elo": 1836.0
+    "elo": 1835.5
   },
   {
     "code": "BIH",
@@ -186,7 +186,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "F",
-    "elo": 2032.0
+    "elo": 2042.4
   },
   {
     "code": "JPN",
@@ -195,7 +195,7 @@
     "confederation": "AFC",
     "host": false,
     "group": "F",
-    "elo": 2027.1
+    "elo": 2009.6
   },
   {
     "code": "SWE",
@@ -204,7 +204,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "F",
-    "elo": 1795.5
+    "elo": 1813.0
   },
   {
     "code": "TUN",
@@ -213,7 +213,7 @@
     "confederation": "CAF",
     "host": false,
     "group": "F",
-    "elo": 1677.8
+    "elo": 1667.5
   },
   {
     "code": "BEL",
