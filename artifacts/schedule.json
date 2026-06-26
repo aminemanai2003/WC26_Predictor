@@ -832,7 +832,9 @@
     "home": "NOR",
     "away": "FRA",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 1,
+    "awayScore": 4
   },
   {
     "id": "G066",
@@ -843,7 +845,9 @@
     "home": "SEN",
     "away": "IRQ",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 5,
+    "awayScore": 0
   },
   {
     "id": "G067",
