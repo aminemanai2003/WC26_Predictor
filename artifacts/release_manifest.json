@@ -1,7 +1,7 @@
 {
   "version": "4.0.0",
-  "trained_at": "2026-06-27T01:21:44Z",
-  "validated_at": "2026-06-27T01:21:45+00:00",
+  "trained_at": "2026-06-27T03:32:25Z",
+  "validated_at": "2026-06-27T03:32:26+00:00",
   "latest_result_date": "2026-06-26",
   "quality_gates": {
     "team_and_group_integrity": "passed",
@@ -13,16 +13,16 @@
   },
   "files": {
     "teams.json": {
-      "sha256": "ee227a918e649225f6c2912290440762cdf3c5882d2b29ee8f7b083b4e5501c1"
+      "sha256": "a8886c00677b89e5d2020d67191ccbb02a5e69d248af3fc632f611d9abde7802"
     },
     "schedule.json": {
-      "sha256": "ef89ec33efdfe89708faa640d3da6642c16bf6c92e9806849030358272f2dc6c"
+      "sha256": "39585ca0edca88598f7432fb91f7e07fee99cd36d92e3c1a50192db95b077354"
     },
     "pairwise.json": {
-      "sha256": "5beb0650afc7f4fc4c499fb9807ac84c1ea4e952a1513c5b726cbbcec215610b"
+      "sha256": "317a390d0209dd80d384c85d8a0b9771334e90334197f4cdae7a83b701e2da9f"
     },
     "meta.json": {
-      "sha256": "9324a3ff77433b466b39199ce7cfdae5408365973a5d1a1906fd2d280866d8a5"
+      "sha256": "ba67b570100adc6a2a819612f722253c447e127fa9a788c3e8917dbfd5d98813"
     }
   }
 }

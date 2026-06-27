@@ -258,7 +258,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "H",
-    "elo": 2179.5
+    "elo": 2190.2
   },
   {
     "code": "URU",
@@ -267,7 +267,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "H",
-    "elo": 1914.6
+    "elo": 1903.9
   },
   {
     "code": "SAU",
@@ -276,7 +276,7 @@
     "confederation": "AFC",
     "host": false,
     "group": "H",
-    "elo": 1708.9
+    "elo": 1708.0
   },
   {
     "code": "CPV",
@@ -285,7 +285,7 @@
     "confederation": "CAF",
     "host": false,
     "group": "H",
-    "elo": 1698.4
+    "elo": 1699.3
   },
   {
     "code": "FRA",
