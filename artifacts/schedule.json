@@ -788,7 +788,9 @@
     "home": "EGY",
     "away": "IRN",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 1,
+    "awayScore": 1
   },
   {
     "id": "G062",
@@ -799,7 +801,9 @@
     "home": "NZL",
     "away": "BEL",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 1,
+    "awayScore": 5
   },
   {
     "id": "G063",
