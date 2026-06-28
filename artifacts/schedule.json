@@ -866,7 +866,9 @@
     "home": "ALG",
     "away": "AUT",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 3,
+    "awayScore": 3
   },
   {
     "id": "G068",
@@ -877,7 +879,9 @@
     "home": "JOR",
     "away": "ARG",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 1,
+    "awayScore": 3
   },
   {
     "id": "G069",
