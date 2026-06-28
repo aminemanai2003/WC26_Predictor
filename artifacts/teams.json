@@ -204,7 +204,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "F",
-    "elo": 1813.0
+    "elo": 1812.9
   },
   {
     "code": "TUN",
@@ -402,7 +402,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "L",
-    "elo": 2073.3
+    "elo": 2085.9
   },
   {
     "code": "CRO",
@@ -411,7 +411,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "L",
-    "elo": 1939.3
+    "elo": 1951.1
   },
   {
     "code": "PAN",
@@ -420,7 +420,7 @@
     "confederation": "CONCACAF",
     "host": false,
     "group": "L",
-    "elo": 1758.9
+    "elo": 1746.2
   },
   {
     "code": "GHA",
@@ -429,6 +429,6 @@
     "confederation": "CAF",
     "host": false,
     "group": "L",
-    "elo": 1695.2
+    "elo": 1683.4
   }
 ]

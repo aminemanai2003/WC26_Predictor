@@ -910,7 +910,9 @@
     "home": "PAN",
     "away": "ENG",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 0,
+    "awayScore": 2
   },
   {
     "id": "G072",
@@ -921,7 +923,9 @@
     "home": "CRO",
     "away": "GHA",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 2,
+    "awayScore": 1
   },
   {
     "id": "R3201",
