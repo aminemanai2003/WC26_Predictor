@@ -888,7 +888,9 @@
     "home": "COL",
     "away": "POR",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 0,
+    "awayScore": 0
   },
   {
     "id": "G070",
@@ -899,7 +901,9 @@
     "home": "COD",
     "away": "UZB",
     "neutral": true,
-    "completed": false
+    "completed": true,
+    "homeScore": 3,
+    "awayScore": 1
   },
   {
     "id": "G071",

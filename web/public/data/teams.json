@@ -114,7 +114,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "D",
-    "elo": 1957.3
+    "elo": 1955.7
   },
   {
     "code": "USA",
@@ -123,7 +123,7 @@
     "confederation": "CONCACAF",
     "host": true,
     "group": "D",
-    "elo": 1935.8
+    "elo": 1936.3
   },
   {
     "code": "AUS",
@@ -132,7 +132,7 @@
     "confederation": "AFC",
     "host": false,
     "group": "D",
-    "elo": 1874.8
+    "elo": 1875.8
   },
   {
     "code": "PRY",
@@ -141,7 +141,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "D",
-    "elo": 1847.7
+    "elo": 1847.8
   },
   {
     "code": "GER",
@@ -366,7 +366,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "K",
-    "elo": 2085.6
+    "elo": 2082.9
   },
   {
     "code": "POR",
@@ -375,16 +375,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "K",
-    "elo": 2054.3
-  },
-  {
-    "code": "UZB",
-    "name": "Uzbekistan",
-    "iso2": "uz",
-    "confederation": "AFC",
-    "host": false,
-    "group": "K",
-    "elo": 1781.1
+    "elo": 2057.0
   },
   {
     "code": "COD",
@@ -393,7 +384,16 @@
     "confederation": "CAF",
     "host": false,
     "group": "K",
-    "elo": 1769.0
+    "elo": 1815.5
+  },
+  {
+    "code": "UZB",
+    "name": "Uzbekistan",
+    "iso2": "uz",
+    "confederation": "AFC",
+    "host": false,
+    "group": "K",
+    "elo": 1734.5
   },
   {
     "code": "ENG",
