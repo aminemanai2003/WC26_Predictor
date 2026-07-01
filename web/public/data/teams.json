@@ -6,7 +6,7 @@
     "confederation": "CONCACAF",
     "host": true,
     "group": "A",
-    "elo": 2038.1
+    "elo": 2069.1
   },
   {
     "code": "KOR",
@@ -24,7 +24,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "A",
-    "elo": 1740.3
+    "elo": 1740.2
   },
   {
     "code": "RSA",
@@ -42,7 +42,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "B",
-    "elo": 2008.6
+    "elo": 2009.1
   },
   {
     "code": "CAN",
@@ -51,7 +51,7 @@
     "confederation": "CONCACAF",
     "host": true,
     "group": "B",
-    "elo": 1855.9
+    "elo": 1855.4
   },
   {
     "code": "BIH",
@@ -114,7 +114,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "D",
-    "elo": 1955.8
+    "elo": 1957.3
   },
   {
     "code": "USA",
@@ -123,7 +123,7 @@
     "confederation": "CONCACAF",
     "host": true,
     "group": "D",
-    "elo": 1937.3
+    "elo": 1935.8
   },
   {
     "code": "AUS",
@@ -159,7 +159,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "E",
-    "elo": 1985.2
+    "elo": 1954.4
   },
   {
     "code": "CIV",
@@ -168,7 +168,7 @@
     "confederation": "CAF",
     "host": false,
     "group": "E",
-    "elo": 1882.2
+    "elo": 1860.7
   },
   {
     "code": "CUW",
@@ -204,7 +204,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "F",
-    "elo": 1812.9
+    "elo": 1801.4
   },
   {
     "code": "TUN",
@@ -294,7 +294,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "I",
-    "elo": 2176.5
+    "elo": 2188.1
   },
   {
     "code": "NOR",
@@ -303,7 +303,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "I",
-    "elo": 1982.9
+    "elo": 2004.5
   },
   {
     "code": "SEN",
@@ -384,7 +384,7 @@
     "confederation": "CAF",
     "host": false,
     "group": "K",
-    "elo": 1815.5
+    "elo": 1805.1
   },
   {
     "code": "UZB",
@@ -402,7 +402,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "L",
-    "elo": 2085.9
+    "elo": 2096.4
   },
   {
     "code": "CRO",
