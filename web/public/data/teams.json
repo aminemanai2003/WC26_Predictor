@@ -60,7 +60,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "B",
-    "elo": 1700.0
+    "elo": 1681.6
   },
   {
     "code": "QAT",
@@ -123,7 +123,7 @@
     "confederation": "CONCACAF",
     "host": true,
     "group": "D",
-    "elo": 1935.8
+    "elo": 1954.3
   },
   {
     "code": "AUS",
