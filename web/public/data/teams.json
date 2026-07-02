@@ -60,7 +60,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "B",
-    "elo": 1681.6
+    "elo": 1669.9
   },
   {
     "code": "QAT",
@@ -108,22 +108,22 @@
     "elo": 1663.9
   },
   {
-    "code": "TUR",
-    "name": "Turkiye",
-    "iso2": "tr",
-    "confederation": "UEFA",
-    "host": false,
-    "group": "D",
-    "elo": 1957.3
-  },
-  {
     "code": "USA",
     "name": "United States",
     "iso2": "us",
     "confederation": "CONCACAF",
     "host": true,
     "group": "D",
-    "elo": 1954.3
+    "elo": 1964.9
+  },
+  {
+    "code": "TUR",
+    "name": "Turkiye",
+    "iso2": "tr",
+    "confederation": "UEFA",
+    "host": false,
+    "group": "D",
+    "elo": 1957.1
   },
   {
     "code": "AUS",
@@ -132,7 +132,7 @@
     "confederation": "AFC",
     "host": false,
     "group": "D",
-    "elo": 1874.8
+    "elo": 1875.8
   },
   {
     "code": "PRY",
@@ -141,7 +141,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "D",
-    "elo": 1860.1
+    "elo": 1860.2
   },
   {
     "code": "GER",
@@ -222,7 +222,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "G",
-    "elo": 1954.2
+    "elo": 1984.2
   },
   {
     "code": "IRN",
@@ -312,7 +312,7 @@
     "confederation": "CAF",
     "host": false,
     "group": "I",
-    "elo": 1902.5
+    "elo": 1872.5
   },
   {
     "code": "IRQ",
