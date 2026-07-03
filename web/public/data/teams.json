@@ -42,7 +42,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "B",
-    "elo": 2008.6
+    "elo": 2041.5
   },
   {
     "code": "CAN",
@@ -333,15 +333,6 @@
     "elo": 2221.8
   },
   {
-    "code": "ALG",
-    "name": "Algeria",
-    "iso2": "dz",
-    "confederation": "CAF",
-    "host": false,
-    "group": "J",
-    "elo": 1912.5
-  },
-  {
     "code": "AUT",
     "name": "Austria",
     "iso2": "at",
@@ -349,6 +340,15 @@
     "host": false,
     "group": "J",
     "elo": 1894.6
+  },
+  {
+    "code": "ALG",
+    "name": "Algeria",
+    "iso2": "dz",
+    "confederation": "CAF",
+    "host": false,
+    "group": "J",
+    "elo": 1879.6
   },
   {
     "code": "JOR",
