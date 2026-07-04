@@ -270,15 +270,6 @@
     "elo": 1903.9
   },
   {
-    "code": "CPV",
-    "name": "Cabo Verde",
-    "iso2": "cv",
-    "confederation": "CAF",
-    "host": false,
-    "group": "H",
-    "elo": 1726.5
-  },
-  {
     "code": "SAU",
     "name": "Saudi Arabia",
     "iso2": "sa",
@@ -286,6 +277,15 @@
     "host": false,
     "group": "H",
     "elo": 1708.0
+  },
+  {
+    "code": "CPV",
+    "name": "Cabo Verde",
+    "iso2": "cv",
+    "confederation": "CAF",
+    "host": false,
+    "group": "H",
+    "elo": 1696.5
   },
   {
     "code": "FRA",
@@ -330,7 +330,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "J",
-    "elo": 2194.6
+    "elo": 2224.6
   },
   {
     "code": "AUT",
