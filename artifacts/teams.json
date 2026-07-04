@@ -114,7 +114,7 @@
     "confederation": "CONCACAF",
     "host": true,
     "group": "D",
-    "elo": 1967.2
+    "elo": 1967.1
   },
   {
     "code": "TUR",
@@ -270,6 +270,15 @@
     "elo": 1903.9
   },
   {
+    "code": "CPV",
+    "name": "Cabo Verde",
+    "iso2": "cv",
+    "confederation": "CAF",
+    "host": false,
+    "group": "H",
+    "elo": 1726.5
+  },
+  {
     "code": "SAU",
     "name": "Saudi Arabia",
     "iso2": "sa",
@@ -277,15 +286,6 @@
     "host": false,
     "group": "H",
     "elo": 1708.0
-  },
-  {
-    "code": "CPV",
-    "name": "Cabo Verde",
-    "iso2": "cv",
-    "confederation": "CAF",
-    "host": false,
-    "group": "H",
-    "elo": 1699.3
   },
   {
     "code": "FRA",
@@ -330,7 +330,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "J",
-    "elo": 2221.8
+    "elo": 2194.6
   },
   {
     "code": "AUT",
@@ -366,7 +366,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "K",
-    "elo": 2082.9
+    "elo": 2088.3
   },
   {
     "code": "POR",
@@ -429,6 +429,6 @@
     "confederation": "CAF",
     "host": false,
     "group": "L",
-    "elo": 1683.4
+    "elo": 1677.9
   }
 ]
