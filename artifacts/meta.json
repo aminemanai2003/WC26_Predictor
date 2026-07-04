@@ -1,9 +1,9 @@
 {
   "version": "4.0.0",
-  "trained_at": "2026-07-04T19:40:23Z",
+  "trained_at": "2026-07-04T21:17:04Z",
   "dixon_coles_rho": 0.013672856789203732,
   "ensemble_w_clf": 0.55,
-  "temperature": 1.0603802681997931,
+  "temperature": 1.060380268199638,
   "classifier": "regularized_multinomial",
   "recency_half_life_years": 12.0,
   "walk_forward_cv": {
@@ -12,14 +12,14 @@
       "2020-01-01 .. 2022-01-01",
       "2022-01-01 .. 2024-01-01"
     ],
-    "mean_log_loss": 0.86456430217094,
+    "mean_log_loss": 0.8645643021709697,
     "fold_log_loss": [
-      0.8740776077660473,
-      0.8373123774005953,
-      0.8823029213461779
+      0.8740776077661442,
+      0.8373123774005884,
+      0.8823029213461764
     ],
     "candidates": {
-      "regularized_multinomial": 0.86456430217094,
+      "regularized_multinomial": 0.8645643021709697,
       "xgboost": 0.865272581577301
     }
   },
@@ -57,8 +57,8 @@
   },
   "test_metrics": {
     "elo_baseline": {
-      "log_loss": 0.8675507617143134,
-      "rps": 0.16747186813016482
+      "log_loss": 0.8675507617143138,
+      "rps": 0.16747186813016485
     },
     "xgb_only": {
       "log_loss": 0.8683704137802124,
@@ -66,20 +66,20 @@
     },
     "selected_classifier": {
       "name": "regularized_multinomial",
-      "log_loss": 0.8677658184819657,
-      "rps": 0.16689301723669514
+      "log_loss": 0.867765818481965,
+      "rps": 0.16689301723669503
     },
     "poisson_only": {
       "log_loss": 0.8712855560413187,
       "rps": 0.168149749414309
     },
     "ensemble_raw": {
-      "log_loss": 0.8665203062262143,
-      "rps": 0.16677490280093013
+      "log_loss": 0.866520306226214,
+      "rps": 0.16677490280093007
     },
     "ensemble_cal": {
-      "log_loss": 0.8654746267081727,
-      "rps": 0.16653824982661292
+      "log_loss": 0.8654746267081733,
+      "rps": 0.16653824982661308
     }
   },
   "train_window": "<= 2021-12-31",
