@@ -1,9 +1,9 @@
 {
   "version": "4.0.0",
-  "trained_at": "2026-07-05T21:23:09Z",
-  "dixon_coles_rho": 0.013902851332750895,
+  "trained_at": "2026-07-05T23:21:52Z",
+  "dixon_coles_rho": 0.014258592156971941,
   "ensemble_w_clf": 0.55,
-  "temperature": 1.0651050248259613,
+  "temperature": 1.0628002166750683,
   "classifier": "regularized_multinomial",
   "recency_half_life_years": 12.0,
   "walk_forward_cv": {
@@ -12,15 +12,15 @@
       "2020-01-01 .. 2022-01-01",
       "2022-01-01 .. 2024-01-01"
     ],
-    "mean_log_loss": 0.8645647270721756,
+    "mean_log_loss": 0.8645637063900132,
     "fold_log_loss": [
-      0.8740855849486544,
-      0.8373097431266757,
-      0.8822988531411967
+      0.8740812143479942,
+      0.837306926191309,
+      0.8823029786307364
     ],
     "candidates": {
-      "regularized_multinomial": 0.8645647270721756,
-      "xgboost": 0.8656051953633627
+      "regularized_multinomial": 0.8645637063900132,
+      "xgboost": 0.8653529683748881
     }
   },
   "features": [
@@ -57,36 +57,36 @@
   },
   "test_metrics": {
     "elo_baseline": {
-      "log_loss": 0.8674018551930279,
-      "rps": 0.16743155460374337
+      "log_loss": 0.867709849574249,
+      "rps": 0.16755301428734673
     },
     "xgb_only": {
-      "log_loss": 0.8669112920761108,
-      "rps": 0.16727000226913863
+      "log_loss": 0.868053138256073,
+      "rps": 0.16748151178155746
     },
     "selected_classifier": {
       "name": "regularized_multinomial",
-      "log_loss": 0.8675456638011032,
-      "rps": 0.1668343063967418
+      "log_loss": 0.867709941793362,
+      "rps": 0.16692996011564434
     },
     "poisson_only": {
-      "log_loss": 0.8708624003406134,
-      "rps": 0.1681124762937172
+      "log_loss": 0.8711154236504791,
+      "rps": 0.16820015704412083
     },
     "ensemble_raw": {
-      "log_loss": 0.866074748320944,
-      "rps": 0.1667061829923333
+      "log_loss": 0.8663296567006591,
+      "rps": 0.166805541214945
     },
     "ensemble_cal": {
-      "log_loss": 0.8649533495247094,
-      "rps": 0.16644793516306186
+      "log_loss": 0.8652461517873736,
+      "rps": 0.16655649785508225
     }
   },
   "train_window": "<= 2021-12-31",
   "val_window": "2022-01-01 .. 2023-12-31",
   "test_window": ">= 2024-01-01",
-  "production_train_window": "1993-01-01 .. 2026-07-04",
-  "latest_result_date": "2026-07-04",
+  "production_train_window": "1993-01-01 .. 2026-07-05",
+  "latest_result_date": "2026-07-05",
   "completed_world_cup_matches": 72,
-  "n_matches_used": 30795
+  "n_matches_used": 30796
 }
