@@ -1,9 +1,9 @@
 {
   "version": "4.0.0",
-  "trained_at": "2026-07-07T04:20:24Z",
+  "trained_at": "2026-07-07T07:56:47Z",
   "dixon_coles_rho": 0.013557800559860136,
   "ensemble_w_clf": 0.5,
-  "temperature": 1.0611561923494426,
+  "temperature": 1.061156192349463,
   "classifier": "regularized_multinomial",
   "recency_half_life_years": 12.0,
   "walk_forward_cv": {
@@ -14,9 +14,9 @@
     ],
     "mean_log_loss": 0.8645628693575486,
     "fold_log_loss": [
-      0.8740759710051024,
-      0.8373100425872124,
-      0.882302594480331
+      0.8740759710051068,
+      0.837310042587212,
+      0.8823025944803269
     ],
     "candidates": {
       "regularized_multinomial": 0.8645628693575486,
@@ -66,20 +66,20 @@
     },
     "selected_classifier": {
       "name": "regularized_multinomial",
-      "log_loss": 0.86759707784268,
-      "rps": 0.16697923693825006
+      "log_loss": 0.8675970778426793,
+      "rps": 0.16697923693824962
     },
     "poisson_only": {
       "log_loss": 0.8717451462725299,
-      "rps": 0.16844421385017563
+      "rps": 0.1684442138501756
     },
     "ensemble_raw": {
-      "log_loss": 0.8665863772736285,
-      "rps": 0.16697246043492145
+      "log_loss": 0.8665863772736299,
+      "rps": 0.16697246043492178
     },
     "ensemble_cal": {
-      "log_loss": 0.8654081691316201,
-      "rps": 0.16669565295482103
+      "log_loss": 0.8654081691316204,
+      "rps": 0.1666956529548211
     }
   },
   "train_window": "<= 2021-12-31",
