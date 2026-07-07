@@ -117,15 +117,6 @@
     "elo": 1957.1
   },
   {
-    "code": "USA",
-    "name": "United States",
-    "iso2": "us",
-    "confederation": "CONCACAF",
-    "host": true,
-    "group": "D",
-    "elo": 1915.3
-  },
-  {
     "code": "AUS",
     "name": "Australia",
     "iso2": "au",
@@ -133,6 +124,15 @@
     "host": false,
     "group": "D",
     "elo": 1873.8
+  },
+  {
+    "code": "USA",
+    "name": "United States",
+    "iso2": "us",
+    "confederation": "CONCACAF",
+    "host": true,
+    "group": "D",
+    "elo": 1871.6
   },
   {
     "code": "PRY",
@@ -222,7 +222,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "G",
-    "elo": 2033.8
+    "elo": 2077.5
   },
   {
     "code": "IRN",
