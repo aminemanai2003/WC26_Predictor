@@ -42,7 +42,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "B",
-    "elo": 2045.5
+    "elo": 2060.2
   },
   {
     "code": "CAN",
@@ -303,7 +303,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "I",
-    "elo": 2043.7
+    "elo": 2050.9
   },
   {
     "code": "SEN",
@@ -330,7 +330,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "J",
-    "elo": 2231.0
+    "elo": 2216.3
   },
   {
     "code": "AUT",
@@ -402,7 +402,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "L",
-    "elo": 2129.2
+    "elo": 2122.0
   },
   {
     "code": "CRO",
