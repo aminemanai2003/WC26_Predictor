@@ -39,8 +39,11 @@ jobs:
         working-directory: web
       - name: Commit refreshed artifacts
         run: |
-          git config user.name "wc26-update-bot"
-          git config user.email "actions@users.noreply.github.com"
+          # Vercel authorizes deployments from this private repository by the
+          # GitHub identity attached to the commit. The generic Actions address
+          # is attributed to github/actions and is blocked by the Hobby project.
+          git config user.name "aminemanai2003"
+          git config user.email "amine.manai@esprit.tn"
           git add artifacts web/public/data notebook/wc2026_pipeline.ipynb
           git diff --cached --quiet || git commit -m "Refresh predictions with latest results"
           git push
