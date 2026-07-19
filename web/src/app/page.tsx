@@ -12,6 +12,7 @@ import { useSimulation } from "@/lib/sim/useSimulation";
 import { useT } from "@/lib/i18n/context";
 
 const FIRST_MATCH_DATE = "2026-06-11T19:00:00-06:00";
+const FIRST_MATCH_TIME_ZONE = "America/Mexico_City";
 
 export default function HomePage() {
   const { t, locale } = useT();
@@ -69,7 +70,7 @@ export default function HomePage() {
               </span>
             </h1>
             <p className="mt-5 text-white/60 text-base sm:text-lg max-w-2xl leading-relaxed">
-              {t("home.heroSub", { n: result?.iterations.toLocaleString() || "10,000" })}
+              {t("home.heroSub", { n: result?.iterations.toLocaleString(locale) || "10,000" })}
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
               <Link
@@ -93,7 +94,15 @@ export default function HomePage() {
       <Section>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
           <StatTile label={t("home.teams")} value="48" sub={t("home.teamsSub")} />
-          <StatTile label={t("home.matches")} value="104" sub={t("home.matchesSub", { date: new Date(FIRST_MATCH_DATE).toLocaleDateString(locale) })} />
+          <StatTile
+            label={t("home.matches")}
+            value="104"
+            sub={t("home.matchesSub", {
+              date: new Date(FIRST_MATCH_DATE).toLocaleDateString(locale, {
+                timeZone: FIRST_MATCH_TIME_ZONE,
+              }),
+            })}
+          />
           <StatTile
             label={t("home.modelLogLoss")}
             value={meta.test_metrics?.ensemble_cal?.log_loss?.toFixed(3) ?? "—"}
@@ -101,7 +110,7 @@ export default function HomePage() {
           />
           <StatTile
             label={t("home.simRuns")}
-            value={result ? result.iterations.toLocaleString() : "…"}
+            value={result ? result.iterations.toLocaleString(locale) : "…"}
             sub={result ? t("home.simRunsSub", { time: (elapsedMs / 1000).toFixed(2) }) : t("home.simRunsStarting")}
           />
         </div>

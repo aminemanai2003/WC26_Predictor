@@ -3,7 +3,7 @@ import { meta } from "@/lib/data";
 import { useT } from "@/lib/i18n/context";
 
 export default function Footer() {
-  const { t } = useT();
+  const { t, locale } = useT();
   return (
     <footer className="mt-16 border-t border-white/5">
       <div className="mx-auto max-w-7xl px-4 sm:px-6 py-8 grid gap-6 sm:grid-cols-[1fr_auto] sm:items-center">
@@ -25,7 +25,7 @@ export default function Footer() {
             {t("footer.modelLine", {
               version: meta.version,
               date: meta.trained_at?.slice(0, 10) ?? "",
-              n: meta.n_matches_used?.toLocaleString() ?? "",
+              n: meta.n_matches_used?.toLocaleString(locale) ?? "",
             })}
           </div>
           <div>{t("footer.disclaimer")}</div>

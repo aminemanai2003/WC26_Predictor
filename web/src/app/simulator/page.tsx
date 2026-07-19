@@ -27,7 +27,7 @@ import { useT } from "@/lib/i18n/context";
 const GROUP_LETTERS = "ABCDEFGHIJKL".split("");
 
 export default function SimulatorPage() {
-  const { t } = useT();
+  const { t, locale } = useT();
   const { result, run, status, elapsedMs } = useSimulation();
   const [iterations, setIterations] = useState(10000);
   const [seed, setSeed] = useState(42);
@@ -345,7 +345,7 @@ export default function SimulatorPage() {
               {status === "running" || status === "loading" ? (
                 <span className="inline-flex items-center gap-1.5 text-accent-green"><Sparkles className="h-3 w-3 animate-pulse" /> {t("common.simulating")}</span>
               ) : result ? (
-                <>{result.iterations.toLocaleString()} {t("common.simulations")} · {(elapsedMs / 1000).toFixed(2)}{t("common.seconds")}</>
+                <>{result.iterations.toLocaleString(locale)} {t("common.simulations")} · {(elapsedMs / 1000).toFixed(2)}{t("common.seconds")}</>
               ) : "—"}
             </div>
           </div>

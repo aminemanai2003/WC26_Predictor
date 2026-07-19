@@ -8,7 +8,7 @@ import { useSimulation } from "@/lib/sim/useSimulation";
 import { useT } from "@/lib/i18n/context";
 
 export default function GroupsPage() {
-  const { t } = useT();
+  const { t, locale } = useT();
   const { result, run, status } = useSimulation();
   useEffect(() => { run({ iterations: 10000, seed: 11 }); }, [run]);
 
@@ -78,7 +78,7 @@ export default function GroupsPage() {
         <p className="mt-6 text-xs text-white/40">
           {status === "running" || status === "loading"
             ? t("groups.runningSim")
-            : t("groups.basedOn", { n: result?.iterations.toLocaleString() || "" })}
+            : t("groups.basedOn", { n: result?.iterations.toLocaleString(locale) || "" })}
         </p>
       </Section>
     </>

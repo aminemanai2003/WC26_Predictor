@@ -17,7 +17,7 @@ const STAGE_KEYS = [
 ] as const;
 
 export default function BracketPage() {
-  const { t } = useT();
+  const { t, locale } = useT();
   const { result, run } = useSimulation();
   useEffect(() => { run({ iterations: 10000, seed: 17 }); }, [run]);
 
@@ -87,7 +87,7 @@ export default function BracketPage() {
         </div>
       )}
       <p className="mt-6 text-xs text-white/40">
-        {t("bracket.footer", { n: result?.iterations.toLocaleString() || "" })}
+        {t("bracket.footer", { n: result?.iterations.toLocaleString(locale) || "" })}
       </p>
     </Section>
   );
