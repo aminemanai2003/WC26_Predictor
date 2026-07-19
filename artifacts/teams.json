@@ -6,7 +6,7 @@
     "confederation": "CONCACAF",
     "host": true,
     "group": "A",
-    "elo": 2036.4
+    "elo": 2036.3
   },
   {
     "code": "KOR",
@@ -24,7 +24,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "A",
-    "elo": 1740.4
+    "elo": 1740.5
   },
   {
     "code": "RSA",
@@ -33,7 +33,7 @@
     "confederation": "CAF",
     "host": false,
     "group": "A",
-    "elo": 1694.5
+    "elo": 1694.6
   },
   {
     "code": "SUI",
@@ -42,7 +42,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "B",
-    "elo": 2023.0
+    "elo": 2022.7
   },
   {
     "code": "CAN",
@@ -51,7 +51,7 @@
     "confederation": "CONCACAF",
     "host": true,
     "group": "B",
-    "elo": 1821.1
+    "elo": 1821.5
   },
   {
     "code": "BIH",
@@ -258,7 +258,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "H",
-    "elo": 2287.7
+    "elo": 2316.4
   },
   {
     "code": "URU",
@@ -330,7 +330,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "J",
-    "elo": 2273.3
+    "elo": 2244.5
   },
   {
     "code": "AUT",
@@ -366,7 +366,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "K",
-    "elo": 2084.5
+    "elo": 2084.4
   },
   {
     "code": "POR",
