@@ -96,7 +96,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "C",
-    "elo": 1818.7
+    "elo": 1818.8
   },
   {
     "code": "HAI",
@@ -204,7 +204,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "F",
-    "elo": 1801.6
+    "elo": 1801.7
   },
   {
     "code": "TUN",
@@ -231,7 +231,7 @@
     "confederation": "AFC",
     "host": false,
     "group": "G",
-    "elo": 1887.7
+    "elo": 1887.6
   },
   {
     "code": "EGY",
@@ -258,7 +258,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "H",
-    "elo": 2316.4
+    "elo": 2316.5
   },
   {
     "code": "URU",
@@ -294,7 +294,7 @@
     "confederation": "UEFA",
     "host": false,
     "group": "I",
-    "elo": 2128.2
+    "elo": 2128.3
   },
   {
     "code": "NOR",
@@ -321,7 +321,7 @@
     "confederation": "AFC",
     "host": false,
     "group": "I",
-    "elo": 1666.9
+    "elo": 1666.8
   },
   {
     "code": "ARG",
@@ -357,7 +357,7 @@
     "confederation": "AFC",
     "host": false,
     "group": "J",
-    "elo": 1720.1
+    "elo": 1720.0
   },
   {
     "code": "COL",
@@ -366,7 +366,7 @@
     "confederation": "CONMEBOL",
     "host": false,
     "group": "K",
-    "elo": 2084.4
+    "elo": 2084.5
   },
   {
     "code": "POR",
@@ -420,7 +420,7 @@
     "confederation": "CONCACAF",
     "host": false,
     "group": "L",
-    "elo": 1746.3
+    "elo": 1746.4
   },
   {
     "code": "GHA",
