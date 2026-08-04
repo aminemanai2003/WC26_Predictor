@@ -1,9 +1,9 @@
 {
   "version": "4.0.0",
-  "trained_at": "2026-08-04T10:52:17Z",
-  "dixon_coles_rho": 0.01282271649737862,
+  "trained_at": "2026-08-04T14:41:55Z",
+  "dixon_coles_rho": 0.013617343693703121,
   "ensemble_w_clf": 0.5,
-  "temperature": 1.0586789531242382,
+  "temperature": 1.0589345446433078,
   "classifier": "regularized_multinomial",
   "recency_half_life_years": 12.0,
   "walk_forward_cv": {
@@ -70,16 +70,16 @@
       "rps": 0.16701437672880778
     },
     "poisson_only": {
-      "log_loss": 0.8702042536098724,
-      "rps": 0.16812806963579224
+      "log_loss": 0.8707519144889379,
+      "rps": 0.16825431110863615
     },
     "ensemble_raw": {
-      "log_loss": 0.8658355799092211,
-      "rps": 0.16688482039031485
+      "log_loss": 0.866094903787653,
+      "rps": 0.166942677207414
     },
     "ensemble_cal": {
-      "log_loss": 0.8648895309617946,
-      "rps": 0.16666405898885392
+      "log_loss": 0.8651278348240533,
+      "rps": 0.16671953051080274
     }
   },
   "train_window": "<= 2021-12-31",
